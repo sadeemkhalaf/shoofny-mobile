@@ -19,6 +19,7 @@ export interface IUser {
     DOEX: IDomainOfExperience;
     YOEX: IYearsOfExperience;
     tags: string[];
+    token: string;
 }
 
 export interface ICity {
