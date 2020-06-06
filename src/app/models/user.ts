@@ -1,3 +1,5 @@
+import { Token } from '../providers/auth.service';
+
 export interface IUser {
     first_name: string;
     last_name: string;
@@ -19,7 +21,7 @@ export interface IUser {
     DOEX: IDomainOfExperience;
     YOEX: IYearsOfExperience;
     tags: string[];
-    token: string;
+    token?: Token;
 }
 
 export interface ICity {

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { IStorage } from './storage';
 import { Observable, ReplaySubject } from 'rxjs';
+import { Token } from 'src/app/providers/auth.service';
 import { IUser } from 'src/app/models/user';
 
 const AUTH_STORAGE_KEY = 'AUTH_TOKEN';
@@ -11,15 +12,18 @@ const API_STORAGE_KEY = 'storageKey';
 @Injectable()
 export class StorageService implements IStorage {
   public token: Observable<string>;
-
   private _tokenSubject: ReplaySubject<string> = new ReplaySubject<string>(1);
 
   constructor(private readonly _storage: Storage) {
     this.token = this._tokenSubject.asObservable();
   }
 
+  public async updateUserToken(userData: Token) {
+    await this._storage.set(AUTH_STORAGE_KEY, userData.access).then(() => this._tokenSubject.next(userData.access));
+    return userData;
+  }
+
   public async updateUserData(userData: IUser) {
-    await this._storage.set(AUTH_STORAGE_KEY, userData.token).then(() => this._tokenSubject.next(userData.token));
     await this.setLocalData(USER_DATA_STORAGE_KEY, userData);
     return userData;
   }

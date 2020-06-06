@@ -94,7 +94,9 @@ export class AuthHttpInterceptor implements HttpInterceptor {
   private _addToken(): Promise<string> {
     return new Promise<string>((resolve) => {
       this._storageService.getAuthToken()
-        .then((token: string) => resolve(token))
+        .then((token: string) => {
+          resolve(token);
+        })
         .catch((error) => {
           console.warn('Can\'t access to storage ', error.message);
           resolve();
