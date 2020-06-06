@@ -1,0 +1,168 @@
+// ========================================= Number grid
+// ========================================= Used to make margin and padding classes
+$NUMBERGRID: (4: 4px, 8: 8px, 16: 16px, 24: 24px, 32: 32px, 40: 40px, 48: 48px, 56: 56px, 64: 64px, 72: 72px, 80: 80px, 88: 88px, 96: 96px, 104: 104px, 112: 112px, 120: 120px, 160: 160px, 180: 180px, 240: 240px);
+/* Generate Margin Attribute Styles */
+//
+@each $i in map-keys($NUMBERGRID) {
+  .margin-top-#{$i} {
+    margin-top: map-get($NUMBERGRID, $i);
+  }
+  .margin-bottom-#{$i} {
+    margin-bottom: map-get($NUMBERGRID, $i);
+  }
+  .margin-left-#{$i} {
+    margin-left: map-get($NUMBERGRID, $i);
+  }
+  .margin-right-#{$i} {
+    margin-right: map-get($NUMBERGRID, $i);
+  }
+  .margin-#{$i} {
+    margin: map-get($NUMBERGRID, $i);
+  }
+}
+
+//======================================= Padding spacing
+@each $key in map-keys($NUMBERGRID) {
+  .padding-bottom-#{$key} {
+    padding-bottom: map-get($NUMBERGRID, $key);
+  }
+  .padding-top-#{$key} {
+    padding-top: map-get($NUMBERGRID, $key);
+  }
+  .padding-left-#{$key} {
+    padding-left: map-get($NUMBERGRID, $key);
+  }
+  .padding-right-#{$key} {
+    padding-right: map-get($NUMBERGRID, $key);
+  }
+  .padding-#{$key} {
+    padding: map-get($NUMBERGRID, $key);
+  }
+}
+
+//======================================= Grid
+.grid {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  flex: 1 1 0;
+}
+
+@for $i from 1 through 12 {
+  .col-#{$i} {
+    flex: 0 0 calc(calc(#{$i} / 12) * 100%);
+    flex-direction: column;
+    width: calc(calc(#{$i} / 12) * 100%);
+    max-width: calc(calc(#{$i} / 12) * 100%);
+  }
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.col-auto {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.justify-content-evenly {
+  justify-content: space-evenly !important;
+}
+
+.justify-content-between {
+  justify-content: space-between !important;
+}
+
+.justify-content-around {
+  justify-content: space-around !important;
+}
+
+.justify-content-center {
+  justify-content: center !important;
+}
+
+.justify-content-end {
+  justify-content: flex-end !important;
+}
+
+.justify-content-start {
+  justify-content: flex-start !important;
+}
+
+.align-content-center {
+  align-content: center !important;
+}
+
+//======================================= end of Grid
+.no-margin {
+  margin: 0 !important;
+}
+
+.no-margin-left {
+  margin-left: 0 !important;
+}
+
+.no-margin-right {
+  margin-right: 0 !important;
+}
+
+.no-margin-top {
+  margin-top: 0 !important;
+}
+
+.no-margin-bottom {
+  margin-bottom: 0 !important;
+}
+
+.no-padding {
+  padding: 0 !important;
+}
+
+.no-padding-left {
+  padding-left: 0 !important;
+}
+
+.no-padding-right {
+  padding-right: 0 !important;
+}
+
+.no-padding-top {
+  padding-top: 0 !important;
+}
+
+.no-padding-bottom {
+  padding-bottom: 0 !important;
+}
+
+.ellipsis {
+  text-overflow: ellipsis;
+
+  /* Required for text-overflow to do anything */
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@mixin flex-box($direction: column) {
+  display:-webkit-box;
+  display:-moz-box;
+  display:-ms-flexbox;
+  display:-webkit-flex;
+  display:flex;
+  -webkit-flex-direction: $direction;
+  -moz-flex-direction: $direction;
+   -ms-flex-direction: $direction;
+       flex-direction: $direction;
+}
+
+@mixin font-size($size: 1.6) {
+  font-size: $size * 1px;
+  font-size: $size * 0.1rem;
+}

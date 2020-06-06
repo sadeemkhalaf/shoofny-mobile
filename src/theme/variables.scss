@@ -74,6 +74,13 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  // custom colors
+  --ion-custom-color-primary: #2678FF;
+  --ion-custom-color-dark: #1F5BBC;
+  --ion-custom-color-red:#FF6A6A;
+  --ion-custom-color-warn: #DCBA4B;
+  --ion-custom-color-common: #5B5B5B; 
 }
 
 @media (prefers-color-scheme: dark) {
@@ -225,4 +232,6 @@
 
     --ion-tab-bar-background: #1f1f1f;
   }
+
+  @import "helper-classes.scss";
 }
