@@ -1,0 +1,8 @@
+{
+    "/api": {
+        "target": "http://shoofny.site/en/",
+        "changeOrigin": true,
+        "secure": false,
+        "logLevel": "debug"
+      }
+}
