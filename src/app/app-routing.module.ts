@@ -23,6 +23,30 @@ const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full'
   },
+  {
+    path: 'home',
+    loadChildren: () => import('./main/details/home/home.module').then( m => m.HomePageModule)
+  },
+  {
+    path: 'job-details',
+    loadChildren: () => import('./main/details/job-details/job-details.module').then( m => m.JobDetailsPageModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./main/details/profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
+    path: 'settings',
+    loadChildren: () => import('./main/details/settings/settings.module').then( m => m.SettingsPageModule)
+  },
+  {
+    path: 'edit-profile',
+    loadChildren: () => import('./main/details/edit-profile/edit-profile.module').then( m => m.EditProfilePageModule)
+  },
+  {
+    path: 'jobs',
+    loadChildren: () => import('./main/details/jobs/jobs.module').then( m => m.JobsPageModule)
+  },
 ];
 
 @NgModule({

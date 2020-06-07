@@ -31,12 +31,9 @@ export class AuthService {
     this._getAccessToken({email: e_mail, password: pass_word});
   }
 
-
-  // check logged in
-
+  // TODO:
   // logout
 
-  // get user access token
   private _getAccessToken(data) {
     return new Promise<Token>(
       (resolve, reject) =>
