@@ -1,0 +1,80 @@
+@import './../../../../theme//helper-classes.scss';
+
+:host {
+    ion-list {
+        ion-icon {
+            color: var(--ion-custom-color-dark);
+        }
+        ion-label {
+            color: var(--ion-custom-color-dark);
+            font-weight: 600;
+        }
+    }
+    .header {
+        background-color: var(--ion-custom-color-dark);
+        color: white;
+        padding-bottom: 40px;
+        ion-icon {
+            height: 24px;
+            width: 24px;
+        }
+    }
+    .space-between {
+        @include flex-box(row);
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .center {
+        @include flex-box(col);
+        align-items: center;
+    }
+
+    .space-arount {
+        @include flex-box(row);
+        justify-content: space-around;
+    }
+    
+    .greeting-label {
+        font-weight: 700;
+        @include font-size(14);
+    }
+    
+    .insights {
+        ion-icon {
+            color: var(--ion-custom-color-warn);
+            padding-right: 3px;
+            height: 16px;
+            width: 16px;
+        }
+        .small-label {
+            @include font-size(8);
+        }
+        .med-label {
+            font-weight: 700;
+            @include font-size(16);
+        }
+    }
+
+    .lift-up {
+        @include flex-box(col);
+        background-color: white;
+        border-radius: 13px;
+        display: flex;
+        flex-grow: 1;
+        // height: 40px;
+        margin-top: -20px;
+    }
+
+    .search-box-row {
+        align-items: center;
+        margin: 8px 16px 0 8px;
+        height: 45px;
+        @include flex-box(row);
+        ion-button {
+            --background: var(--ion-custom-color-dark);
+            height: 45px;
+        }
+    }
+
+}
