@@ -1,7 +1,7 @@
 <ion-header> </ion-header>
 
 <ion-content>
-  <div class="justify-content-center">
+  <form class="justify-content-center" [formGroup]="form" (ngSubmit)="onSubmitForm()">
     <div class="col align-content-center">
       <ion-img
         style="height: 80px; width: 80px;"
@@ -9,15 +9,21 @@
       ></ion-img>
       <ion-item class="col">
         <ion-label position="floating">Email</ion-label>
-        <ion-input type="email" class="no-padding"></ion-input>
+        <ion-input type="email" class="no-padding" formControlName="email" required></ion-input>
       </ion-item>
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
+        Email is required.
+      </span>
       <ion-item class="col">
         <ion-label position="floating">Password</ion-label>
-        <ion-input type="password"></ion-input>
+        <ion-input type="password" formControlName="password" required></ion-input>
       </ion-item>
-      <ion-button (click)="login('admin@admin.com', 'admin')">Login</ion-button>
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
+        Password is required.
+      </span>
+      <ion-button type="submit">Login</ion-button>
       <ion-label class="links margin-top-10">You don't have an account?<span> Signup</span></ion-label>
       <ion-label class="links margin-top-10"><span>Forgot your passsword?</span></ion-label>
     </div>
-  </div>
+  </form>
 </ion-content>
