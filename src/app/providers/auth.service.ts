@@ -90,7 +90,6 @@ export class AuthService {
       .subscribe((userData: IUser) => this._setUserData(userData)
         .then(() => {
           resolve(userData);
-          this._route.navigate(['/home']);
         }), (reason) => {
           if (reason.status >= 400 && reason.status < 500) {
             if (reason.status == 401) {
@@ -100,7 +99,7 @@ export class AuthService {
                 console.log(refresh);
               }, error => { 
                 console.warn('token missing!');
-                this._route.navigate(['/login']); })
+               })
             } else {
               this._removeUserData().then(() => {
                 this._route.navigate(['/login']);

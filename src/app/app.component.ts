@@ -24,4 +24,6 @@ export class AppComponent {
       this.splashScreen.hide();
     });
   }
+
+  // TODO: handle routing based on Auth-state here
 }
