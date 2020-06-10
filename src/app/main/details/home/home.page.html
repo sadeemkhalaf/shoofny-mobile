@@ -20,7 +20,7 @@
         <ion-icon name="settings" slot="start"></ion-icon>
         <ion-label>Settings</ion-label>
       </ion-item>
-      <ion-item>
+      <ion-item (click)="logout()">
         <ion-icon name="log-out-outline" slot="start"></ion-icon>
         <ion-label>Logout</ion-label>
       </ion-item>
@@ -29,17 +29,18 @@
 </ion-menu>
 
 <ion-content id="main-content">
-<div class="content">
+<div class="content" *ngIf="!!userData">
   <div class="col header">
     <!-- menu  profile-image --- row -->
     <div class="row space-between margin-16">
       <!-- <ion-icon name="menu"></ion-icon> -->
       <ion-menu-button></ion-menu-button>
-      <div>profile</div>
+      <div class="image-circle" id="profile-img">
+      </div>
     </div>
     <!-- Name -->
     <div class="row margin-left-16 margin-bottom-16">
-      <ion-label class="greeting-label">Hello, Friend</ion-label>
+      <ion-label class="greeting-label">Hello, {{userData.first_name}}</ion-label>
     </div>
     <!-- sights cols/row -->
     <div class="insights row space-between margin-16">
@@ -48,7 +49,7 @@
           <ion-icon name="location"></ion-icon>
           <ion-label class="small-label">Jobs in your city</ion-label>
         </div>
-        <ion-label class="med-label">0</ion-label>
+        <ion-label class="med-label">{{jobsCountByCity}}</ion-label>
         
       </div>
       <div class="col center">
@@ -56,15 +57,14 @@
            <ion-icon name="eye"></ion-icon>
            <ion-label class="small-label">Profile Views</ion-label>
         </div>
-        <ion-label class="med-label">0</ion-label>
+        <ion-label class="med-label">{{!!profile_views? profile_views : 0}}</ion-label>
       </div>
       <div class="col center">
         <div class="row">
           <ion-icon name="star"></ion-icon>
         <ion-label class="small-label">Profile Rating</ion-label>
         </div>
-
-        <ion-label class="med-label">0</ion-label>
+        <ion-label class="med-label">{{!!rating_avaerage ? rating_avaerage : 0}}</ion-label>
       </div>
     </div>
   </div>
@@ -74,6 +74,10 @@
     <ion-searchbar type="ios" placeholder="search" showCancelButton="focus"></ion-searchbar>
     <ion-button><ion-icon name="options"></ion-icon></ion-button>
    </div>
+   <div class="col jobs-list" *ngFor="let job of jobsListByCity">
+        <app-job-list-item [jobItem]="job"></app-job-list-item>
+   </div>
+
   </div>
 </div>
 </ion-content>

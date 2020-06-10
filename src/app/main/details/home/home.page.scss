@@ -1,6 +1,15 @@
 @import './../../../../theme//helper-classes.scss';
 
 :host {
+    .image-circle {
+        height: 32px;
+        width: 32px;
+        background-color: var(--ion-custom-color-warn);
+        border-radius: 50%;
+        background-image: url('./../../../../assets/placeholder-img.png');
+        background-size: contain;
+    }
+
     ion-list {
         ion-icon {
             color: var(--ion-custom-color-dark);
@@ -26,7 +35,7 @@
     }
 
     .center {
-        @include flex-box(col);
+        @include flex-box(column);
         align-items: center;
     }
 
@@ -57,7 +66,7 @@
     }
 
     .lift-up {
-        @include flex-box(col);
+        @include flex-box(column);
         background-color: white;
         border-radius: 13px;
         display: flex;
@@ -74,6 +83,15 @@
         ion-button {
             --background: var(--ion-custom-color-dark);
             height: 45px;
+        }
+    }
+
+    .jobs-list {
+        @include flex-box(column);
+        align-items: center;
+        margin: 20px;
+        app-job-list-item {
+            // width: 100%;
         }
     }
 
