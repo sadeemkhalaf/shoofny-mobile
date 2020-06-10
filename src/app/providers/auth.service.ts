@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ReplaySubject, Observable } from 'rxjs';
+import { ReplaySubject, Observable, BehaviorSubject } from 'rxjs';
 import { IUser } from 'src/app/models/user';
 import { AuthHttp } from '../core/auth-http/auth-http.service';
 import { NetworkService, ConnectionStatus } from '../core/utils/network.service';
 import { StorageService } from '../core/storage/storage.service';
 import { Router } from '@angular/router';
 import { AppHelpersService } from '../core/utils/app-helpers.service';
-import { take } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 export class Token {
@@ -19,11 +18,11 @@ export class Token {
 })
 export class AuthService {
   public loggedInUser: Observable<IUser>;
+  public isLoggedIn = new BehaviorSubject(false);
   private _loggedInUser: ReplaySubject<IUser> = new ReplaySubject(1);
 
   constructor(
     private _http: AuthHttp,
-    private _httpClient: HttpClient,
     private _networkService: NetworkService,
     private _storageService: StorageService,
     private _helper: AppHelpersService,
@@ -34,7 +33,7 @@ export class AuthService {
       this._refreshToken(refresh);
     }, error => { 
       console.warn('token missing!');
-      this._route.navigate(['/login']); });
+    });
   }
 
   // login
@@ -45,7 +44,8 @@ export class AuthService {
   // TODO:
   // logout
   public logout() {
-      return this._http.post('api/auth/logout/', {});
+    this.isLoggedIn.next(false);
+      return this._storageService.clearUserData();
   }
 
   private _getAccessToken(data) {
@@ -56,6 +56,7 @@ export class AuthService {
           .subscribe((token: any) => {
             this._helper.hideLoading();
             if (!!token) {
+              this.isLoggedIn.next(true);
               this._setUserToken(token).then(() => {
                 resolve(token);
                 this._route.navigate(['/home']);
@@ -82,7 +83,7 @@ export class AuthService {
 
   private _removeUserData(): Promise<any> {
     return this._storageService.clearUserData()
-      .then((response) => this._loggedInUser.next(), (reason) => console.warn(reason));
+      .then((response) => this._loggedInUser.next(null), (reason) => console.warn(reason));
   }
 
   private _fillUserData(resolve, reject) {
@@ -93,7 +94,6 @@ export class AuthService {
         }), (reason) => {
           if (reason.status >= 400 && reason.status < 500) {
             if (reason.status == 401) {
-              // send refresh token
               this._storageService.getRefreshAuthToken().then((refresh) => {
                 this._refreshToken(refresh);
                 console.log(refresh);
@@ -102,7 +102,6 @@ export class AuthService {
                })
             } else {
               this._removeUserData().then(() => {
-                this._route.navigate(['/login']);
                 console.warn('Token missing or expired');
                 reject(reason);
               });
@@ -120,6 +119,8 @@ export class AuthService {
           this._storageService.getAuthToken()
             .then(() => this._fillUserData(resolve, reject),
               reject => {
+                this.isLoggedIn.next(false);
+                this._route.navigate(['/login']);
                 console.warn(reject);
               })
         } else {
@@ -135,16 +136,18 @@ export class AuthService {
         this._http.post('/api/token/refresh/', { refresh: refreshToken })
           .subscribe((token: any) => {
             if (!!token) {
-              console.log(token);
+              this.isLoggedIn.next(true);
               this._storageService.updateUserToken(token)
                 .then(() => resolve(token));
             } else {
               reject({ message: 'token missing or expired' });
             }
           }, error => {
-            // reject(error);
-            this._route.navigate(['/login']);
+            reject(error);
           }));
   }
 
+  isAuthenticated() {
+    return this.isLoggedIn.value;
+  }
 }
