@@ -56,6 +56,7 @@ export class AuthService {
           .subscribe((token: any) => {
             this._helper.hideLoading();
             if (!!token) {
+              this._checkLoggedIn();
               this.isLoggedIn.next(true);
               this._setUserToken(token).then(() => {
                 resolve(token);
@@ -120,7 +121,6 @@ export class AuthService {
             .then(() => this._fillUserData(resolve, reject),
               reject => {
                 this.isLoggedIn.next(false);
-                this._route.navigate(['/login']);
                 console.warn(reject);
               })
         } else {

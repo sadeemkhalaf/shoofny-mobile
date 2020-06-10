@@ -35,8 +35,8 @@
     <div class="row space-between margin-16">
       <!-- <ion-icon name="menu"></ion-icon> -->
       <ion-menu-button></ion-menu-button>
-      <div class="image-circle" id="profile-img">
-      </div>
+      <!-- <div class="image-circle" id="profile-img"> -->
+        <app-profile-picture-circle [userDataPicture]="userData.picture"></app-profile-picture-circle>
     </div>
     <!-- Name -->
     <div class="row margin-left-16 margin-bottom-16">
@@ -73,6 +73,9 @@
    <div class="search-box-row">
     <ion-searchbar type="ios" placeholder="search" showCancelButton="focus"></ion-searchbar>
     <ion-button><ion-icon name="options"></ion-icon></ion-button>
+   </div>
+   <div class="row">
+     <ion-label (click)="navigateTo('/jobs')" class="show-all-link margin-right-16 margin-top-16">Show All</ion-label>
    </div>
    <div class="col jobs-list" *ngFor="let job of jobsListByCity">
         <app-job-list-item [jobItem]="job"></app-job-list-item>

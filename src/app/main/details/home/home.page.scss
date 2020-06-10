@@ -1,13 +1,14 @@
 @import './../../../../theme//helper-classes.scss';
 
 :host {
-    .image-circle {
-        height: 32px;
-        width: 32px;
-        background-color: var(--ion-custom-color-warn);
-        border-radius: 50%;
-        background-image: url('./../../../../assets/placeholder-img.png');
-        background-size: contain;
+    .show-all-link {
+        text-align: end;
+        width: 100%;
+        color: var(--ion-custom-color-primary);
+        font-weight: 600;
+    }
+    .main-content {
+        background-color: white;
     }
 
     ion-list {
@@ -28,20 +29,10 @@
             width: 24px;
         }
     }
-    .space-between {
-        @include flex-box(row);
-        justify-content: space-between;
-        align-items: center;
-    }
 
     .center {
         @include flex-box(column);
         align-items: center;
-    }
-
-    .space-arount {
-        @include flex-box(row);
-        justify-content: space-around;
     }
     
     .greeting-label {
@@ -71,7 +62,6 @@
         border-radius: 13px;
         display: flex;
         flex-grow: 1;
-        // height: 40px;
         margin-top: -20px;
     }
 
@@ -89,10 +79,7 @@
     .jobs-list {
         @include flex-box(column);
         align-items: center;
-        margin: 20px;
-        app-job-list-item {
-            // width: 100%;
-        }
+        margin: 8px 16px;
     }
 
 }

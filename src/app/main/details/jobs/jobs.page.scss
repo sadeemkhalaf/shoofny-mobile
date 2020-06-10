@@ -1,0 +1,20 @@
+@import './../../../../theme//helper-classes.scss';
+
+:host {
+    .search-box-row {
+        align-items: center;
+        margin: 8px 16px 0 8px;
+        height: 45px;
+        @include flex-box(row);
+        ion-button {
+            --background: var(--ion-custom-color-dark);
+            height: 45px;
+        }
+    }
+
+    .jobs-list {
+        @include flex-box(column);
+        align-items: center;
+        margin: 8px 16px;
+    }
+}

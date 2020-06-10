@@ -48,4 +48,8 @@ export class HomePage implements OnInit {
     return this._jobDetailsService.getJobByParam({ city: id });
   }
 
+  public navigateTo(path: string) {
+    this._route.navigate([path]);
+  }
+
 }

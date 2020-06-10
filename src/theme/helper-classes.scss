@@ -166,3 +166,9 @@ $NUMBERGRID: (4: 4px, 8: 8px, 16: 16px, 24: 24px, 32: 32px, 40: 40px, 48: 48px, 
   font-size: $size * 1px;
   font-size: $size * 0.1rem;
 }
+
+.space-between {
+  @include flex-box(row);
+  justify-content: space-between;
+  align-items: center;
+}

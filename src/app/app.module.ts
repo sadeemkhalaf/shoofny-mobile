@@ -15,7 +15,7 @@ import { CoreModule } from './core/core.module';
 import { HTTP } from '@ionic-native/http/ngx';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AuthGuardsGuard } from './guards/auth-guards.guard';
-import { ComponentsModule, components } from './components/components/components.module';
+import { ComponentsModule, components } from './components/components.module';
 
 @NgModule({
   declarations: [AppComponent],
