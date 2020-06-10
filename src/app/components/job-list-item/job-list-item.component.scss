@@ -1,0 +1,38 @@
+@import './../../../theme/helper-classes.scss';
+:host {
+    width: 100%;
+    .card-item {
+        @include flex-box(row);
+        padding: 16px;
+        background-color: #efefef;
+        border-radius: 13px;
+    }
+
+    .image-circle {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        background-color: yellowgreen;
+    }
+
+    .content {
+        width: 100%;
+    }
+    .space-between {
+        @include flex-box(row);
+        justify-content: space-between;
+        align-items: center;
+    }
+    .title {
+        font-weight: 600px;
+        @include font-size(12);
+    }
+    .small-font {
+        @include font-size(9);
+        color: #ABABAB;
+    }
+    .tiny-font {
+        @include font-size(7);
+        color: #ABABAB;
+    }
+}
