@@ -14,6 +14,8 @@ import { Toast } from '@ionic-native/toast/ngx';
 import { CoreModule } from './core/core.module';
 import { HTTP } from '@ionic-native/http/ngx';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { AuthGuardsGuard } from './guards/auth-guards.guard';
+import { ComponentsModule, components } from './components/components/components.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,6 +32,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    AuthGuardsGuard,
     InAppBrowser,
     Toast,
     Platform,
