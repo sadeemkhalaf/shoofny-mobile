@@ -1,6 +1,7 @@
 import { IUser, ICity, IDomainOfExperience, IYearsOfExperience, INationality } from './user';
 
 export interface IJobDetails {
+    id: number;
     user: IUser;
     slug: string;
     job_des: string;
