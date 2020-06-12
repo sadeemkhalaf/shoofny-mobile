@@ -6,7 +6,6 @@ import { NetworkService, ConnectionStatus } from '../core/utils/network.service'
 import { StorageService } from '../core/storage/storage.service';
 import { Router } from '@angular/router';
 import { AppHelpersService } from '../core/utils/app-helpers.service';
-import { HttpClient } from '@angular/common/http';
 
 export class Token {
   access: string;
@@ -18,7 +17,7 @@ export class Token {
 })
 export class AuthService {
   public loggedInUser: Observable<IUser>;
-  public isLoggedIn = new BehaviorSubject(false);
+  private _isLoggedIn = new BehaviorSubject(null);
   private _loggedInUser: ReplaySubject<IUser> = new ReplaySubject(1);
 
   constructor(
@@ -44,7 +43,7 @@ export class AuthService {
   // TODO:
   // logout
   public logout() {
-    this.isLoggedIn.next(false);
+    this._isLoggedIn.next(false);
       return this._storageService.clearUserData();
   }
 
@@ -57,7 +56,7 @@ export class AuthService {
             this._helper.hideLoading();
             if (!!token) {
               this._checkLoggedIn();
-              this.isLoggedIn.next(true);
+              this._isLoggedIn.next(true);
               this._setUserToken(token).then(() => {
                 resolve(token);
                 this._route.navigate(['/home']);
@@ -120,7 +119,6 @@ export class AuthService {
           this._storageService.getAuthToken()
             .then(() => this._fillUserData(resolve, reject),
               reject => {
-                this.isLoggedIn.next(false);
                 console.warn(reject);
               })
         } else {
@@ -136,7 +134,6 @@ export class AuthService {
         this._http.post('/api/token/refresh/', { refresh: refreshToken })
           .subscribe((token: any) => {
             if (!!token) {
-              this.isLoggedIn.next(true);
               this._storageService.updateUserToken(token)
                 .then(() => resolve(token));
             } else {
@@ -148,6 +145,6 @@ export class AuthService {
   }
 
   isAuthenticated() {
-    return this.isLoggedIn.value;
+    return this._isLoggedIn.value;
   }
 }

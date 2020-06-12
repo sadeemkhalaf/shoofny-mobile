@@ -3,11 +3,6 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuardsGuard } from './guards/auth-guards.guard';
 
 const routes: Routes = [
-  // {
-  //   path: 'home',
-  //   loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-  //   , canActivate: [AuthGuardsGuard]
-  // },
   {
     path: 'login',
     loadChildren: () => import('./main/user/login/login.module').then( m => m.LoginPageModule)
@@ -21,34 +16,35 @@ const routes: Routes = [
     loadChildren: () => import('./main/user/reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
   },
   {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
-  },
-  {
     path: 'home',
     loadChildren: () => import('./main/details/home/home.module').then( m => m.HomePageModule)
     , canActivate: [AuthGuardsGuard]
   },
   {
-    path: 'job-details',
-    loadChildren: () => import('./main/details/job-details/job-details.module').then( m => m.JobDetailsPageModule)
-  },
-  {
-    path: 'profile',
+    path: 'home/profile',
     loadChildren: () => import('./main/details/profile/profile.module').then( m => m.ProfilePageModule)
   },
   {
-    path: 'settings',
+    path: 'home/settings',
     loadChildren: () => import('./main/details/settings/settings.module').then( m => m.SettingsPageModule)
   },
   {
-    path: 'edit-profile',
+    path: 'home/profile/edit-profile',
     loadChildren: () => import('./main/details/edit-profile/edit-profile.module').then( m => m.EditProfilePageModule)
   },
   {
-    path: 'jobs',
+    path: 'home/jobs/job-details/:id',
+    loadChildren: () => import('./main/details/job-details/job-details-routing.module')
+    .then(m => m.JobDetailsPageRoutingModule)
+  },
+  {
+    path: 'home/jobs',
     loadChildren: () => import('./main/details/jobs/jobs.module').then( m => m.JobsPageModule)
+    },
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
   },
 ];
 

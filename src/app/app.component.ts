@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from './providers/auth.service';
 import { Router, Route } from '@angular/router';
 import { Location } from '@angular/common';
+import { StorageService } from './core/storage/storage.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,7 @@ import { Location } from '@angular/common';
 })
 export class AppComponent {
   constructor(
-    private _auth: AuthService,
+    private _storage: StorageService,
     private _route: Router,
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -29,11 +30,11 @@ export class AppComponent {
       this.splashScreen.hide();
     });
 
-    this._auth.isLoggedIn.subscribe((loggedIn) => {
-      if (loggedIn) {
-        this._route.navigate(['/home']);
+    this._storage.getAuthToken().then((loggedIn) => {
+      if (!!loggedIn) {
+        this._route.parseUrl('/home');
       } else {
-        this._route.navigate(['/login']);
+        this._route.parseUrl('/login');
       }
     })
   }
