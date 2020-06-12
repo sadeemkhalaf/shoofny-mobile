@@ -3,7 +3,7 @@
 :host {
     .search-box-row {
         align-items: center;
-        margin: 8px 16px 0 8px;
+        margin: 8px 16px 16px 8px;
         height: 45px;
         @include flex-box(row);
         ion-button {
@@ -15,6 +15,6 @@
     .jobs-list {
         @include flex-box(column);
         align-items: center;
-        margin: 8px 16px;
+        margin: 0 16px;
     }
 }

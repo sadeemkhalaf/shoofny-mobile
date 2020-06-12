@@ -6,7 +6,11 @@ const routes: Routes = [
   {
     path: '',
     component: JobsPage
-  },   
+  },   {
+    path: 'job-details/:id',
+    loadChildren: () => import('./job-details/job-details.module').then( m => m.JobDetailsPageModule)
+  },
+  
 ];
 
 @NgModule({

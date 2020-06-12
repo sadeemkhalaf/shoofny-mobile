@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { IJobDetails } from 'src/app/models/Job';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-job-list-item',
@@ -9,7 +10,7 @@ import { IJobDetails } from 'src/app/models/Job';
 export class JobListItemComponent implements OnInit {
 
   @Input() jobItem: IJobDetails;
-  constructor() { }
+  constructor(private _route: Router) { }
 
   ngOnInit() {}
 
@@ -19,5 +20,8 @@ export class JobListItemComponent implements OnInit {
     const diffTime = Math.abs(now - updated);
     return Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
   }
-  navigateToJobDetails() {}
+
+  navigateToJobDetails() {
+    this._route.navigateByUrl(`/home/jobs/job-details/:${this.jobItem.id}`);
+  }
 }

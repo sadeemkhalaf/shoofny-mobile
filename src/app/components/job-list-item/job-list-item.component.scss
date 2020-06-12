@@ -3,7 +3,7 @@
     width: 100%;
     .card-item {
         @include flex-box(row);
-        padding: 16px;
+        padding: 8px;
         background-color: #efefef;
         border-radius: 13px;
     }
@@ -12,7 +12,7 @@
         height: 50px;
         width: 50px;
         border-radius: 50%;
-        background-color: yellowgreen;
+        background-color: rgb(151, 151, 151);
     }
 
     .content {
@@ -25,10 +25,10 @@
     }
     .title {
         font-weight: 600px;
-        @include font-size(12);
+        @include font-size(10);
     }
     .small-font {
-        @include font-size(9);
+        @include font-size(8);
         color: #ABABAB;
     }
     .tiny-font {

@@ -28,15 +28,16 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-    });
-
-    this._storage.getAuthToken().then((loggedIn) => {
+          this._storage.getAuthToken().then((loggedIn) => {
       if (!!loggedIn) {
         this._route.parseUrl('/home');
       } else {
         this._route.parseUrl('/login');
       }
-    })
+    });
+    });
+
+
   }
 
   // TODO: handle routing based on Auth-state here -- done

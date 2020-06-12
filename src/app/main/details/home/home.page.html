@@ -1,8 +1,3 @@
-<!-- <ion-header class="col">
-  <ion-toolbar>
-    <ion-title>home</ion-title>
-  </ion-toolbar>
-</ion-header> -->
 <ion-menu side="start" content-id="main-content">
   <ion-header>
     <ion-toolbar translucent>
@@ -29,58 +24,58 @@
 </ion-menu>
 
 <ion-content id="main-content">
-<div class="content" *ngIf="!!userData">
-  <div class="col header">
-    <!-- menu  profile-image --- row -->
-    <div class="row space-between margin-16">
-      <!-- <ion-icon name="menu"></ion-icon> -->
-      <ion-menu-button></ion-menu-button>
-      <!-- <div class="image-circle" id="profile-img"> -->
+  <div class="content" *ngIf="!!userData">
+    <div class="col header">
+      <div class="row space-between margin-16">
+        <ion-menu-button></ion-menu-button>
         <app-profile-picture-circle [userDataPicture]="userData.picture"></app-profile-picture-circle>
-    </div>
-    <!-- Name -->
-    <div class="row margin-left-16 margin-bottom-16">
-      <ion-label class="greeting-label">Hello, {{userData.first_name}}</ion-label>
-    </div>
-    <!-- sights cols/row -->
-    <div class="insights row space-between margin-16">
-      <div class="col center">
-        <div class="row">
-          <ion-icon name="location"></ion-icon>
-          <ion-label class="small-label">Jobs in your city</ion-label>
-        </div>
-        <ion-label class="med-label">{{jobsCountByCity}}</ion-label>
-        
       </div>
-      <div class="col center">
-        <div class="row">
-           <ion-icon name="eye"></ion-icon>
-           <ion-label class="small-label">Profile Views</ion-label>
-        </div>
-        <ion-label class="med-label">{{!!profile_views? profile_views : 0}}</ion-label>
+      <div class="row margin-left-16 margin-bottom-16">
+        <ion-label class="greeting-label">Hello, {{userData.first_name}}</ion-label>
       </div>
-      <div class="col center">
-        <div class="row">
-          <ion-icon name="star"></ion-icon>
-        <ion-label class="small-label">Profile Rating</ion-label>
-        </div>
-        <ion-label class="med-label">{{!!rating_avaerage ? rating_avaerage : 0}}</ion-label>
-      </div>
-    </div>
-  </div>
-  <div class="lift-up body col">
-    <ion-label class="margin-left-16 margin-top-32">find your dream job here</ion-label>
-   <div class="search-box-row">
-    <ion-searchbar type="ios" placeholder="search" showCancelButton="focus"></ion-searchbar>
-    <ion-button><ion-icon name="options"></ion-icon></ion-button>
-   </div>
-   <div class="row">
-     <ion-label (click)="navigateTo('/jobs')" class="show-all-link margin-right-16 margin-top-16">Show All</ion-label>
-   </div>
-   <div class="col jobs-list" *ngFor="let job of jobsListByCity">
-        <app-job-list-item [jobItem]="job"></app-job-list-item>
-   </div>
+      <div class="insights row space-between margin-16">
+        <div class="col center">
+          <div class="row">
+            <ion-icon name="location"></ion-icon>
+            <ion-label class="small-label">Jobs in your city</ion-label>
+          </div>
+          <ion-label class="med-label">{{jobsCountByCity}}</ion-label>
 
+        </div>
+        <div class="col center">
+          <div class="row">
+            <ion-icon name="eye"></ion-icon>
+            <ion-label class="small-label">Profile Views</ion-label>
+          </div>
+          <ion-label class="med-label">{{!!profile_views? profile_views : 0}}</ion-label>
+        </div>
+        <div class="col center">
+          <div class="row">
+            <ion-icon name="star"></ion-icon>
+            <ion-label class="small-label">Profile Rating</ion-label>
+          </div>
+          <ion-label class="med-label">{{!!rating_avaerage ? rating_avaerage : 0}}</ion-label>
+        </div>
+      </div>
+    </div>
+    <div class="lift-up body col">
+      <ion-label class="margin-left-16 margin-top-32 lite-text">find your dream job here</ion-label>
+      <div class="search-box-row">
+        <ion-searchbar type="ios" placeholder="search" showCancelButton="focus"></ion-searchbar>
+        <ion-button>
+          <ion-icon name="options"></ion-icon>
+        </ion-button>
+      </div>
+      <div class="row margin-right-16 margin-left-16 margin-top-16 space-between">
+        <ion-label class="lite-text">Latest Job Posts</ion-label>
+      </div>
+      <div class="col jobs-list" *ngFor="let job of jobsListByCity">
+        <app-job-list-item [jobItem]="job"></app-job-list-item>
+      </div>
+
+    </div>
   </div>
-</div>
+  <ion-label class="show-all-link">
+    <span [routerLink]="['/home/jobs']" routerDirection="forward">Show All</span>
+  </ion-label>
 </ion-content>

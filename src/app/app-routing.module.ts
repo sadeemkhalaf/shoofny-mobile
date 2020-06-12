@@ -33,11 +33,6 @@ const routes: Routes = [
     loadChildren: () => import('./main/details/edit-profile/edit-profile.module').then( m => m.EditProfilePageModule)
   },
   {
-    path: 'home/jobs/job-details/:id',
-    loadChildren: () => import('./main/details/job-details/job-details-routing.module')
-    .then(m => m.JobDetailsPageRoutingModule)
-  },
-  {
     path: 'home/jobs',
     loadChildren: () => import('./main/details/jobs/jobs.module').then( m => m.JobsPageModule)
     },
