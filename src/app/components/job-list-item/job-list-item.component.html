@@ -3,7 +3,7 @@
   <div class="col-8">
     <div class="row content space-between">
       <ion-label class="title">{{jobItem.job_des}}</ion-label>
-      <ion-label class="tiny-font margin-right-8">{{caculateDays()}} days ago</ion-label>
+      <ion-label class="tiny-font margin-right-8">{{caculateDays() > 1 ? caculateDays() + ' days' : caculateDays() + ' day'}} ago</ion-label>
     </div>
     <div class="row padding-top-20">
       <ion-label class="small-font">{{jobItem.country.name}}</ion-label>
