@@ -1,7 +1,24 @@
-<div class="row space-between margin-16">
-  <app-back-button></app-back-button>
-  <ion-label>Job Details</ion-label>
+<div class="padding-16 top-header">
+  <div class="row tool-bar space-between">
+    <app-back-button></app-back-button>
+    <ion-label>Job Details</ion-label>
     <app-profile-picture-circle [userDataPicture]="''"></app-profile-picture-circle>
   </div>
+</div>
+<div class="image-circle"></div>
 <ion-content>
+  <div class="header">
+    <div class="col">
+      <ion-label class="title-lg">Job Title</ion-label>
+      <ion-label class="title-sm">At Company</ion-label>
+      <ion-label class="title-sm">country, city</ion-label>
+      <ion-label class="title-sm"># days</ion-label>
+    </div>
+  </div>
+  <div class="content-body padding-16">
+    <div class="description-box">
+      <ion-label class="title-md">Job Description</ion-label>
+      <p></p>
+    </div>
+  </div>
 </ion-content>
