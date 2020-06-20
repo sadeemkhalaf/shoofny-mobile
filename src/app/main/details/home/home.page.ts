@@ -6,6 +6,8 @@ import { take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { JobDetailsService } from 'src/app/providers/job-details.service';
 import { IJobDetails } from 'src/app/models/Job';
+import { MenuController } from '@ionic/angular';
+import { AppHelpersService } from 'src/app/core/utils/app-helpers.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -19,6 +21,7 @@ export class HomePage implements OnInit {
   public jobsListByCity: IJobDetails[] = [];
 
   constructor(
+    public helper: AppHelpersService,
     private _auth: AuthService,
     private _route: Router,
     private _jobDetailsService: JobDetailsService,
@@ -27,21 +30,19 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this._storage.getUserData().then((data) => {
       this.userData = data;
-      this.getJobsByCity(595)
+      this.getJobsByCity(this.userData.city.id)
         .pipe(take(1))
         .subscribe((data: any) => {
           this.jobsCountByCity = data.count;
           this.jobsListByCity = data.results as IJobDetails[];
         });
-      if (!!this.userData.picture) {
-        document.getElementsByClassName('image-circle')
-          .item(0).setAttribute('style', `backgroundImage: url('${this.userData.picture}')`);
-      }
     })
   }
 
   public logout() {
-    this._auth.logout();
+    this._auth.logout().then(() => {
+      this.navigateTo('/login');
+    }, error => console.error(error));
   }
 
   public getJobsByCity(id: number) {

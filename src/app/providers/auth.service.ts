@@ -28,11 +28,8 @@ export class AuthService {
     private _route: Router) {
     this.loggedInUser = this._loggedInUser.asObservable();
     this._checkLoggedIn();
-    this._storageService.getRefreshAuthToken().then((refresh) => {
-      this._refreshToken(refresh);
-    }, error => { 
-      console.warn('token missing!');
-    });
+    this._isLoggedIn.next(true);
+    this.refreshToken();
   }
 
   // login
@@ -94,12 +91,7 @@ export class AuthService {
         }), (reason) => {
           if (reason.status >= 400 && reason.status < 500) {
             if (reason.status == 401) {
-              this._storageService.getRefreshAuthToken().then((refresh) => {
-                this._refreshToken(refresh);
-                console.log(refresh);
-              }, error => { 
-                console.warn('token missing!');
-               })
+                this.refreshToken();
             } else {
               this._removeUserData().then(() => {
                 console.warn('Token missing or expired');
@@ -117,7 +109,10 @@ export class AuthService {
       this._networkService.onNetworkChange().subscribe((status: ConnectionStatus) => {
         if (status === ConnectionStatus.Online) {
           this._storageService.getAuthToken()
-            .then(() => this._fillUserData(resolve, reject),
+            .then(() => {
+              this._fillUserData(resolve, reject);
+              this._isLoggedIn.next(true);
+            },
               reject => {
                 console.warn(reject);
               })
@@ -128,8 +123,9 @@ export class AuthService {
     });
   }
 
-  public _refreshToken(refreshToken: string) {
-    return new Promise<Token>(
+  public refreshToken() {
+    this._storageService.getRefreshAuthToken().then((refreshToken) => {
+      return new Promise<Token>(
       (resolve, reject) =>
         this._http.post('/api/token/refresh/', { refresh: refreshToken })
           .subscribe((token: any) => {
@@ -141,7 +137,10 @@ export class AuthService {
             }
           }, error => {
             reject(error);
+            this._route.navigate([`/login`], {queryParamsHandling: 'merge', replaceUrl: true});
           }));
+    }, error => console.error(error))
+
   }
 
   isAuthenticated() {

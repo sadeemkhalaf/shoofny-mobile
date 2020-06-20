@@ -1,34 +1,9 @@
-<ion-menu side="start" content-id="main-content">
-  <ion-header>
-    <ion-toolbar translucent>
-      <ion-title>Menu</ion-title>
-      <ion-label>Profile data</ion-label>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-    <ion-list>
-      <ion-item>
-        <ion-icon name="person" slot="start"></ion-icon>
-        <ion-label>Profile</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-icon name="settings" slot="start"></ion-icon>
-        <ion-label>Settings</ion-label>
-      </ion-item>
-      <ion-item (click)="logout()">
-        <ion-icon name="log-out-outline" slot="start"></ion-icon>
-        <ion-label>Logout</ion-label>
-      </ion-item>
-    </ion-list>
-  </ion-content>
-</ion-menu>
-
-<ion-content id="main-content">
+<ion-content>
   <div class="content" *ngIf="!!userData">
     <div class="col header">
       <div class="row space-between margin-16">
-        <ion-menu-button></ion-menu-button>
-        <app-profile-picture-circle [userDataPicture]="userData.picture"></app-profile-picture-circle>
+        <ion-menu-button menu="menu"></ion-menu-button>
+        <app-profile-picture-circle></app-profile-picture-circle>
       </div>
       <div class="row margin-left-16 margin-bottom-16">
         <ion-label class="greeting-label">Hello, {{userData.first_name}}</ion-label>
@@ -62,7 +37,7 @@
       <ion-label class="margin-left-16 margin-top-32 lite-text">find your dream job here</ion-label>
       <div class="search-box-row">
         <ion-searchbar type="ios" placeholder="search" showCancelButton="focus"></ion-searchbar>
-        <ion-button>
+        <ion-button (click)="helper.openMenu('filter')">
           <ion-icon name="options"></ion-icon>
         </ion-button>
       </div>
@@ -72,10 +47,16 @@
       <div class="col jobs-list" *ngFor="let job of jobsListByCity">
         <app-job-list-item [jobItem]="job"></app-job-list-item>
       </div>
+      <div class="align-center">
+        <ion-button [routerLink]="['/home/jobs']" routerDirection="forward">
+          <ion-label class="show-all-link">
+            <span >Show All</span>
+          </ion-label>    
+        </ion-button>
+      </div>
 
     </div>
   </div>
-  <ion-label class="show-all-link">
-    <span [routerLink]="['/home/jobs']" routerDirection="forward">Show All</span>
-  </ion-label>
+
+
 </ion-content>

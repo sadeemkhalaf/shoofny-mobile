@@ -31,6 +31,9 @@
         @include font-size(7);
         color: rgb(165, 165, 165);
     }
+    p {
+        @include font-size(8);
+    }
     .image-circle {
         margin-top: -30px;
         height: 60px;
@@ -39,4 +42,21 @@
         background-color: white;
         border: grey 1px solid;
     }
+
+    .center-content {
+        @include flex-box(column);
+        justify-content: center;
+        align-items: center;
+        .apply-btn {
+            width: 100%;
+        }
+
+        .applied-btn {
+            width: 100%;
+            --background: white;
+            --color: var(--ion-custom-color-dark);
+            --border-color: var(--ion-custom-color-dark);   
+        }
+    }
+
 }

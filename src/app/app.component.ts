@@ -19,16 +19,19 @@ export class AppComponent {
     private _route: Router,
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private _auth: AuthService
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
+    console.log('initializing app')
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
           this._storage.getAuthToken().then((loggedIn) => {
+            console.log('initializing app, ', loggedIn)
       if (!!loggedIn) {
         this._route.parseUrl('/home');
       } else {
@@ -39,7 +42,11 @@ export class AppComponent {
 
 
   }
-
+  public logout() {
+    this._auth.logout().then(() => {
+      this._route.navigate(['/login']);
+    }, error => console.error(error));
+  }
   // TODO: handle routing based on Auth-state here -- done
 
 }

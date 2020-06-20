@@ -1,14 +1,15 @@
 @import './../../../../theme//helper-classes.scss';
 
 :host {
-
-    ion-menu-button{
-        --padding-start: 0;
+    .align-center {
+        width: 100%;
+        @include flex-box(column);
+        justify-content: center;
+        align-items: center;
     }
-
     .show-all-link {
         text-align: end;
-        color: var(--ion-custom-color-dark);
+        color: white;
         font-weight: 600;
         @include font-size(8);
         span {

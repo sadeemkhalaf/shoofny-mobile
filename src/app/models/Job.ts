@@ -12,4 +12,5 @@ export interface IJobDetails {
     tags: string[];
     timestamp: Date;
     updated: Date;
+    job_title: string;
 }

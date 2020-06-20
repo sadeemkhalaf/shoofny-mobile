@@ -22,6 +22,6 @@ export class JobListItemComponent implements OnInit {
   }
 
   navigateToJobDetails() {
-    this._route.navigateByUrl(`/home/jobs/job-details/:${this.jobItem.id}`);
+    this._route.navigate([`/home/jobs/job-details/`, this.jobItem.id]);
   }
 }

@@ -2,15 +2,16 @@
   <div class="row space-between margin-16">
     <app-back-button></app-back-button>
     <ion-label>Jobs</ion-label>
-      <app-profile-picture-circle [userDataPicture]="''"></app-profile-picture-circle>
+      <app-profile-picture-circle></app-profile-picture-circle>
     </div>
   <div class="search-box-row">
     <ion-searchbar type="ios" placeholder="search" showCancelButton="focus"></ion-searchbar>
-    <ion-button><ion-icon name="options"></ion-icon></ion-button>
+    <ion-button (click)="helper.openMenu('filter')">
+      <ion-icon name="options"></ion-icon>
+    </ion-button>
    </div>
 
    <div class="col jobs-list" *ngFor="let job of jobsList">
     <app-job-list-item [jobItem]="job" class="margin-bottom-8"></app-job-list-item>
 </div>
-
 </ion-content>

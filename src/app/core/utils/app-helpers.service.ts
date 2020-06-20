@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Platform, ToastController } from '@ionic/angular';
+import { Platform, ToastController, MenuController } from '@ionic/angular';
 import { Color } from '@ionic/core';
 import { ReplaySubject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -18,6 +18,7 @@ export class AppHelpersService {
   constructor(private _toastController: ToastController,
               private _inAppBrowser: InAppBrowser,
               private _toast: Toast,
+              private _menuCtrl: MenuController,
               private _platform: Platform) {
     this._toastSubject.asObservable().pipe(debounceTime(250)).subscribe((toast) => this._showToast(toast));
   }
@@ -61,7 +62,7 @@ export class AppHelpersService {
 
   public showToast(message: string, color: Color = 'danger', duration: number = TOAST_TIMEOUT, position: 'top' | 'bottom' | 'middle' = 'top') {
     if (this.isRealDevice) {
-      const backgroundColor = color === 'danger' ? '#F43E00' : '#333333';
+      const backgroundColor = color === 'danger' ? '#00ab66' : '#00ab66';//'#F43E00';
       // const textColor = color === 'danger' ? '#f43e00' : '#FFFFFF';
       this._toastSubject.next({message, position: 'bottom', duration, styling: {backgroundColor}});
     } else {
@@ -145,6 +146,11 @@ export class AppHelpersService {
         .test(item[key.trim()])));
   }
 
+  public openMenu(menuId: string) {
+    this._menuCtrl.enable(true, menuId);
+    this._menuCtrl.open(menuId);
+  }
+
   private async _showToast(toastObject) {
     if (this.isRealDevice) {
       return this._toast.showWithOptions(toastObject).subscribe();
@@ -152,4 +158,5 @@ export class AppHelpersService {
       return await (await toastObject).present();
     }
   }
+  
 }

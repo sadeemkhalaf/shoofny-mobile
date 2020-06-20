@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { JobDetailsService } from 'src/app/providers/job-details.service';
 import { IJobDetails } from 'src/app/models/Job';
+import { AppHelpersService } from 'src/app/core/utils/app-helpers.service';
 
 @Component({
   selector: 'app-jobs',
@@ -10,6 +11,7 @@ import { IJobDetails } from 'src/app/models/Job';
 export class JobsPage implements OnInit {
   public jobsList: IJobDetails[] = [];
   constructor(
+    public helper: AppHelpersService,
     private _jobDetailsService: JobDetailsService
     ) {}
 
@@ -18,5 +20,6 @@ export class JobsPage implements OnInit {
       this.jobsList = jobs.results as IJobDetails[];
     });
   }
+  
 
 }

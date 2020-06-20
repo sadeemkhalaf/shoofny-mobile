@@ -3,10 +3,9 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { timeout } from 'rxjs/operators';
 import { Observable, ReplaySubject, TimeoutError } from 'rxjs';
 import { ErrorResponse, IHttp } from './auth-http';
-import { CoreModule } from '../core.module';
 
 @Injectable({
-  providedIn: CoreModule,
+  providedIn: 'root',
 })
 export class AuthHttp implements IHttp {
   private TIMEOUT = 120000;

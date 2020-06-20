@@ -1,24 +1,29 @@
-<div class="padding-16 top-header">
+<div class="padding-16 top-header"  *ngIf="!!jobDetails">
   <div class="row tool-bar space-between">
     <app-back-button></app-back-button>
     <ion-label>Job Details</ion-label>
-    <app-profile-picture-circle [userDataPicture]="''"></app-profile-picture-circle>
+    <app-profile-picture-circle></app-profile-picture-circle>
   </div>
 </div>
 <div class="image-circle"></div>
-<ion-content>
+<ion-content *ngIf="!!jobDetails">
   <div class="header">
     <div class="col">
-      <ion-label class="title-lg">Job Title</ion-label>
+      <ion-label class="title-lg">{{jobDetails.job_title}}</ion-label>
       <ion-label class="title-sm">At Company</ion-label>
-      <ion-label class="title-sm">country, city</ion-label>
-      <ion-label class="title-sm"># days</ion-label>
+      <ion-label class="title-sm">{{jobDetails.country.name}}, {{jobDetails.city.name}}</ion-label>
+      <ion-label class="title-sm">{{caculateDays()}} days</ion-label>
     </div>
   </div>
   <div class="content-body padding-16">
     <div class="description-box">
       <ion-label class="title-md">Job Description</ion-label>
-      <p></p>
+      <p>{{jobDetails.job_des}}</p>
     </div>
   </div>
 </ion-content>
+<ion-footer class="center-content padding-left-16 padding-right-16 padding-top-8 padding-bottom-8">
+  <ion-button [ngClass]="applied ? 'applied-btn' : 'apply-btn'" (click)="applyNow()" [disabled]="applied">
+    <ion-label>{{applied ? 'Applied' : 'Apply Now'}}</ion-label>
+  </ion-button>
+</ion-footer>
