@@ -6,12 +6,15 @@ import { catchError, switchMap, tap } from 'rxjs/operators';
 import { StorageService } from '../storage/storage.service';
 import { environment } from '../../../environments/environment';
 import { AppHelpersService } from '../utils/app-helpers.service';
+import { Token } from 'src/app/providers/auth.service';
+import { AuthHttp } from './auth-http.service';
 
 @Injectable()
 export class AuthHttpInterceptor implements HttpInterceptor {
 
   constructor(private _router: Router,
               private _storageService: StorageService,
+              private _http: AuthHttp,
               private _helper: AppHelpersService) {
   }
 
@@ -79,11 +82,46 @@ export class AuthHttpInterceptor implements HttpInterceptor {
   private _handleAuthError(err: HttpErrorResponse): Observable<any> {
     console.log('Handled error ' + err.status + ' - ' + err.message);
     if (err.status === 401) {
-      this._router.navigate([`/login`], {queryParamsHandling: 'merge', replaceUrl: true});
+      this._storageService.getAuthToken()
+      .then((token) => {
+        if(!!token) {
+          console.log('token found');
+          this.refreshToken();
+        } else {
+          console.log('err.status: ', err.status);
+          this._router.navigate([`/login`], {queryParamsHandling: 'merge', replaceUrl: true});
+        }
+      });
       // if you've caught / handled the error, you don't want to rethrow it
       // unless you also want downstream consumers to have to handle it as well.
       return of(err.message);
     }
+  }
+
+  public refreshToken() {
+    this._storageService.getRefreshAuthToken().then((refreshToken) => {
+      return new Promise<Token>(
+      (resolve, reject) =>
+        this._http.post('/api/token/refresh/', { refresh: refreshToken })
+          .subscribe((token: any) => {
+            if (!!token) {
+              this._storageService.updateUserToken(token)
+                .then(() => {
+                  this._router.navigate([`/home`], {replaceUrl: true});
+                  resolve(token);
+                });
+            } else {
+              this._storageService.clearUserData();
+              reject({ message: 'token missing or expired' });
+              this._router.navigate([`/login`], {queryParamsHandling: 'merge', replaceUrl: true});
+            }
+          }, error => {
+            reject(error);
+            this._storageService.clearUserData();
+            this._router.navigate([`/login`], {queryParamsHandling: 'merge', replaceUrl: true});
+          }));
+    }, error => console.error(error))
+
   }
 
   /**

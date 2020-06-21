@@ -8,14 +8,12 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { AppHelpersService } from './core/utils/app-helpers.service';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { Toast } from '@ionic-native/toast/ngx';
 import { CoreModule } from './core/core.module';
 import { HTTP } from '@ionic-native/http/ngx';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AuthGuardsGuard } from './guards/auth-guards.guard';
-import { ComponentsModule, components } from './components/components.module';
 
 @NgModule({
   declarations: [AppComponent],

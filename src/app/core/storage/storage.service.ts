@@ -56,13 +56,13 @@ export class StorageService implements IStorage {
 
   // Save data
   public setLocalData<T = any>(key: string, data: T): Promise<T> {
-    console.log('Set local data for: ', `${API_STORAGE_KEY}-${key}`);
+    // console.log('Set local data for: ', `${API_STORAGE_KEY}-${key}`);
     return this._storage.set(`${API_STORAGE_KEY}-${key}`, JSON.stringify(data));
   }
 
   // Get cached data
   public getLocalData<T = any>(key: string): Promise<T> {
-    console.log('Getting cached data for: ', `${API_STORAGE_KEY}-${key}`);
+    // console.log('Getting cached data for: ', `${API_STORAGE_KEY}-${key}`);
     return this._storage.get(`${API_STORAGE_KEY}-${key}`)
       .then(data => !!data ? Promise.resolve(JSON.parse(data)) 
       : Promise.reject({ message: 'No Cached data for Offline support found' }));

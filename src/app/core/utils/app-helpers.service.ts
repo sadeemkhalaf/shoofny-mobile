@@ -151,6 +151,10 @@ export class AppHelpersService {
     this._menuCtrl.open(menuId);
   }
 
+  public closeMenu(menuId: string) {
+    this._menuCtrl.close(menuId);
+  }
+
   private async _showToast(toastObject) {
     if (this.isRealDevice) {
       return this._toast.showWithOptions(toastObject).subscribe();

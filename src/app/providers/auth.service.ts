@@ -29,7 +29,6 @@ export class AuthService {
     this.loggedInUser = this._loggedInUser.asObservable();
     this._checkLoggedIn();
     this._isLoggedIn.next(true);
-    this.refreshToken();
   }
 
   // login
@@ -91,7 +90,12 @@ export class AuthService {
         }), (reason) => {
           if (reason.status >= 400 && reason.status < 500) {
             if (reason.status == 401) {
-                this.refreshToken();
+              console.log('reason.status: ', reason.status)
+              this._storageService.getAuthToken().then((token) => {
+                if(!!token) {
+                  this.refreshToken();
+                }
+              })
             } else {
               this._removeUserData().then(() => {
                 console.warn('Token missing or expired');
@@ -109,9 +113,14 @@ export class AuthService {
       this._networkService.onNetworkChange().subscribe((status: ConnectionStatus) => {
         if (status === ConnectionStatus.Online) {
           this._storageService.getAuthToken()
-            .then(() => {
-              this._fillUserData(resolve, reject);
-              this._isLoggedIn.next(true);
+            .then((token) => {
+              if(!!token) 
+              {
+                this._fillUserData(resolve, reject);
+                this._isLoggedIn.next(true);
+              } else {
+                this._isLoggedIn.next(false);
+              }
             },
               reject => {
                 console.warn(reject);
@@ -137,7 +146,10 @@ export class AuthService {
             }
           }, error => {
             reject(error);
-            this._route.navigate([`/login`], {queryParamsHandling: 'merge', replaceUrl: true});
+            this.logout().then(() => 
+            this._route.navigate([`/login`], {queryParamsHandling: 'merge', replaceUrl: true})
+            );
+           
           }));
     }, error => console.error(error))
 
