@@ -6,7 +6,6 @@ import { take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { JobDetailsService } from 'src/app/providers/job-details.service';
 import { IJobDetails } from 'src/app/models/Job';
-import { MenuController } from '@ionic/angular';
 import { AppHelpersService } from 'src/app/core/utils/app-helpers.service';
 @Component({
   selector: 'app-home',
@@ -39,8 +38,21 @@ export class HomePage implements OnInit {
     })
   }
 
+  ionViewWillEnter() {
+    this._storage.getUserData().then((data) => {
+      this.userData = data;
+      this.getJobsByCity(this.userData.city.id)
+        .pipe(take(1))
+        .subscribe((data: any) => {
+          this.jobsCountByCity = data.count;
+          this.jobsListByCity = data.results as IJobDetails[];
+        });
+    })
+  }
+
   public logout() {
     this._auth.logout().then(() => {
+      this.helper.closeMenu('menu')
       this.navigateTo('/login');
     }, error => console.error(error));
   }

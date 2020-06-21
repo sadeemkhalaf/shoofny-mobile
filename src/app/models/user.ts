@@ -67,5 +67,6 @@ export interface IDomainOfExperience {
 
 export interface IYearsOfExperience {
     id: number;
-    year: string;
+    title: string;
+    // year: string;
 }

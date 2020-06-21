@@ -17,12 +17,12 @@
         text-align: center;
     }
     .title-lg {
-        margin-top: 10px;
+        margin-top: 8px;
         font-weight: 600;
         @include font-size(10);
     }
     .title-md {
-        margin-top: 10px;
+        margin-top: 8px;
         font-weight: 500;
         @include font-size(9);
     }
@@ -30,6 +30,11 @@
         font-weight: 400;
         @include font-size(7);
         color: rgb(165, 165, 165);
+    }
+    .title-rg {
+        margin-left: 8px;
+        font-weight: 400;
+        @include font-size(8);
     }
     p {
         @include font-size(8);

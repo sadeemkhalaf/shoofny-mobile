@@ -31,18 +31,52 @@
         <ion-title>Filter Jobs</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content>
+    <ion-content class="margin-8 padding-16">
       <ion-list>
-        <ion-item style="cursor: pointer;">
-          <ion-icon name="person" slot="start"></ion-icon>
-          <ion-label>Profile</ion-label>
+        <ion-item class="col">
+          <ion-label position="stacked">Job Title</ion-label>
+          <ion-input clearInput placeholder="Job Title"></ion-input>
         </ion-item>
-        <ion-item style="cursor: pointer;">
-          <ion-icon name="settings" slot="start"></ion-icon>
-          <ion-label>Settings</ion-label>
+        <ion-item class="col">
+          <ion-label position="stacked">Country</ion-label>
+          <ion-select  placeholder="country">
+            <ion-select-option value="brown">Brown</ion-select-option>
+            <ion-select-option value="blonde">Blonde</ion-select-option>
+            <ion-select-option value="black">Black</ion-select-option>
+            <ion-select-option value="red">Red</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item class="col">
+          <ion-label position="stacked">City</ion-label>
+          <ion-select  placeholder="country">
+            <ion-select-option value="brown">Brown</ion-select-option>
+            <ion-select-option value="blonde">Blonde</ion-select-option>
+            <ion-select-option value="black">Black</ion-select-option>
+            <ion-select-option value="red">Red</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item class="col">
+          <ion-label position="stacked">Domain of Expertise</ion-label>
+          <ion-input clearInput placeholder="domain"></ion-input>
+        </ion-item>
+        <ion-item class="col">
+          <ion-label position="stacked">Experience Level</ion-label>
+          <ion-input clearInput placeholder="level"></ion-input>
+        </ion-item>
+        <ion-item class="col">
+          <ion-label position="stacked">Tags</ion-label>
+          <ion-input clearInput placeholder="add skills"></ion-input>
         </ion-item>
       </ion-list>
     </ion-content>
+    <ion-footer class="space-between padding-8">
+      <ion-button color="medium" (click)="helper.closeMenu('filter')">
+        <ion-label>Cancel</ion-label>
+      </ion-button>
+      <ion-button>
+        <ion-label>Filter Jobs</ion-label>
+      </ion-button>
+    </ion-footer>
   </ion-menu>
 
   <ion-router-outlet id="main-content"></ion-router-outlet>

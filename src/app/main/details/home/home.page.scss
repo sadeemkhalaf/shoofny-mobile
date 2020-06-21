@@ -71,7 +71,6 @@
     .lift-up {
         @include flex-box(column);
         background-color: white;
-        border-radius: 13px;
         display: flex;
         flex-grow: 1;
         margin-top: -20px;

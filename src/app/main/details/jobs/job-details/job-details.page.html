@@ -10,15 +10,27 @@
   <div class="header">
     <div class="col">
       <ion-label class="title-lg">{{jobDetails.job_title}}</ion-label>
-      <ion-label class="title-sm">At Company</ion-label>
-      <ion-label class="title-sm">{{jobDetails.country.name}}, {{jobDetails.city.name}}</ion-label>
-      <ion-label class="title-sm">{{caculateDays()}} days</ion-label>
+      <ion-label class="title-sm margin-top-4">At Company</ion-label>
+      <ion-label class="title-sm margin-top-4">{{jobDetails.country.name}}, {{jobDetails.city.name}}</ion-label>
+      <ion-label class="title-sm margin-top-4">{{caculateDays()}}</ion-label>
     </div>
   </div>
   <div class="content-body padding-16">
     <div class="description-box">
       <ion-label class="title-md">Job Description</ion-label>
       <p>{{jobDetails.job_des}}</p>
+      <ion-label class="title-md">Experience </ion-label>
+      <span class="title-rg"> {{jobDetails.level.title}}</span>
+      <div class="margin-8"></div>
+      <ion-label class="title-md">Domains </ion-label>
+      <span class="title-rg"> {{jobDetails.domains.name_EN}}</span>
+      <div class="margin-8"></div>
+      <ion-label class="title-md">Skills Required </ion-label>
+      <div class="margin-top-8" *ngFor="let tag of jobDetails.tags">
+        <ion-chip>
+          <ion-label>{{tag}}</ion-label>
+        </ion-chip>
+      </div>
     </div>
   </div>
 </ion-content>

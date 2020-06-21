@@ -9,6 +9,16 @@ import { StorageService } from '../core/storage/storage.service';
 export class DetailsService {
 
   constructor(private _http: AuthHttp,
-    private _networkService: NetworkService,
     private _storageService: StorageService) { }
+
+    getCountries() {
+      return this._http.get('/cities_light/api/countries');
+    }
+    getCities() {
+      return this._http.get('/cities_light/api/cities');
+    }
+    getDomains() {
+      return this._http.get('/api/domains');
+    }
+
 }

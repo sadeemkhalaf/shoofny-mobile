@@ -28,7 +28,7 @@
     }
     .title {
         font-weight: 600px;
-        @include font-size(10);
+        @include font-size(8);
     }
     .small-font {
         @include font-size(8);

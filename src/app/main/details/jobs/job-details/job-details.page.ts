@@ -34,7 +34,8 @@ export class JobDetailsPage implements OnInit {
     const now = new Date(Date.now()).getTime();
     const updated = new Date(this.jobDetails.updated).getTime();
     const diffTime = Math.abs(now - updated);
-    return Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+    const days =  Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return days > 1 ? days + ' days' : days + ' day'; 
   }
 
   public applyNow() {

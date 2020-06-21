@@ -2,13 +2,13 @@
   <div class="col image-circle margin-right-10"></div>
   <div class="col-8">
     <div class="row content space-between">
-      <ion-label class="title">{{jobItem.job_des}}</ion-label>
-      <ion-label class="tiny-font margin-right-8">{{caculateDays() > 1 ? caculateDays() + ' days' : caculateDays() + ' day'}} ago</ion-label>
+      <ion-label class="title">{{jobItem.job_title}}</ion-label>
     </div>
     <div class="row padding-top-20">
       <ion-label class="small-font">{{jobItem.country.name}}</ion-label>
       <ion-label class="small-font">, {{jobItem.city.name}}</ion-label>
     </div>
+    <ion-label class="tiny-font margin-right-8">{{caculateDays() > 1 ? caculateDays() + ' days' : caculateDays() + ' day'}} ago</ion-label>
   </div>
   <div class="col" (click)="navigateToJobDetails()" >
     <ion-icon name="chevron-forward-outline"></ion-icon>
