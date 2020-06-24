@@ -1,9 +1,51 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>profile</ion-title>
-  </ion-toolbar>
-</ion-header>
+<div class="padding-16 top-header" *ngIf="!!profile">
+  <div class="row tool-bar space-between">
+    <app-back-button></app-back-button>
+    <span class="justify-content-center" [routerLink]="['/home/profile/edit-profile']"><span class="title-sm">Edit</span> <ion-icon name="pencil-outline" slot="end"></ion-icon></span>
+  </div>
+<div class="col profile-header">
+  <div class="profile-picture-circle"></div>
+  <ion-label class="title-lg">{{profile.first_name}}</ion-label>
+  <ion-label class="title-sm">{{profile.city.display_name}}</ion-label>
+  <ion-label class="title-sm">{{profile.DOEX.name_EN}}</ion-label>
+  <ion-label class="title-sm">AGE</ion-label>
+</div>
+</div>
 
-<ion-content>
-
+<ion-content *ngIf="!!profile">
+  <div class="row space-between margin-left-32 margin-right-32 margin-top-16 margin-bottom-16">
+    <div class="col align-items-center">
+      <ion-label class="title-sm">Rating</ion-label>
+      <ion-label class="title-md">
+        <ion-icon name="star" class="icon-yellow"></ion-icon>
+        {{!!profile.rating_avaerage ? profile.rating_avaerage : '0'}}
+      </ion-label>
+    </div>
+    <div class="col align-items-center">
+      <ion-label class="title-sm">Experience</ion-label>
+      <ion-label class="title-md">{{!!profile.YOEX.year ? profile.YOEX.year : '0'}}</ion-label>
+    </div>
+    <div class="col align-items-center">
+      <ion-label class="title-sm">Views</ion-label>
+      <ion-label class="title-md">{{!!profile.profile_views ? profile.profile_views : '0'}}</ion-label>
+    </div>
+  </div>
+  <div class="margin-left-32 margin-right-32">
+    <div class="col margin-bottom-16">
+      <ion-label class="title-lg">Contact</ion-label>
+      <ion-label class="title-sm">{{profile.email}}</ion-label>
+      <ion-label class="title-sm">+962792234543</ion-label>
+    </div>
+    <ion-label class="title-lg margin-bottom-16">Top Skills</ion-label>
+    <div class="margin-bottom-16">
+      <ion-chip *ngFor="let skill of profile.tags">{{skill}}</ion-chip>
+    </div>
+    <ion-label class="title-lg margin-bottom-32">Your Video</ion-label>
+    <div class="justify-content-center margin-bottom-16 video-container">
+      <video controls style="width: auto; height: auto;" 
+      [src]="'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'"
+      #video>
+      </video>
+    </div>
+  </div>
 </ion-content>

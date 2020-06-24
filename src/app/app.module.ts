@@ -14,7 +14,10 @@ import { CoreModule } from './core/core.module';
 import { HTTP } from '@ionic-native/http/ngx';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AuthGuardsGuard } from './guards/auth-guards.guard';
-
+import { MediaCapture } from '@ionic-native/media-capture/ngx';
+import { Media } from '@ionic-native/media/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { IonicSelectableModule } from 'ionic-selectable';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -24,6 +27,7 @@ import { AuthGuardsGuard } from './guards/auth-guards.guard';
     AppRoutingModule,
     RouterModule,
     FormsModule,
+    IonicSelectableModule,
     ReactiveFormsModule,
     CoreModule],
   providers: [
@@ -34,7 +38,10 @@ import { AuthGuardsGuard } from './guards/auth-guards.guard';
     InAppBrowser,
     Toast,
     Platform,
-    HTTP
+    HTTP,
+    Media,
+    MediaCapture,
+    File
   ],
   bootstrap: [AppComponent]
 })

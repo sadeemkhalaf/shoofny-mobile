@@ -56,6 +56,7 @@ export interface INationality {
     continent: string;
     tld: string;
     phone: number;
+    url: string;
 }
 
 export interface IDomainOfExperience {

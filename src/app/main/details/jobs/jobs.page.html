@@ -14,4 +14,7 @@
    <div class="col jobs-list" *ngFor="let job of jobsList">
     <app-job-list-item [jobItem]="job" class="margin-bottom-8"></app-job-list-item>
 </div>
+<div class="no-results-label">
+  <ion-label *ngIf="jobsList.length === 0">No Results Found</ion-label>
+</div>
 </ion-content>

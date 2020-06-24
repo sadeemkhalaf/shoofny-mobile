@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuardsGuard } from './guards/auth-guards.guard';
+import { DataResolverService } from './resolvers/data-resolver.service';
 
 const routes: Routes = [
   {
@@ -18,7 +19,8 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./main/details/home/home.module').then( m => m.HomePageModule)
-    , canActivate: [AuthGuardsGuard]
+    , canActivate: [AuthGuardsGuard],
+    runGuardsAndResolvers: 'always'
   },
   {
     path: 'home/profile',
@@ -34,6 +36,10 @@ const routes: Routes = [
   },
   {
     path: 'home/jobs',
+    resolve: {
+      query: DataResolverService
+    },
+    runGuardsAndResolvers: 'always',
     loadChildren: () => import('./main/details/jobs/jobs.module').then( m => m.JobsPageModule)
     },
   {
@@ -45,7 +51,9 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { 
+      preloadingStrategy: PreloadAllModules,
+      onSameUrlNavigation: 'reload' })
   ],
   exports: [RouterModule]
 })

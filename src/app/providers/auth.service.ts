@@ -43,6 +43,16 @@ export class AuthService {
       return this._storageService.clearUserData();
   }
 
+  public getUserProfile() {
+    return this._http.get<IUser>('/api/auth/profile');
+  }
+
+  public updateUserProfile(user: IUser) {
+    return this._http.put<IUser>('/api/auth/profile', user);
+  }
+
+  
+
   private _getAccessToken(data) {
     this._helper.showLoading();
     return new Promise<Token>(
@@ -97,7 +107,7 @@ export class AuthService {
                 }
               })
             } else {
-              this._removeUserData().then(() => {
+              this._removeUserData().then(async () => {
                 console.warn('Token missing or expired');
                 reject(reason);
               });
@@ -133,6 +143,7 @@ export class AuthService {
   }
 
   public refreshToken() {
+    console.log('refresh token');
     this._storageService.getRefreshAuthToken().then((refreshToken) => {
       return new Promise<Token>(
       (resolve, reject) =>

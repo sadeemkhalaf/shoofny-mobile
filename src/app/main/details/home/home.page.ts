@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/providers/auth.service';
 import { IUser } from 'src/app/models/user';
 import { StorageService } from 'src/app/core/storage/storage.service';
@@ -30,7 +30,6 @@ export class HomePage implements OnInit {
     this._storage.getUserData().then((data) => {
       this.userData = data;
       this.getJobsByCity(this.userData.city.id)
-        .pipe(take(1))
         .subscribe((data: any) => {
           this.jobsCountByCity = data.count;
           this.jobsListByCity = data.results as IJobDetails[];

@@ -1,0 +1,56 @@
+@import '../../../../theme/helper-classes.scss';
+:host {
+    .top-header {
+        // background-color: rgb(223, 223, 223);
+        background-color: var(--ion-custom-color-dark);
+        color: white;
+        width: 100%;
+        @include flex-box(column);
+        justify-content: center;
+
+        .tool-bar {
+            width: 100%;
+            top: 0;
+        }
+        .profile-header {
+            width: 100%;
+            align-items: center;
+        }
+    }
+
+    .profile-picture-circle {
+        height: 75px;
+        width: 75px;
+        border-radius: 50%;
+        background-color: whitesmoke;
+    }
+
+    .title-lg {
+        margin-top: 8px;
+        font-weight: 600;
+        @include font-size(9);
+    }
+    .title-md {
+        margin-top: 8px;
+        font-weight: 500;
+        @include font-size(9);
+        color: var(--ion-custom-color-dark);
+    }
+    .title-sm {
+        font-weight: 400;
+        @include font-size(7);
+        opacity: 70%;
+    }
+    .title-rg {
+        margin-left: 8px;
+        font-weight: 400;
+        @include font-size(8);
+    }
+    .icon-yellow {
+        color: var(--ion-custom-color-warn);
+    }
+
+    .video-container {
+        width: 100%;
+    }
+}

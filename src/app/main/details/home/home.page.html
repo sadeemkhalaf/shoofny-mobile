@@ -47,6 +47,9 @@
       <div class="col jobs-list" *ngFor="let job of jobsListByCity">
         <app-job-list-item [jobItem]="job"></app-job-list-item>
       </div>
+      <div class="no-results-label" *ngIf="jobsListByCity.length === 0">
+        <ion-label >No Results Found</ion-label>
+      </div>
       <div class="align-center">
         <ion-button [routerLink]="['/home/jobs']" routerDirection="forward">
           <ion-label class="show-all-link">

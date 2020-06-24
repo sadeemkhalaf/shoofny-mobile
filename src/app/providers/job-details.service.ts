@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthHttp } from '../core/auth-http/auth-http.service';
 import { NetworkService } from '../core/utils/network.service';
-import { StorageService } from '../core/storage/storage.service';
-import { HttpClient } from '@angular/common/http';
 import { IJobDetails } from '../models/Job';
 import { IDomainOfExperience, IUser } from '../models/user';
 
@@ -11,8 +9,7 @@ import { IDomainOfExperience, IUser } from '../models/user';
 })
 export class JobDetailsService {
 
-  constructor(private _http: AuthHttp,
-    private _networkService: NetworkService) { }
+  constructor(private _http: AuthHttp) { }
 
     // domains of experience
     public getDomainsOfExperience() {

@@ -86,6 +86,7 @@ $NUMBERGRID: (4: 4px, 8: 8px, 16: 16px, 24: 24px, 32: 32px, 40: 40px, 48: 48px, 
 }
 
 .justify-content-center {
+  display: flex;
   justify-content: center !important;
 }
 
@@ -99,6 +100,10 @@ $NUMBERGRID: (4: 4px, 8: 8px, 16: 16px, 24: 24px, 32: 32px, 40: 40px, 48: 48px, 
 
 .align-content-center {
   align-content: center !important;
+}
+
+.align-items-center {
+  align-items: center !important;
 }
 
 //======================================= end of Grid

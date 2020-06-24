@@ -84,6 +84,7 @@ export class AuthHttpInterceptor implements HttpInterceptor {
     if (err.status === 401) {
       this._storageService.getAuthToken()
       .then((token) => {
+        console.log('token: ', token);
         if(!!token) {
           console.log('token found');
           this.refreshToken();
@@ -100,18 +101,20 @@ export class AuthHttpInterceptor implements HttpInterceptor {
 
   public refreshToken() {
     this._storageService.getRefreshAuthToken().then((refreshToken) => {
+      console.log(refreshToken);
       return new Promise<Token>(
       (resolve, reject) =>
         this._http.post('/api/token/refresh/', { refresh: refreshToken })
           .subscribe((token: any) => {
             if (!!token) {
+              console.log(token);
               this._storageService.updateUserToken(token)
                 .then(() => {
                   this._router.navigate([`/home`], {replaceUrl: true});
                   resolve(token);
                 });
             } else {
-              this._storageService.clearUserData();
+              // this._storageService.clearUserData();
               reject({ message: 'token missing or expired' });
               this._router.navigate([`/login`], {queryParamsHandling: 'merge', replaceUrl: true});
             }

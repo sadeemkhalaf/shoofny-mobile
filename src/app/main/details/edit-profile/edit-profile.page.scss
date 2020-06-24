@@ -1,0 +1,37 @@
+@import '../../../../theme/helper-classes.scss';
+:host {
+    .top-header {
+        background-color: var(--ion-custom-color-dark);
+        color: white;
+        @include flex-box(row);
+    }
+
+    .profile-picture-circle {
+        height: 75px;
+        width: 75px;
+        border-radius: 50%;
+        background-color: whitesmoke;
+    }
+    .title-lg {
+        font-weight: 600;
+        @include font-size(9);
+    }
+    .title-md {
+        font-weight: 500;
+        @include font-size(9);
+    }
+    .title-sm {
+        font-weight: 400;
+        @include font-size(7);
+        opacity: 70%;
+    }
+    .title-rg {
+        font-weight: 400;
+        @include font-size(8);
+    }
+
+    ion-input {
+        font-weight: 400;
+        @include font-size(8);
+    }
+}
