@@ -1,13 +1,10 @@
 <ion-app>
   <ion-split-pane content-id="main-content">
     <ion-menu side="start" menuId="menu" type="push" content-id="main-content">
-    <ion-header>
-      <ion-toolbar translucent>
-        <ion-title>Menu</ion-title>
-        <ion-label>Profile data</ion-label>
-      </ion-toolbar>
-    </ion-header>
     <ion-content>
+      <div class="margin-16" translucent>
+        <ion-label>Menu</ion-label>
+      </div>
       <ion-list>
         <ion-item style="cursor: pointer;" [routerLink]="['/home/profile']" (click)="helper.closeMenu('menu')">
           <ion-icon name="person" slot="start"></ion-icon>
@@ -26,13 +23,12 @@
   </ion-menu>
 
   <ion-menu side="end" content-id="main-content" menuId="filter">
-    <ion-header>
-      <ion-toolbar translucent>
-        <ion-title>Filter Jobs</ion-title>
-        <ion-icon (click)=""></ion-icon>
-      </ion-toolbar>
-    </ion-header>
     <ion-content class="margin-8 padding-16">
+      <div class="margin-16 row space-between" translucent>
+        <ion-label>Filter Jobs</ion-label>
+        <span (click)="clearAndReset()" style="display: flex; align-items: center;">
+          clear<ion-icon name="close-outline"></ion-icon></span>
+      </div>
       <ion-list>
         <ion-item class="col">
           <ion-label position="stacked">Job Title</ion-label>
@@ -79,7 +75,7 @@
         <ion-item>
           <ion-input clearInput placeholder="add skills" [(ngModel)]="tagInput">
           </ion-input>
-          <ion-button slot="end" (click)="addTag(tagInput)">
+          <ion-button slot="end" (click)="addTag()">
             <ion-icon name="add-outline"></ion-icon>
           </ion-button>
         </ion-item>

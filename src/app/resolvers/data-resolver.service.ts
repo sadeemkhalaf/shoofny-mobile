@@ -11,7 +11,6 @@ export class DataResolverService implements Resolve<any>{
 
   resolve(route: import("@angular/router").ActivatedRouteSnapshot, state: import("@angular/router").RouterStateSnapshot) {
     // const id = route.paramMap.get('id');
-    console.log(this._dataService.getData());
     return this._dataService.getData();
   }
 }

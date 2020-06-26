@@ -30,8 +30,7 @@ export class JobsPage implements OnInit {
         if (e instanceof NavigationEnd) {
           const config = this._data.getData();
           this._loadData(config);
-        }
-        
+        }    
       });
     }
 
@@ -46,12 +45,14 @@ export class JobsPage implements OnInit {
   }
 
   private _loadData(config?) {
+    this.helper.showLoading();
     if(!!config) {
       this._config = config;
       console.log('config: ', this._config);
       this._jobDetailsService.getJobByParam(this._config).pipe(take(1)).subscribe((jobs: any) => {
         this.jobsList = jobs.results as IJobDetails[];
-      });
+        this.helper.hideLoading();
+      }, error => this.helper.hideLoading());
       this._data.clearData();
     }
     else if(!!this._activatedRoute.snapshot.data['query']) {
@@ -59,12 +60,14 @@ export class JobsPage implements OnInit {
       console.log('config: ', this._config);
       this._jobDetailsService.getJobByParam(this._config).pipe(take(1)).subscribe((jobs: any) => {
         this.jobsList = jobs.results as IJobDetails[];
-      });
+        this.helper.hideLoading()
+      }, error => this.helper.hideLoading());
       this._data.clearData();
     } else {
       this._jobDetailsService.getJobByParam({}).pipe(take(1)).subscribe((jobs: any) => {
         this.jobsList = jobs.results as IJobDetails[];
-      });
+        this.helper.hideLoading()
+      }, error => this.helper.hideLoading());
     }
   }
 }

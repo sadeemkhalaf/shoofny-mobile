@@ -3,10 +3,11 @@ import { AuthService } from 'src/app/providers/auth.service';
 import { IUser } from 'src/app/models/user';
 import { StorageService } from 'src/app/core/storage/storage.service';
 import { take } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { JobDetailsService } from 'src/app/providers/job-details.service';
 import { IJobDetails } from 'src/app/models/Job';
 import { AppHelpersService } from 'src/app/core/utils/app-helpers.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -19,6 +20,8 @@ export class HomePage implements OnInit {
   public jobsCountByCity: number = 0;
   public jobsListByCity: IJobDetails[] = [];
 
+  navigationSubscription: Subscription = new Subscription();
+
   constructor(
     public helper: AppHelpersService,
     private _auth: AuthService,
@@ -27,14 +30,18 @@ export class HomePage implements OnInit {
     private _storage: StorageService) { }
 
   ngOnInit() {
-    this._storage.getUserData().then((data) => {
-      this.userData = data;
-      this.getJobsByCity(this.userData.city.id)
-        .subscribe((data: any) => {
-          this.jobsCountByCity = data.count;
-          this.jobsListByCity = data.results as IJobDetails[];
-        });
-    })
+    this._loadData();
+    this.navigationSubscription = this._route.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this._loadData();
+      }
+
+    });
+  }
+
+  ngOnDestroy() {
+    this.navigationSubscription.unsubscribe();
   }
 
   ionViewWillEnter() {
@@ -45,6 +52,9 @@ export class HomePage implements OnInit {
         .subscribe((data: any) => {
           this.jobsCountByCity = data.count;
           this.jobsListByCity = data.results as IJobDetails[];
+          if (this.jobsListByCity.length > 3) {
+            this.jobsListByCity = this.jobsListByCity.sort((a, b) => a.timestamp > b.timestamp ? 1 : -1).slice(0, 3);
+          }
         });
     })
   }
@@ -64,4 +74,15 @@ export class HomePage implements OnInit {
     this._route.navigate([path]);
   }
 
+  _loadData() {
+    this._storage.getUserData().then((data) => {
+      this.userData = data;
+      this.getJobsByCity(this.userData.city.id)
+        .pipe(take(1))
+        .subscribe((data: any) => {
+          this.jobsCountByCity = data.count;
+          this.jobsListByCity = data.results as IJobDetails[];
+        });
+    })
+  }
 }

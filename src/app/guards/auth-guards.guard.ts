@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { StorageService } from '../core/storage/storage.service';
 
@@ -8,7 +8,9 @@ import { StorageService } from '../core/storage/storage.service';
 })
 export class AuthGuardsGuard implements CanActivate {
 
-  constructor(private _storage: StorageService) {}
+  constructor(
+    private _storage: StorageService,
+    private _route: Router) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -20,6 +22,7 @@ export class AuthGuardsGuard implements CanActivate {
             return true;
           } else {
             reject('not authenticated')
+            this._route.navigate(['/login'])
             return false;
           }
         })

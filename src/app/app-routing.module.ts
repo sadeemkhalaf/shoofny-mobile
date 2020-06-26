@@ -5,6 +5,17 @@ import { DataResolverService } from './resolvers/data-resolver.service';
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('./main/details/home/home.module').then( m => m.HomePageModule)
+    , canActivate: [AuthGuardsGuard],
+    runGuardsAndResolvers: 'always'
+  },
+  {
     path: 'login',
     loadChildren: () => import('./main/user/login/login.module').then( m => m.LoginPageModule)
   },
@@ -15,12 +26,6 @@ const routes: Routes = [
   {
     path: 'reset-password',
     loadChildren: () => import('./main/user/reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
-  },
-  {
-    path: 'home',
-    loadChildren: () => import('./main/details/home/home.module').then( m => m.HomePageModule)
-    , canActivate: [AuthGuardsGuard],
-    runGuardsAndResolvers: 'always'
   },
   {
     path: 'home/profile',
@@ -42,11 +47,6 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     loadChildren: () => import('./main/details/jobs/jobs.module').then( m => m.JobsPageModule)
     },
-  {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
-  },
 ];
 
 @NgModule({

@@ -3,7 +3,7 @@
     <div class="col header">
       <div class="row space-between margin-16">
         <ion-menu-button menu="menu"></ion-menu-button>
-        <app-profile-picture-circle></app-profile-picture-circle>
+        <app-profile-picture-circle [routerLink]="['/home/profile']" ></app-profile-picture-circle>
       </div>
       <div class="row margin-left-16 margin-bottom-16">
         <ion-label class="greeting-label">Hello, {{userData.first_name}}</ion-label>

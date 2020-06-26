@@ -13,4 +13,5 @@ export interface IJobDetails {
     timestamp: Date;
     updated: Date;
     job_title: string;
+    Company_Name: string;
 }

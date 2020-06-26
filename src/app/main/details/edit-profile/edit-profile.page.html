@@ -3,7 +3,7 @@
   <ion-label class="margin-left-16">Edit Profile</ion-label>
 </div>
 
-<ion-content>
+<ion-content *ngIf="!!user">
 <div class="margin-32 col">
   <div class="row align-items-center margin-bottom-16">
     <div class="profile-picture-circle margin-right-16"></div>
@@ -13,40 +13,86 @@
   <ion-list>
     <ion-item class="col">
       <ion-label position="stacked">First Name</ion-label>
-      <ion-input clearInput placeholder="First Name"></ion-input>
+      <ion-input clearInput placeholder="First Name" [(ngModel)]="user.first_name"></ion-input>
     </ion-item>
     <ion-item class="col">
       <ion-label position="stacked">Last Name</ion-label>
-      <ion-input clearInput placeholder="Last Name"></ion-input>
+      <ion-input clearInput placeholder="Last Name" [(ngModel)]="user.last_name"></ion-input>
     </ion-item>
     <ion-item class="col">
       <ion-label position="stacked">email</ion-label>
-      <ion-input clearInput placeholder="email" type="email"></ion-input>
+      <ion-input clearInput placeholder="email"  [(ngModel)]="user.email" type="email"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label class="title-rg" position="floating">Date of Birth</ion-label>
-      <ion-datetime displayFormat="MM/DD/YYYY" max="2020-01-01"></ion-datetime>
+      <ion-datetime displayFormat="MM/DD/YYYY" max="2020-01-01" [(ngModel)]="user.DOB"></ion-datetime>
     </ion-item>
-    <ion-item class="col">
-      <ion-label position="stacked">Country</ion-label>
-      <ion-input clearInput placeholder="Country"></ion-input>
+    <ion-item>
+      <ion-label class="title-rg" position="stacked">Country</ion-label>
+      <ionic-selectable
+        [(ngModel)]="country"
+        [items]="countries"
+        itemValueField="id"
+        itemTextField="name"
+        [canSearch]="true"
+        (onChange)="countryChange($event)">
+      </ionic-selectable>
     </ion-item>
-    <ion-item class="col">
-      <ion-label position="stacked">City</ion-label>
-      <ion-input clearInput placeholder="City"></ion-input>
+    <ion-item *ngIf="!!country">
+      <ion-label class="title-rg" position="stacked">City</ion-label>
+      <ionic-selectable
+        [(ngModel)]="city"
+        [items]="filteredCities"
+        itemValueField="id"
+        itemTextField="name"
+        [canSearch]="true"
+        (onChange)="cityChange($event)">
+      </ionic-selectable>
     </ion-item>
   </ion-list>
   <ion-label class="title-lg margin-bottom-8">Professional Information</ion-label>
   <ion-list>
     <ion-item class="col">
-      <ion-label position="stacked">Domain of Experience</ion-label>
-      <ion-input clearInput placeholder="domain of experience"></ion-input>
+      <ion-label position="stacked" class="title-rg" >Domain of Expertise</ion-label>
+      <ionic-selectable
+        [(ngModel)]="domain"
+        [items]="domains"
+        itemValueField="id"
+        itemTextField="name_EN"
+        [canSearch]="true"
+        (onChange)="cityChange($event)">
+      </ionic-selectable>
     </ion-item>
     <ion-item class="col">
       <ion-label position="stacked">Experience Level</ion-label>
-      <ion-input clearInput placeholder="experience level"></ion-input>
+      <ion-input clearInput placeholder="experience level" [(ngModel)]="user.YOEX.year"></ion-input>
     </ion-item>
   </ion-list>
-
+  
+  <ion-label class="title-lg margin-bottom-8">Public Professional Profiles</ion-label>
+  <ion-list>
+    <ion-item class="col">
+      <ion-input clearInput placeholder="url"></ion-input>
+    </ion-item>
+    <div class="row align-items-center margin-top-8">
+      <div class="circle-add-button">+</div>
+      <span class="margin-left-8 title-sm">add more</span>
+    </div>
+  </ion-list>
+  <ion-label class="floating-label" position="floating">Tags</ion-label>
+  <ion-item>
+    <ion-input clearInput placeholder="add skills" [(ngModel)]="tagInput">
+    </ion-input>
+    <ion-button slot="end" (click)="addTag(tagInput)">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
+  <ion-item *ngIf="tags.length > 0">
+    <ion-chip *ngFor="let tag of tags" color="secondary">
+      <ion-icon name="tag" color="primary"></ion-icon>
+      <ion-label>{{tag}}</ion-label>
+      <ion-icon name="close-circle-outline" (click)="clearTag(tag)"></ion-icon>
+    </ion-chip>
+</ion-item>
 </div>
 </ion-content>

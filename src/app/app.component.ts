@@ -11,6 +11,7 @@ import { DetailsService } from './providers/details.service';
 import { INationality, ICity, IDomainOfExperience } from './models/user';
 import { DataService } from './providers/data.service';
 import { Location } from '@angular/common';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -47,9 +48,6 @@ export class AppComponent {
     private _dataService: DataService
   ) {
     this.initializeApp();
-    this.getCountries();
-    this.getCities();
-    this.getDomains();
   }
 
   initializeApp() {
@@ -58,7 +56,11 @@ export class AppComponent {
       this.splashScreen.hide();
       this._storage.getAuthToken().then((loggedIn) => {
         if (!!loggedIn) {
+          console.log('hello home!')
           this._route.parseUrl('/home');
+          this.getCountries();
+          this.getCities();
+          this.getDomains();
         } else {
           this._route.parseUrl('/login');
         }
@@ -66,8 +68,17 @@ export class AppComponent {
     });
   }
 
+
+  public logout() {
+    this._auth.logout().then(() => {
+      this._route.navigate(['/login']);
+      this.helper.closeMenu('menu');
+    }, error => console.error(error));
+  }
+
   getCountries() {
     this._detailsService.getCountries()
+    .pipe(take(1))
     .subscribe((countries: any) => {
       this.countries = countries.results;
     });
@@ -75,6 +86,7 @@ export class AppComponent {
 
   getCities() {
     this._detailsService.getCities()
+    .pipe(take(1))
     .subscribe((cities: any) => {
       this.cities = cities.results;
     });
@@ -82,15 +94,10 @@ export class AppComponent {
 
   getDomains() {
     this._detailsService.getDomains()
+    .pipe(take(1))
     .subscribe((domains: any) => {
       this.domains = domains.results;
     });
-  }
-
-  public logout() {
-    this._auth.logout().then(() => {
-      this._route.navigate(['/login']);
-    }, error => console.error(error));
   }
 
   countryChange(event: any) {
@@ -127,7 +134,7 @@ export class AppComponent {
   }
 
   clearAndReset() {
-    this.helper.closeMenu('filter'); 
+    // this.helper.closeMenu('filter'); 
     this._resetfilter();
   }
 
