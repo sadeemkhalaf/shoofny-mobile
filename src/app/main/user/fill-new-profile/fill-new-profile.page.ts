@@ -100,11 +100,12 @@ export class FillNewProfilePage implements OnInit {
   }
 
   pickImage() {
-    this._imagePickerService.imagePicker()
-      .then((path) => {
-        this._imagePickerService.readAsDataURL(path)
-          .then((image) => this.image = image, err => console.error(err));
-      }, err => console.error(err));
+    this._imagePickerService.selectImage();
+    // this._imagePickerService.imagePicker()
+    //   .then((path) => {
+    //     this._imagePickerService.readAsDataURL(path)
+    //       .then((image) => this.image = image, err => console.error(err));
+    //   }, err => console.error(err));
   }
 
   private _getFilteredCities() {

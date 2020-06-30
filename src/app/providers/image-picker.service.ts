@@ -72,7 +72,7 @@ export class ImagePickerService {
     */
   }
 
-  private async selectImage() {
+  public async selectImage() {
     const actionSheet = await this.actionSheetController.create({
       header: 'Select image source',
       buttons: [{
@@ -83,7 +83,7 @@ export class ImagePickerService {
       }, {
         text: 'Use Camera',
         handler: () => {
-          this.pickImage(this._camera.PictureSourceType.CAMERA);
+           this.pickImage(this._camera.PictureSourceType.CAMERA);
         }
       }, {
         text: 'Cancel',
