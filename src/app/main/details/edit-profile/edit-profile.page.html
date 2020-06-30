@@ -87,12 +87,12 @@
       <ion-icon name="add-outline"></ion-icon>
     </ion-button>
   </ion-item>
-  <ion-item *ngIf="tags.length > 0">
+  <div *ngIf="tags.length > 0">
     <ion-chip *ngFor="let tag of tags" color="secondary">
       <ion-icon name="tag" color="primary"></ion-icon>
       <ion-label>{{tag}}</ion-label>
       <ion-icon name="close-circle-outline" (click)="clearTag(tag)"></ion-icon>
     </ion-chip>
-</ion-item>
+  </div>
 </div>
 </ion-content>

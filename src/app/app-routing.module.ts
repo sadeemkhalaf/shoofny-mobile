@@ -20,10 +20,6 @@ const routes: Routes = [
     loadChildren: () => import('./main/user/login/login.module').then( m => m.LoginPageModule)
   },
   {
-    path: 'signup',
-    loadChildren: () => import('./main/user/signup/signup.module').then( m => m.SignupPageModule)
-  },
-  {
     path: 'reset-password',
     loadChildren: () => import('./main/user/reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
   },
@@ -47,6 +43,14 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     loadChildren: () => import('./main/details/jobs/jobs.module').then( m => m.JobsPageModule)
     },
+    {
+      path: 'signup',
+      loadChildren: () => import('./main/user/signup/signup.module').then( m => m.SignupPageModule)
+    },
+  {
+    path: 'signup/profile',
+    loadChildren: () => import('./main/user/fill-new-profile/fill-new-profile.module').then( m => m.FillNewProfilePageModule)
+  },
 ];
 
 @NgModule({

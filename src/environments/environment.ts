@@ -4,7 +4,7 @@
 
 export const environment = {
   APIEndpoint: 'http://shoofny.site/en',
-  production: false
+  production: true
 };
 
 /*

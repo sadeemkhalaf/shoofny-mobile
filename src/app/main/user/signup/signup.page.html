@@ -1,9 +1,89 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>signup</ion-title>
-  </ion-toolbar>
-</ion-header>
+<div class="padding-16 top-header">
+  <app-back-button></app-back-button>
+  <ion-label class="margin-left-16">Register</ion-label>
+</div>
+<div class="steps-header row padding-left-32 padding-bottom-16">
+  <div class="row align-items-center">
+    <div class="circle activated"><span class="title-rg">1</span></div>
+    <span class="margin-left-4 margin-right-4 title-sm">Register</span>
+  </div>
+  <div class="row align-items-center">
+    <div class="circle off"><span class="title-rg">2</span></div>
+    <span class="margin-left-4 margin-right-4 title-sm">Fill Profile</span>
+  </div>
+  <div class="row align-items-center">
+    <div class="circle off"><span class="title-rg">3</span></div>
+    <span class="margin-left-4 margin-right-4 title-sm">Take The Video</span>
+  </div>
+</div>
 
 <ion-content>
+  <div class="margin-left-32 margin-right-32 margin-top-16 margin-bottom-32">
+      <ion-label class="title-lg margin-bottom-8">Fill in the fields to create the account</ion-label>
+      <ion-list>
+        <ion-item class="col">
+          <ion-input clearInput placeholder="First Name" class="title-rg"></ion-input>
+        </ion-item>
+        <ion-item class="col">
+          <ion-input clearInput placeholder="Last Name" class="title-rg"></ion-input>
+        </ion-item>
+        <ion-item class="col">
+          <ion-label position="stacked" class="margin-bottom-8">Phone Number</ion-label>
+          <div class="row mobile-input">
+            <!-- <ion-input clearInput placeholder="code" class="code margin-right-8 title-rg" type="number"></ion-input> -->
+            <div>
+              <ion-label position="stacked" class="margin-bottom-8 title-rg">Dial Code</ion-label>
+              <ionic-selectable
+                item-content
+                [(ngModel)]="countryCode"
+                [items]="countryCodes"
+                itemValueField="code"
+                itemTextField="dial_code"
+                [canSearch]="true"
+                (onChange)="countryCodeChange($event)"
+                (onSearch)="countryCodeSearch($event)">
+              </ionic-selectable>
+            </div>
+            <ion-input clearInput maxlength="9" placeholder="Phone Number" class="number title-rg" type="number"></ion-input>
+          </div>
+        </ion-item>
+      </ion-list>
+      <form [formGroup]="form" (ngSubmit)="onSubmitForm()">
+        <ion-item class="col">
+          <ion-input clearInput placeholder="Email" class="title-rg" formControlName="email" type="email"></ion-input>
+          <div *ngIf="isSubmitted && f.email.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors.required">Email is required</div>
+            <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+          </div>
+        </ion-item>
+        <ion-item class="col">
+          <ion-input clearInput placeholder="Password" type="password" formControlName="password" class="title-rg"></ion-input>
+          <div *ngIf="isSubmitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Password is required</div>
+            <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+          </div>
+        </ion-item>
+        <ion-item class="col">
+          <ion-input clearInput placeholder="Re-type Password" type="password" formControlName="confirmPassword" class="title-rg">
+          </ion-input>
+          <div *ngIf="isSubmitted && f.confirmPassword.errors" class="invalid-feedback">
+            <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
+            <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords must match</div>
+          </div>
+        </ion-item>
+        <ion-item class="col">
+          <ion-input clearInput placeholder="User Name" formControlName="userName" class="title-rg"></ion-input>
+        </ion-item>
 
+    </form>
+  </div>
 </ion-content>
+
+<ion-footer class="padding-8" style="direction: rtl;">
+  <ion-button [routerLink]="['profile']">  <!-- type="submit" -->
+    <ion-label>
+      <ion-icon name="arrow-forward-outline"></ion-icon>
+      Continue
+    </ion-label>
+  </ion-button>
+</ion-footer>

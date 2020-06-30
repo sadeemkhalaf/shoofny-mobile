@@ -1,21 +1,21 @@
 import { Token } from '../providers/auth.service';
 
-export interface IUser {
+export class IUser {
     id: number;
-    first_name: string;
-    last_name: string;
-    email: string;
-    username: string;
+    first_name: string = '';
+    last_name: string = '';
+    email: string = '';
+    username: string = '';
     DOB: Date;
-    picture: string;
-    video: string;
-    Private: boolean;
+    picture: string = '';
+    video: string = '';
+    Private: boolean = true;
     date_joined: Date;
     is_seeker: boolean;
     is_active: boolean;
     rating_avaerage: number;
     profile_views: number;
-    gender: string;
+    gender: string = '';
     Job_in_City: number;
     city: ICity;
     nationality: INationality;
@@ -23,6 +23,11 @@ export interface IUser {
     YOEX: IYearsOfExperience;
     tags: string[];
     token?: Token;
+
+    IUser() {
+        this.DOB = new Date('1/1/1990');
+        this.YOEX = new IYearsOfExperience();
+    }
 }
 
 export interface ICity {
@@ -66,8 +71,11 @@ export interface IDomainOfExperience {
     slug: string;
 }
 
-export interface IYearsOfExperience {
+export class IYearsOfExperience {
     id: number;
     title: string;
     // year: string;
+    IYearsOfExperience() {
+        this.title = '0';
+    }
 }

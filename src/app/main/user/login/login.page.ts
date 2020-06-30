@@ -33,13 +33,13 @@ export class LoginPage implements OnInit {
       email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]]
     });
   }
+  
+ login(email: string, password: string) {
+    this._auth.login(email, password);
+  }
 
   get errorControl() {
     return this.form.controls;
-  }
-
-  login(email: string, password: string) {
-    this._auth.login(email, password);
   }
 
   onSubmitForm() {

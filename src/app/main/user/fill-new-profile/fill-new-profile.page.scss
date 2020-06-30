@@ -54,4 +54,26 @@
         font-weight: 400;
         @include font-size(8);
     }
+    .circle-add-button {
+        @include flex-box(column);
+        border-radius: 50%;
+        height: 22px;
+        width: 22px;
+        background-color: var(--ion-custom-color-dark);
+        padding: 4px;
+        color: white;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .profile-picture-circle {
+        height: 75px;
+        width: 75px;
+        border-radius: 50%;
+        background-color: whitesmoke;
+    }
+    ion-input {
+        font-weight: 400;
+        @include font-size(8);
+    }
 }
