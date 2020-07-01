@@ -17,10 +17,10 @@ export class ProfilePictureCircleComponent implements OnInit {
   ngOnInit() {
     this._storage.getUserData().then((data) => {
       this.userData = data;
-      const pictureUrl = !!this.userData.picture && this.userData.picture.length > 0 ? this.userData.picture : './../../../assets/placeholder-img.png' ; 
-        document.getElementsByClassName('image-circle')
-        .item(0).setAttribute('style', `background-image: url('${pictureUrl}')`); 
-    }) 
+      const pictureUrl = !!this.userData.picture && this.userData.picture.length > 0 ? this.userData.picture : './../../../assets/placeholder-img.png' ;
+      document.getElementsByClassName('image-circle')
+        .item(0).setAttribute('style', `background-image: url('${pictureUrl}')`);
+    });
   }
 
 }

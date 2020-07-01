@@ -20,7 +20,7 @@
 <ion-content>
   <div class="margin-32 col">
     <div class="row align-items-center margin-bottom-16">
-      <div class="profile-picture-circle margin-right-16"></div>
+      <div class="profile-picture-circle margin-right-16" #profilePicture></div>
       <ion-label class="title-rg" (click)="pickImage()">Change Picture</ion-label>
     </div>
     <ion-label class="title-lg margin-bottom-8">Basic Information</ion-label>
@@ -111,6 +111,10 @@
       </ion-chip>
     </div>
   </div>
+<!-- 
+  <div>
+    <img src="{{image}}"/>
+  </div> -->
 </ion-content>
 
 <ion-footer class="padding-8" style="direction: rtl;">

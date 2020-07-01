@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/providers/auth.service';
 import { StorageService } from 'src/app/core/storage/storage.service';
 import { DetailsService } from 'src/app/providers/details.service';
 import { ImagePickerService } from 'src/app/providers/image-picker.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-fill-new-profile',
@@ -24,7 +25,7 @@ export class FillNewProfilePage implements OnInit {
   public image: any;
 
   // selected and filtered
-  public jobTitle: string = "";
+  public jobTitle: string;
   public country: INationality;
   public city: ICity;
   public url: string;
@@ -100,12 +101,14 @@ export class FillNewProfilePage implements OnInit {
   }
 
   pickImage() {
-    this._imagePickerService.selectImage();
-    // this._imagePickerService.imagePicker()
-    //   .then((path) => {
-    //     this._imagePickerService.readAsDataURL(path)
-    //       .then((image) => this.image = image, err => console.error(err));
-    //   }, err => console.error(err));
+    this._imagePickerService.selectImage()
+    .then(() => this._imagePickerService.$selectedImage
+    .pipe(take(1))
+    .subscribe((img) => {
+      this.image = img;
+      document.getElementsByClassName('profile-picture-circle')
+        .item(0).setAttribute('style', `background-image: url('${this.image}')`);
+    }));
   }
 
   private _getFilteredCities() {
