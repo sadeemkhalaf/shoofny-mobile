@@ -1,80 +1,80 @@
-@import '../../../../theme/helper-classes.scss';
+@import "../../../../theme/helper-classes.scss";
 
 :host {
-    .top-header {
-        background-color:  #f9f9f9;
-        @include flex-box(row);
+  .top-header {
+    background-color: #f9f9f9;
+    @include flex-box(row);
+  }
+
+  .steps-header {
+    background-color: #f9f9f9;
+    .circle {
+      @include flex-box(column);
+      justify-content: center;
+      align-items: center;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      color: whitesmoke;
     }
 
-    .steps-header {
-        background-color:  #f9f9f9;
-        .circle {
-            @include flex-box(column);
-            justify-content: center;
-            align-items: center;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            color: whitesmoke;
-        }
-
-        .activated {
-            background-color: var(--ion-custom-color-primary);
-        }
-
-        .off {
-            background-color: grey;
-            opacity: 25%;
-        }
+    .activated {
+      background-color: var(--ion-custom-color-primary);
     }
 
-    .mobile-input {
-        width: 100%;
-        .code {
-            width: 25%;
-        }
-        .number {
-            width: 75%;
-        }
+    .off {
+      background-color: grey;
+      opacity: 25%;
     }
-    .title-lg {
-        font-weight: 600;
-        @include font-size(9);
+  }
+
+  .mobile-input {
+    width: 100%;
+    .code {
+      width: 25%;
     }
-    .title-md {
-        font-weight: 500;
-        @include font-size(9);
+    .number {
+      width: 75%;
     }
-    .title-sm {
-        font-weight: 400;
-        @include font-size(7);
-        opacity: 70%;
-    }
-    .title-rg {
-        font-weight: 400;
-        @include font-size(8);
-    }
-    .circle-add-button {
-        @include flex-box(column);
-        border-radius: 50%;
-        height: 22px;
-        width: 22px;
-        background-color: var(--ion-custom-color-dark);
-        padding: 4px;
-        color: white;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .profile-picture-circle {
-        height: 75px;
-        width: 75px;
-        border-radius: 50%;
-        background-color: whitesmoke;
-        background-size: cover;
-    }
-    ion-input {
-        font-weight: 400;
-        @include font-size(8);
-    }
+  }
+  .title-lg {
+    font-weight: 600;
+    @include font-size(9);
+  }
+  .title-md {
+    font-weight: 500;
+    @include font-size(9);
+  }
+  .title-sm {
+    font-weight: 400;
+    @include font-size(7);
+    opacity: 70%;
+  }
+  .title-rg {
+    font-weight: 400;
+    @include font-size(8);
+  }
+  .circle-add-button {
+    @include flex-box(column);
+    border-radius: 50%;
+    height: 22px;
+    width: 22px;
+    background-color: var(--ion-custom-color-dark);
+    padding: 4px;
+    color: white;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .profile-picture-circle {
+    height: 75px;
+    width: 75px;
+    border-radius: 50%;
+    background-color: whitesmoke;
+    background-size: cover;
+  }
+  ion-input {
+    font-weight: 400;
+    @include font-size(8);
+  }
 }

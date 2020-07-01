@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { IUser, INationality, ICity, IDomainOfExperience, IYearsOfExperience } from 'src/app/models/user';
+import {
+  IUser,
+  INationality,
+  ICity,
+  IDomainOfExperience,
+  IYearsOfExperience,
+} from 'src/app/models/user';
 import { AuthService } from 'src/app/providers/auth.service';
 import { StorageService } from 'src/app/core/storage/storage.service';
 import { DetailsService } from 'src/app/providers/details.service';
@@ -12,7 +18,6 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./fill-new-profile.page.scss'],
 })
 export class FillNewProfilePage implements OnInit {
-
   public user: IUser = new IUser();
 
   // inputs values
@@ -36,32 +41,30 @@ export class FillNewProfilePage implements OnInit {
     private _authService: AuthService,
     private _storageService: StorageService,
     private _imagePickerService: ImagePickerService,
-    private _detailsService: DetailsService) { }
+    private _detailsService: DetailsService
+  ) {}
 
   ngOnInit() {
     this._initializeUser();
   }
 
-  // 
+  //
   getCountries() {
-    this._detailsService.getCountries()
-      .subscribe((countries: any) => {
-        this.countries = countries.results;
-      });
+    this._detailsService.getCountries().subscribe((countries: any) => {
+      this.countries = countries.results;
+    });
   }
 
   getCities() {
-    this._detailsService.getCities()
-      .subscribe((cities: any) => {
-        this.cities = cities.results;
-      });
+    this._detailsService.getCities().subscribe((cities: any) => {
+      this.cities = cities.results;
+    });
   }
 
   getDomains() {
-    this._detailsService.getDomains()
-      .subscribe((domains: any) => {
-        this.domains = domains.results;
-      });
+    this._detailsService.getDomains().subscribe((domains: any) => {
+      this.domains = domains.results;
+    });
   }
 
   countryChange(event: any) {
@@ -86,7 +89,7 @@ export class FillNewProfilePage implements OnInit {
   }
 
   clearTag(value: string) {
-    this.tags = this.tags.filter(tag => tag !== value);
+    this.tags = this.tags.filter((tag) => tag !== value);
   }
 
   addUrl() {
@@ -97,23 +100,26 @@ export class FillNewProfilePage implements OnInit {
   }
 
   clearUrl(value: string) {
-    this.urls = this.urls.filter(url => url !== value);
+    this.urls = this.urls.filter((url) => url !== value);
   }
 
   pickImage() {
-    this._imagePickerService.selectImage()
-    .then(() => this._imagePickerService.$selectedImage
-    .pipe(take(1))
-    .subscribe((img) => {
-      this.image = img;
-      document.getElementsByClassName('profile-picture-circle')
-        .item(0).setAttribute('style', `background-image: url('${this.image}')`);
-    }));
+    this._imagePickerService.selectImage().then(() =>
+      this._imagePickerService.$selectedImage.pipe(take(1)).subscribe((img) => {
+        this.image = img;
+        document
+          .getElementsByClassName('profile-picture-circle')
+          .item(0)
+          .setAttribute('style', `background-image: url('${this.image}')`);
+      })
+    );
   }
 
   private _getFilteredCities() {
     // By Country Selected (country id)
-    this.filteredCities = this.cities.filter((city) => city.country === this.country.id);
+    this.filteredCities = this.cities.filter(
+      (city) => city.country === this.country.id
+    );
   }
 
   private _prepareData() {
@@ -128,5 +134,4 @@ export class FillNewProfilePage implements OnInit {
     this.getCountries();
     this.getDomains();
   }
-
 }

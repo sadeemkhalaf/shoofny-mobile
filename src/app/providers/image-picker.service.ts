@@ -58,6 +58,7 @@ export class ImagePickerService {
       // If it's base64 (DATA_URL):
       // let base64Image = 'data:image/jpeg;base64,' + imageData;
       this.$selectedImage.next('data:image/jpeg;base64,' + imageData);
+
       // this.$selectedImage.next(imageData);
     }, (err) => {
       // Handle error
