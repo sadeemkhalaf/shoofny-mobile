@@ -9,7 +9,7 @@ import {
 import { AuthService } from 'src/app/providers/auth.service';
 import { StorageService } from 'src/app/core/storage/storage.service';
 import { DetailsService } from 'src/app/providers/details.service';
-import { ImagePickerService } from 'src/app/providers/image-picker.service';
+import { MediaPickerService } from 'src/app/providers/media-picker.service';
 import { take } from 'rxjs/operators';
 
 @Component({
@@ -40,7 +40,7 @@ export class FillNewProfilePage implements OnInit {
   constructor(
     private _authService: AuthService,
     private _storageService: StorageService,
-    private _imagePickerService: ImagePickerService,
+    private _imagePickerService: MediaPickerService,
     private _detailsService: DetailsService
   ) {}
 

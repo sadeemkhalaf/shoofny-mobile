@@ -59,7 +59,7 @@ export class StorageService implements IStorage {
     // console.log('Set local data for: ', `${API_STORAGE_KEY}-${key}`);
     return this._storage.set(`${API_STORAGE_KEY}-${key}`, JSON.stringify(data));
   }
-
+  
   // Get cached data
   public getLocalData<T = any>(key: string): Promise<T> {
     // console.log('Getting cached data for: ', `${API_STORAGE_KEY}-${key}`);

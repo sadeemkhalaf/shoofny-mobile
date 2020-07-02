@@ -51,6 +51,10 @@ const routes: Routes = [
     path: 'signup/profile',
     loadChildren: () => import('./main/user/fill-new-profile/fill-new-profile.module').then( m => m.FillNewProfilePageModule)
   },
+  {
+    path: 'start-recording',
+    loadChildren: () => import('./main/user/start-recording/start-recording.module').then( m => m.StartRecordingPageModule)
+  },
 ];
 
 @NgModule({

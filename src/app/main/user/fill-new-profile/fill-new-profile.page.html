@@ -91,7 +91,7 @@
       <ion-item class="row" *ngFor="let url of urls, let i = index">
         <ion-input placeholder="url" [(ngModel)]="urls[i]"></ion-input>
         <div class="row align-items-center margin-top-8" (click)="clearUrl(url)">
-          <div class="circle-add-button">x</div>
+          <div class="circle-add-button warning">x</div>
         </div>
       </ion-item>
     </ion-list>
@@ -104,7 +104,7 @@
       </ion-button>
     </ion-item>
     <div *ngIf="tags.length > 0">
-      <ion-chip *ngFor="let tag of tags" color="secondary">
+      <ion-chip *ngFor="let tag of tags" color="primary">
         <ion-icon name="tag" color="primary"></ion-icon>
         <ion-label>{{tag}}</ion-label>
         <ion-icon name="close-circle-outline" (click)="clearTag(tag)"></ion-icon>
