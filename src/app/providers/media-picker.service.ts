@@ -2,48 +2,33 @@ import { Injectable } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
 import { File } from '@ionic-native/file/ngx';
-import { ImagePicker, ImagePickerOptions } from '@ionic-native/image-picker/ngx';
-import { pathToFileURL } from 'url';
 import { ReplaySubject } from 'rxjs';
+import { MediaCapture, CaptureVideoOptions } from '@ionic-native/media-capture/ngx';
+import { StorageService } from '../core/storage/storage.service';
 
+const VIDEO_FILE_KEY = 'videoFile';
+const IMAGE_FILE_KEY = 'imageFile';
 @Injectable({
   providedIn: 'root'
 })
-export class ImagePickerService {
+export class MediaPickerService {
 
   constructor(
     public actionSheetController: ActionSheetController,
     private _camera: Camera,
-    private _imagePicker: ImagePicker,
+    private _storageService: StorageService,
+    private _mediaCapture: MediaCapture,
     private _file: File) { }
 
   croppedImagepath = '';
   isLoading = false;
   $selectedImage: ReplaySubject<any> = new ReplaySubject(1);
+  $selectedVideo: ReplaySubject<any> = new ReplaySubject(1);
 
   imagePickerOptions = {
     maximumImagesCount: 1,
     quality: 50
   };
-
-/* HOW TO USE:
-    1- call imagePicker() to return the image path 
-    2- use prev. data returned (path) as a parameter to call readAsData(path)
-
-*/
-  public imagePicker() {
-    let options: ImagePickerOptions = {
-      maximumImagesCount: 1,
-      quality: 100
-    };
-    return this._imagePicker.getPictures(options);
-  }
-
-  public readAsDataURL(path: string) {
-    const fileName = path.substring(path.lastIndexOf('/') + 1);
-    const pathString = path.substring(0, path.lastIndexOf('/') + 1);
-    return this._file.readAsDataURL(pathString, fileName);
-  }
 
   private pickImage(source: any) {
     const options: CameraOptions = {
@@ -58,6 +43,7 @@ export class ImagePickerService {
       // If it's base64 (DATA_URL):
       // let base64Image = 'data:image/jpeg;base64,' + imageData;
       this.$selectedImage.next('data:image/jpeg;base64,' + imageData);
+      this._storageService.setLocalData(IMAGE_FILE_KEY, 'data:image/jpeg;base64,' + imageData);
 
       // this.$selectedImage.next(imageData);
     }, (err) => {
@@ -85,6 +71,39 @@ export class ImagePickerService {
       ]
     });
     await actionSheet.present();
+  }
+
+  public async selectVideo() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Start recoding your Video',
+      buttons: [{
+        text: 'Use Camera',
+        handler: () => {
+           this._recordVideo();
+        }
+      }, {
+        text: 'Cancel',
+        role: 'cancel'
+      }
+      ]
+    });
+    await actionSheet.present();
+  }
+
+  private _recordVideo() {
+    let options: CaptureVideoOptions = { 
+      duration: 59,
+      limit: 1,
+      quality: 80
+    }
+    this._mediaCapture.captureVideo(options)
+      .then(
+        (data) => {
+          this._storageService.setLocalData(VIDEO_FILE_KEY, data);
+          this.$selectedVideo.next(data);
+        },
+        (err) => console.error(err)
+      );
   }
 
 }
