@@ -62,7 +62,7 @@ export class MediaPickerService {
       }, {
         text: 'Use Camera',
         handler: () => {
-           this.pickImage(this._camera.PictureSourceType.CAMERA);
+          this.pickImage(this._camera.PictureSourceType.CAMERA);
         }
       }, {
         text: 'Cancel',
@@ -79,7 +79,7 @@ export class MediaPickerService {
       buttons: [{
         text: 'Use Camera',
         handler: () => {
-           this._recordVideo();
+          this._recordVideo();
         }
       }, {
         text: 'Cancel',
@@ -97,24 +97,28 @@ export class MediaPickerService {
   }
 
   private _recordVideo() {
-    let options: CaptureVideoOptions = { 
+    let options: CaptureVideoOptions = {
       duration: 59,
       limit: 1,
       quality: 80
     }
     this._mediaCapture.captureVideo(options)
       .then(
-        (data) => {
-          const video = data[0];
-          const fileName = video.name;
-          const directory = video['localURL'].split('/');
-          directory.pop();
-          const fromDirectory = directory.join('/');
+        (res) => {
+          const capturedFile = res[0];
+          const fileName = capturedFile.name;
+          const dir = capturedFile['localURL'].split('/');
+          dir.pop();
+          const fromDirectory = dir.join('/');
           const toDirectory = this._file.dataDirectory;
-          this._file.copyFile(fromDirectory, fileName, toDirectory, fileName).then((result) => {
-            this._storageService.setLocalData(VIDEO_FILE_KEY, result);
-            this.$selectedVideo.next(result);
-          })
+
+          this._file.copyFile(fromDirectory, fileName, toDirectory, fileName).then((res) => {
+            this.$selectedVideo.next(capturedFile);
+            this._storageService.setLocalData(VIDEO_FILE_KEY, capturedFile);
+
+          }, err => {
+            console.log('err: ', err);
+          });
         },
         (err) => console.error(err)
       );
