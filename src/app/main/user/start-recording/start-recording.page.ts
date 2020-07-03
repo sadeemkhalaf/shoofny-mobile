@@ -39,7 +39,7 @@ export class StartRecordingPage implements OnInit {
 
   playVideo() {
     this._mediaService.$selectedVideo.pipe(take(1)).subscribe((vid) => {
-      let video = this.myVideo.nativeElement;
+      const video = this.myVideo.nativeElement;
       video.src = this._mediaService.getVideoToPlay(vid);
       video.play();
     })
