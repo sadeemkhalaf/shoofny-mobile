@@ -17,6 +17,8 @@ export class StartRecordingPage implements OnInit {
   public video: any;
   public enablePlay: boolean;
 
+  public pathTest: string;
+
   constructor(
     private _mediaService: MediaPickerService,
     private _storageService: StorageService
@@ -40,7 +42,8 @@ export class StartRecordingPage implements OnInit {
   playVideo() {
     this._mediaService.$selectedVideo.pipe(take(1)).subscribe((vid) => {
       const video = this.myVideo.nativeElement;
-      video.src = this._mediaService.getVideoToPlay(vid);
+      video.src = vid;
+      // this._mediaService.getVideoToPlay(vid);
       video.play();
     })
 

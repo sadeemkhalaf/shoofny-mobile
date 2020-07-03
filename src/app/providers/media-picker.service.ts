@@ -105,20 +105,9 @@ export class MediaPickerService {
     this._mediaCapture.captureVideo(options)
       .then(
         (res) => {
-          const capturedFile = res[0];
-          const fileName = capturedFile.name;
-          const dir = capturedFile['localURL'].split('/');
-          dir.pop();
-          const fromDirectory = dir.join('/');
-          const toDirectory = this._file.dataDirectory;
-
-          this._file.copyFile(fromDirectory, fileName, toDirectory, fileName).then((res) => {
-            this.$selectedVideo.next(capturedFile);
+          const capturedFile: MediaFile = res[0];
+            this.$selectedVideo.next(capturedFile.fullPath);
             this._storageService.setLocalData(VIDEO_FILE_KEY, capturedFile);
-
-          }, err => {
-            console.log('err: ', err);
-          });
         },
         (err) => console.error(err)
       );
