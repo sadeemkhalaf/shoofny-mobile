@@ -90,6 +90,12 @@ export class MediaPickerService {
     await actionSheet.present();
   }
 
+  getVideoToPlay(file) {
+    const path = this._file.dataDirectory + file.name;
+    const url = path.replace(/^file:\/\//, '');
+    return url;
+  }
+
   private _recordVideo() {
     let options: CaptureVideoOptions = { 
       duration: 59,
@@ -99,8 +105,16 @@ export class MediaPickerService {
     this._mediaCapture.captureVideo(options)
       .then(
         (data) => {
-          this._storageService.setLocalData(VIDEO_FILE_KEY, data);
-          this.$selectedVideo.next(data);
+          const video = data[0];
+          const fileName = video.name;
+          const directory = video['localURL'].split('/');
+          directory.pop();
+          const fromDirectory = directory.join('/');
+          const toDirectory = this._file.dataDirectory;
+          this._file.copyFile(fromDirectory, fileName, toDirectory, fileName).then((result) => {
+            this._storageService.setLocalData(VIDEO_FILE_KEY, result);
+            this.$selectedVideo.next(result);
+          })
         },
         (err) => console.error(err)
       );

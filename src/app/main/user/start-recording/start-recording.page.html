@@ -20,36 +20,38 @@
       </div>
     </ion-slide>
     <ion-slide>
-        <div class="steps-header row padding-left-32 padding-bottom-16">
-          <div class="row align-items-center">
-            <div class="circle off"><span class="title-rg">1</span></div>
-            <span class="margin-left-4 margin-right-4 title-sm">Register</span>
-          </div>
-          <div class="row align-items-center">
-            <div class="circle off"><span class="title-rg">2</span></div>
-            <span class="margin-left-4 margin-right-4 title-sm">Fill Profile</span>
-          </div>
-          <div class="row align-items-center">
-            <div class="circle activated"><span class="title-rg">3</span></div>
-            <span class="margin-left-4 margin-right-4 title-sm">Take The Video</span>
-          </div>
+      <div class="steps-header row padding-left-32 padding-bottom-16">
+        <div class="row align-items-center">
+          <div class="circle off"><span class="title-rg">1</span></div>
+          <span class="margin-left-4 margin-right-4 title-sm">Register</span>
         </div>
-        <div>
-          <div class="title-container col">
-            <ion-label class="title-ex">59</ion-label>
-            <ion-label class="title-md">seconds</ion-label>
-            <ion-label class="title-sm">Make Every Second Count</ion-label>
-          </div>
+        <div class="row align-items-center">
+          <div class="circle off"><span class="title-rg">2</span></div>
+          <span class="margin-left-4 margin-right-4 title-sm">Fill Profile</span>
+        </div>
+        <div class="row align-items-center">
+          <div class="circle activated"><span class="title-rg">3</span></div>
+          <span class="margin-left-4 margin-right-4 title-sm">Take The Video</span>
+        </div>
+      </div>
+      <div>
+        <div class="title-container col">
+          <ion-label class="title-ex">59</ion-label>
+          <ion-label class="title-md">seconds</ion-label>
+          <ion-label class="title-sm">Make Every Second Count</ion-label>
+        </div>
 
-          <div class="video-container">
-            <video *ngIf="!!video" controls style="width: auto; height: auto;" [src]="video"></video>
+        <div class="video-container">
+          <video #video controls style="width: auto; height: auto;" *ngIf="enablePlay"></video>
+          <div class="row">
+            <ion-button (click)="playVideo()" *ngIf="enablePlay">PLAY VIDEO</ion-button>
             <ion-button (click)="startRecording()">START RECORDING</ion-button>
           </div>
-
         </div>
-<div>
+      </div>
+      <div>
 
-</div>
+      </div>
     </ion-slide>
   </ion-slides>
 </ion-content>
