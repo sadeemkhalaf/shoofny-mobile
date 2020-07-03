@@ -1,0 +1,68 @@
+@import '../../../../theme/helper-classes.scss';
+:host {
+    ion-slides {
+        height: 100%;
+        background-color: #f7f7f7;
+        top: 0;
+      }
+
+      .steps-header {
+        // background-color:  #f9f9f9;
+        position:  absolute;
+        top: 16px;
+        .circle {
+            @include flex-box(column);
+            justify-content: center;
+            align-items: center;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            color: whitesmoke;
+        }
+
+        .activated {
+            background-color: var(--ion-custom-color-primary);
+        }
+
+        .off {
+            background-color: grey;
+            opacity: 25%;
+        }
+    }
+
+    .slide-content {
+        @include flex-box(column);
+        // justify-content: center;
+
+      .img-container {
+        height: 220px;
+        width: 220px;
+        background-image: url('../../../../assets//vid.png');
+      }
+    }
+
+    .title-lg {
+        font-weight: 600;
+        @include font-size(11);
+        color: var(--ion-custom-color-dark);
+    }
+    .title-md {
+        font-weight: 500;
+        @include font-size(9);
+        color: var(--ion-custom-color-dark);
+    }
+    .title-sm {
+        font-weight: 400;
+        @include font-size(7);
+        opacity: 70%;
+    }
+    .title-rg {
+      font-weight: 400;
+      @include font-size(8);
+  }
+    .title-ex {
+      font-weight: 600;
+      @include font-size(30);
+      color: var(--ion-custom-color-dark);
+    }
+}

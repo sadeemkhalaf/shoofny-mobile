@@ -42,7 +42,7 @@ export class FillNewProfilePage implements OnInit {
     private _storageService: StorageService,
     private _imagePickerService: MediaPickerService,
     private _detailsService: DetailsService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this._initializeUser();

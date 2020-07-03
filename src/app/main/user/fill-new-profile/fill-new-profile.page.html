@@ -85,7 +85,7 @@
         <ion-input clearInput placeholder="url" [(ngModel)]="url"></ion-input>
       </ion-item>
       <div class="row align-items-center margin-top-8" (click)="addUrl()">
-        <div class="circle-add-button">+</div>
+        <div class="circle-add-button add">+</div>
         <span class="margin-left-8 title-sm">add more</span>
       </div>
       <ion-item class="row" *ngFor="let url of urls, let i = index">
@@ -95,7 +95,7 @@
         </div>
       </ion-item>
     </ion-list>
-    <ion-label class="floating-label" position="floating">Tags</ion-label>
+    <ion-label class="title-lg margin-bottom-8">Tags</ion-label>
     <ion-item>
       <ion-input clearInput placeholder="add skills" [(ngModel)]="tagInput">
       </ion-input>
@@ -114,7 +114,7 @@
 </ion-content>
 
 <ion-footer class="padding-8" style="direction: rtl;">
-  <ion-button>
+  <ion-button [routerLink]="['start-recording']">
     <ion-label>
       <ion-icon name="arrow-forward-outline"></ion-icon>
       Confirm & Continue

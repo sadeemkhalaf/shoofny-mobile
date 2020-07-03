@@ -52,7 +52,7 @@ const routes: Routes = [
     loadChildren: () => import('./main/user/fill-new-profile/fill-new-profile.module').then( m => m.FillNewProfilePageModule)
   },
   {
-    path: 'start-recording',
+    path: 'signup/profile/start-recording',
     loadChildren: () => import('./main/user/start-recording/start-recording.module').then( m => m.StartRecordingPageModule)
   },
 ];

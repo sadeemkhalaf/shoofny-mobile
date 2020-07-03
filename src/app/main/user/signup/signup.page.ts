@@ -65,7 +65,7 @@ export class SignupPage implements OnInit {
   countryCodeSearch(event) {
     this.countryCodes = this._countryCodes.filter(data => 
       !!data.dial_code && data.dial_code.includes(event.text) 
-      || !!data.dial_code && data.name.includes(event.text));
+      || !!data.name && data.name.toLocaleLowerCase().includes(event.text.toLocaleLowerCase()));
   }
 
   readCountryCodes() {

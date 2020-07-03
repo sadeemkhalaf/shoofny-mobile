@@ -6,8 +6,8 @@ import { ReplaySubject } from 'rxjs';
 import { MediaCapture, CaptureVideoOptions } from '@ionic-native/media-capture/ngx';
 import { StorageService } from '../core/storage/storage.service';
 
-const VIDEO_FILE_KEY = 'videoFile';
-const IMAGE_FILE_KEY = 'imageFile';
+export const VIDEO_FILE_KEY = 'videoFile';
+export const IMAGE_FILE_KEY = 'imageFile';
 @Injectable({
   providedIn: 'root'
 })

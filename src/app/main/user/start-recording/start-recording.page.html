@@ -1,9 +1,55 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>start-recording</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+  <ion-slides pager="true" [options]="slideOpts">
+    <ion-slide>
+      <div class="slide-content align-items-center">
+        <div class="img-container"></div>
+        <div class="text-container margin-32">
+          <div class="title-lg margin-bottom-4">We suggest to start as the following</div>
+          <div class="title-md margin-bottom-4">Greetings</div>
+          <div class="title-md margin-bottom-4">Introduce yourself</div>
+          <div class="title-sm margin-bottom-4">name, age, city</div>
+          <div class="title-md margin-bottom-4">speak about your education</div>
+          <div class="title-sm margin-bottom-4">college degree, extra courses</div>
+          <div class="title-md margin-bottom-4">speak about your experience</div>
+          <div class="title-sm margin-bottom-4">past and current experience</div>
+          <div class="title-md margin-bottom-4">speak about yourself too!</div>
+          <div class="title-sm margin-bottom-4">skills, voluntary work and hobbies</div>
+          <div></div>
+          <div class="title-md">Ready, swipe left!</div>
+        </div>
+      </div>
+    </ion-slide>
+    <ion-slide>
+        <div class="steps-header row padding-left-32 padding-bottom-16">
+          <div class="row align-items-center">
+            <div class="circle off"><span class="title-rg">1</span></div>
+            <span class="margin-left-4 margin-right-4 title-sm">Register</span>
+          </div>
+          <div class="row align-items-center">
+            <div class="circle off"><span class="title-rg">2</span></div>
+            <span class="margin-left-4 margin-right-4 title-sm">Fill Profile</span>
+          </div>
+          <div class="row align-items-center">
+            <div class="circle activated"><span class="title-rg">3</span></div>
+            <span class="margin-left-4 margin-right-4 title-sm">Take The Video</span>
+          </div>
+        </div>
+        <div>
+          <div class="title-container col">
+            <ion-label class="title-ex">59</ion-label>
+            <ion-label class="title-md">seconds</ion-label>
+            <ion-label class="title-sm">Make Every Second Count</ion-label>
+          </div>
 
+          <div class="video-container">
+            <video *ngIf="!!video" controls style="width: auto; height: auto;" [src]="video"></video>
+            <ion-button (click)="startRecording()">START RECORDING</ion-button>
+          </div>
+
+        </div>
+<div>
+
+</div>
+    </ion-slide>
+  </ion-slides>
 </ion-content>
