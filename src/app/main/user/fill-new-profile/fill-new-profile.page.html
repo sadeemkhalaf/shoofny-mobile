@@ -23,7 +23,7 @@
       <div class="profile-picture-circle margin-right-16" #profilePicture></div>
       <ion-label class="title-rg" (click)="pickImage()">Change Picture</ion-label>
     </div>
-    <ion-label class="title-lg margin-bottom-8">Basic Information</ion-label>
+    <ion-label class="title-lg margin-bottom-8 margin-top-16">Basic Information</ion-label>
     <ion-list>
       <ion-item class="col">
         <ion-label position="stacked">First Name</ion-label>
@@ -60,7 +60,7 @@
         </ionic-selectable>
       </ion-item>
     </ion-list>
-    <ion-label class="title-lg margin-bottom-8">Professional Information</ion-label>
+    <ion-label class="title-lg margin-bottom-8 margin-top-16">Professional Information</ion-label>
     <ion-list>
       <ion-item class="col">
         <ion-label position="stacked" class="title-rg" >Domain of Expertise</ion-label>
@@ -79,12 +79,12 @@
       </ion-item>
     </ion-list>
     
-    <ion-label class="title-lg margin-bottom-8">Public Professional Profiles</ion-label>
+    <ion-label class="title-lg margin-bottom-8 margin-top-16">Public Professional Profiles</ion-label>
     <ion-list>
       <ion-item class="col">
         <ion-input clearInput placeholder="url" [(ngModel)]="url"></ion-input>
       </ion-item>
-      <div class="row align-items-center margin-top-8" (click)="addUrl()">
+      <div class="row align-items-center margin-8" (click)="addUrl()">
         <div class="circle-add-button add">+</div>
         <span class="margin-left-8 title-sm">add more</span>
       </div>
@@ -95,7 +95,7 @@
         </div>
       </ion-item>
     </ion-list>
-    <ion-label class="title-lg margin-bottom-8">Tags</ion-label>
+    <ion-label class="title-lg margin-bottom-8 margin-top-16">Tags</ion-label>
     <ion-item>
       <ion-input clearInput placeholder="add skills" [(ngModel)]="tagInput">
       </ion-input>
