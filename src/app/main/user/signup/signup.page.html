@@ -30,10 +30,10 @@
         <ion-item class="col">
           <ion-label position="stacked" class="margin-bottom-8">Phone Number</ion-label>
           <div class="row mobile-input">
-            <!-- <ion-input clearInput placeholder="code" class="code margin-right-8 title-rg" type="number"></ion-input> -->
             <div>
               <ion-label position="stacked" class="margin-bottom-8 title-rg">Dial Code</ion-label>
               <ionic-selectable
+              class="title-rg"
                 item-content
                 [(ngModel)]="countryCode"
                 [items]="countryCodes"

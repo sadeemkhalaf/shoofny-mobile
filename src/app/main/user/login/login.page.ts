@@ -33,7 +33,7 @@ export class LoginPage implements OnInit {
       email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]]
     });
   }
-  
+
  login(email: string, password: string) {
     this._auth.login(email, password);
   }
@@ -46,7 +46,7 @@ export class LoginPage implements OnInit {
     this.isSubmitted = true;
     if (this.form.valid) {
       const email = this.form.get('email').value;
-      const password = this.form.get('password').value
+      const password = this.form.get('password').value;
       this.login(email, password);
     }
   }

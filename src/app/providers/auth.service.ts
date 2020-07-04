@@ -40,7 +40,7 @@ export class AuthService {
   // logout
   public logout() {
     this._isLoggedIn.next(false);
-      return this._storageService.clearUserData();
+    return this._storageService.clearUserData();
   }
 
   public getUserProfile() {
@@ -51,7 +51,7 @@ export class AuthService {
     return this._http.put<IUser>('/api/auth/profile', user);
   }
 
-  
+
 
   private _getAccessToken(data) {
     this._helper.showLoading();
@@ -69,10 +69,12 @@ export class AuthService {
               });
             } else {
               this._helper.hideLoading();
+              this._helper.showToast('Wrong email/password!', 'danger');
               reject({ message: 'Wrong username and password' });
             }
           }, error => {
             this._helper.hideLoading();
+            this._helper.showToast('Something went wrong!', 'danger');
             reject(error);
           }));
   }
@@ -100,12 +102,12 @@ export class AuthService {
         }), (reason) => {
           if (reason.status >= 400 && reason.status < 500) {
             if (reason.status == 401) {
-              console.log('reason.status: ', reason.status)
+              console.log('reason.status: ', reason.status);
               this._storageService.getAuthToken().then((token) => {
-                if(!!token) {
+                if (!!token) {
                   this.refreshToken();
                 }
-              })
+              });
             } else {
               this._removeUserData().then(async () => {
                 console.warn('Token missing or expired');
@@ -124,7 +126,7 @@ export class AuthService {
         if (status === ConnectionStatus.Online) {
           this._storageService.getAuthToken()
             .then((token) => {
-              if(!!token) 
+              if (!!token)
               {
                 this._fillUserData(resolve, reject);
                 this._isLoggedIn.next(true);
@@ -134,7 +136,7 @@ export class AuthService {
             },
               reject => {
                 console.warn(reject);
-              })
+              });
         } else {
           console.warn('You are offline!');
         }
@@ -157,12 +159,12 @@ export class AuthService {
             }
           }, error => {
             reject(error);
-            this.logout().then(() => 
+            this.logout().then(() =>
             this._route.navigate([`/login`], {queryParamsHandling: 'merge', replaceUrl: true})
             );
-           
+
           }));
-    }, error => console.error(error))
+    }, error => console.error(error));
 
   }
 
