@@ -6,10 +6,16 @@
         top: 0;
       }
 
-      .steps-header {
-        // background-color:  #f9f9f9;
+      .header {
         position:  absolute;
-        top: 16px;
+        top: 0px;
+        width: 100%;
+      }
+      .top-header {
+        background-color:  #f9f9f9;
+        @include flex-box(row);
+    }
+      .steps-header {
         .circle {
             @include flex-box(column);
             justify-content: center;
@@ -19,7 +25,6 @@
             border-radius: 50%;
             color: whitesmoke;
         }
-
         .activated {
             background-color: var(--ion-custom-color-primary);
         }
@@ -28,6 +33,11 @@
             background-color: grey;
             opacity: 25%;
         }
+    }
+
+    
+    .success {
+      color: #37ad4b;
     }
 
     .slide-content {

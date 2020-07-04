@@ -20,36 +20,50 @@
       </div>
     </ion-slide>
     <ion-slide>
-      <div class="steps-header row padding-left-32 padding-bottom-16">
-        <div class="row align-items-center">
-          <div class="circle off"><span class="title-rg">1</span></div>
-          <span class="margin-left-4 margin-right-4 title-sm">Register</span>
+      <div class="header">
+        <div class="padding-16 top-header">
+          <app-back-button></app-back-button>
+          <ion-label class="margin-left-16">Video Recording</ion-label>
         </div>
-        <div class="row align-items-center">
-          <div class="circle off"><span class="title-rg">2</span></div>
-          <span class="margin-left-4 margin-right-4 title-sm">Fill Profile</span>
-        </div>
-        <div class="row align-items-center">
-          <div class="circle activated"><span class="title-rg">3</span></div>
-          <span class="margin-left-4 margin-right-4 title-sm">Take The Video</span>
+        <div class="steps-header row padding-16 space-between">
+          <div class="row align-items-center">
+            <div class="circle off"><span class="title-rg">1</span></div>
+            <span class="margin-left-4 margin-right-4 title-sm">Register</span>
+          </div>
+          <div class="row align-items-center">
+            <div class="circle off"><span class="title-rg">2</span></div>
+            <span class="margin-left-4 margin-right-4 title-sm">Fill Profile</span>
+          </div>
+          <div class="row align-items-center">
+            <div class="circle activated"><span class="title-rg">3</span></div>
+            <span class="margin-left-4 margin-right-4 title-sm">Take The Video</span>
+          </div>
         </div>
       </div>
       <div>
-        <div class="title-container col">
+        <div class="title-container col margin-8">
           <ion-label class="title-ex">59</ion-label>
           <ion-label class="title-md">seconds</ion-label>
           <ion-label class="title-sm">Make Every Second Count</ion-label>
         </div>
-
         <div class="video-container">
-          <video #video controls style="width: auto; height: auto;" *ngIf="enablePlay"></video>
+          <div class="success margin-16" *ngIf="enablePlay">
+            <ion-label>
+              <ion-icon name="thumbs-up-outline"></ion-icon>
+              All set!
+            </ion-label>
+          </div>
+          <ion-button (click)="startRecording()">START RECORDING</ion-button>
+        </div>
+      <!-- TODO: still needs a workaround to view video from local storage 
+        <div class="video-container">
+          <video #video controls style="width: auto; height: auto;" *ngIf="enablePlay" [src]="pathTest" type='video/mp4'></video>
           <div class="row">
             <ion-button (click)="playVideo()" *ngIf="enablePlay">PLAY VIDEO</ion-button>
             <ion-button (click)="startRecording()">START RECORDING</ion-button>
           </div>
-
           {{pathTest}}
-        </div>
+        </div> -->
       </div>
       <div>
 

@@ -25,6 +25,7 @@
     "@ionic-native/http": "^5.26.0",
     "@ionic-native/image-picker": "^5.27.0",
     "@ionic-native/in-app-browser": "^5.26.0",
+    "@ionic-native/ionic-webview": "^5.27.0",
     "@ionic-native/media": "^5.26.0",
     "@ionic-native/media-capture": "^5.26.0",
     "@ionic-native/network": "^5.26.0",
@@ -98,9 +99,7 @@
       "cordova-plugin-statusbar": {},
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
-      "cordova-plugin-ionic-webview": {
-        "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
-      },
+      "cordova-plugin-ionic-webview": {},
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-telerik-imagepicker": {
         "PHOTO_LIBRARY_USAGE_DESCRIPTION": " "

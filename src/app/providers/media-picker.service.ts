@@ -97,7 +97,7 @@ export class MediaPickerService {
   }
 
   private _recordVideo() {
-    let options: CaptureVideoOptions = {
+    const options: CaptureVideoOptions = {
       duration: 59,
       limit: 1,
       quality: 80
@@ -105,9 +105,9 @@ export class MediaPickerService {
     this._mediaCapture.captureVideo(options)
       .then(
         (res) => {
-          const capturedFile: MediaFile = res[0];
-            this.$selectedVideo.next(capturedFile.fullPath);
-            this._storageService.setLocalData(VIDEO_FILE_KEY, capturedFile);
+          const capturedFile = res[0];
+          this.$selectedVideo.next(capturedFile.fullPath);
+          this._storageService.setLocalData(VIDEO_FILE_KEY, capturedFile);
         },
         (err) => console.error(err)
       );
