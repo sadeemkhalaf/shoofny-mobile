@@ -20,18 +20,10 @@ export class ProfilePage implements OnInit {
     private _streamingMedia: StreamingMedia
     ) { }
 
-  ngOnInit() {
-    this._authService.getUserProfile()
-    .pipe(take(1))
-    .subscribe((user) => {
-      this.profile = user as IUser;
-    }, error => this.helper.showToast(error)
-    )
-  }
+  ngOnInit() {}
 
   ionViewDidEnter() {
     this._authService.getUserProfile()
-    .pipe(take(1))
     .subscribe((user) => {
       this.profile = user as IUser;
     }, error => this.helper.showToast(error)
