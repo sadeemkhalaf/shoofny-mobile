@@ -5,14 +5,14 @@
         <div class="img-container"></div>
         <div class="text-container margin-32">
           <div class="title-lg margin-bottom-4">We suggest to start as the following</div>
-          <div class="title-md margin-bottom-4">Greetings</div>
-          <div class="title-md margin-bottom-4">Introduce yourself</div>
+          <div class="title-md dark-color margin-bottom-4">Greetings</div>
+          <div class="title-md dark-color margin-bottom-4">Introduce yourself</div>
           <div class="title-sm margin-bottom-4">name, age, city</div>
-          <div class="title-md margin-bottom-4">speak about your education</div>
+          <div class="title-md dark-color margin-bottom-4">speak about your education</div>
           <div class="title-sm margin-bottom-4">college degree, extra courses</div>
-          <div class="title-md margin-bottom-4">speak about your experience</div>
+          <div class="title-md dark-color margin-bottom-4">speak about your experience</div>
           <div class="title-sm margin-bottom-4">past and current experience</div>
-          <div class="title-md margin-bottom-4">speak about yourself too!</div>
+          <div class="title-md dark-color margin-bottom-4">speak about yourself too!</div>
           <div class="title-sm margin-bottom-4">skills, voluntary work and hobbies</div>
           <div></div>
           <div class="title-md">Ready, swipe left!</div>
@@ -43,7 +43,7 @@
       <div>
         <div class="title-container col margin-8">
           <ion-label class="title-ex">59</ion-label>
-          <ion-label class="title-md">seconds</ion-label>
+          <ion-label class="title-md dark-color">seconds</ion-label>
           <ion-label class="title-sm">Make Every Second Count</ion-label>
         </div>
         <div class="video-container">
@@ -53,7 +53,10 @@
               All set!
             </ion-label>
           </div>
-          <ion-button (click)="startRecording()">START RECORDING</ion-button>
+          <div class="row align-items-center space-between">
+            <ion-button size="small" class="padding-left-8" (click)="startRecording()">START RECORDING</ion-button>
+            <ion-label class="padding-left-8 warning title-rg" *ngIf="enablePlay">Finish and login!</ion-label>
+          </div>
         </div>
       <!-- TODO: still needs a workaround to view video from local storage 
         <div class="video-container">

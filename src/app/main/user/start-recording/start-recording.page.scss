@@ -40,6 +40,10 @@
       color: #37ad4b;
     }
 
+  .warning {
+    color: var(--ion-color-danger-tint);
+  }
+
     .slide-content {
         @include flex-box(column);
         // justify-content: center;
@@ -59,8 +63,12 @@
     .title-md {
         font-weight: 500;
         @include font-size(9);
-        color: var(--ion-custom-color-dark);
     }
+
+    .dark-color {
+      color: var(--ion-custom-color-dark);
+    }
+    
     .title-sm {
         font-weight: 400;
         @include font-size(7);
