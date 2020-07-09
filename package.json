@@ -49,6 +49,7 @@
     "cordova-plugin-network-information": "^2.0.2",
     "cordova-plugin-streaming-media": "^2.3.0",
     "cordova-plugin-telerik-imagepicker": "^2.3.3",
+    "cordova-plugin-x-toast": "^2.7.2",
     "ionic-selectable": "^4.7.1",
     "rxjs": "~6.5.1",
     "tslib": "^1.10.0",
@@ -110,7 +111,8 @@
         "PHOTO_LIBRARY_USAGE_DESCRIPTION": " "
       },
       "cordova-plugin-file-transfer": {},
-      "cordova-plugin-network-information": {}
+      "cordova-plugin-network-information": {},
+      "cordova-plugin-x-toast": {}
     },
     "platforms": [
       "ios",
