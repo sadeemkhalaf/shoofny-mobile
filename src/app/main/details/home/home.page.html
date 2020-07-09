@@ -1,12 +1,12 @@
 <ion-content>
-  <div class="content" *ngIf="!!userData">
+  <div class="content">
     <div class="col header">
       <div class="row space-between margin-16">
         <ion-menu-button menu="menu"></ion-menu-button>
         <app-profile-picture-circle [routerLink]="['/home/profile']" ></app-profile-picture-circle>
       </div>
-      <div class="row margin-left-16 margin-bottom-16">
-        <ion-label class="greeting-label">Hello, {{userData.first_name}}</ion-label>
+      <div class="row margin-left-16 margin-bottom-16" *ngIf="!!userData">
+        <ion-label class="greeting-label">Hello, {{!!userData.first_name ? userData.first_name : ''}}</ion-label>
       </div>
       <div class="insights row space-between margin-16">
         <div class="col center">
@@ -47,19 +47,19 @@
       <div class="col jobs-list" *ngFor="let job of jobsListByCity">
         <app-job-list-item [jobItem]="job"></app-job-list-item>
       </div>
-      <div class="no-results-label" *ngIf="jobsListByCity.length === 0">
-        <ion-label >No Results Found</ion-label>
+      <div class="no-results-label margin-8" *ngIf="jobsListByCity.length === 0">
+        <ion-label class="title-rg">No Results Found</ion-label>
       </div>
-      <div class="align-center">
-        <ion-button [routerLink]="['/home/jobs']" routerDirection="forward">
-          <ion-label class="show-all-link">
-            <span >Show All</span>
-          </ion-label>    
-        </ion-button>
-      </div>
-
     </div>
   </div>
-
-
 </ion-content>
+
+<ion-footer>
+  <div class="align-center padding-8">
+    <ion-button [routerLink]="['/home/jobs']" routerDirection="forward">
+      <ion-label class="show-all-link">
+        <span >Show All</span>
+      </ion-label>    
+    </ion-button>
+  </div>
+</ion-footer>

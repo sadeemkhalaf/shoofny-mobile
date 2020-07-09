@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/providers/auth.service';
 import { IUser } from 'src/app/models/user';
-import { StorageService } from 'src/app/core/storage/storage.service';
-import { take } from 'rxjs/operators';
-import { Router, NavigationEnd } from '@angular/router';
+import { take, switchMap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 import { JobDetailsService } from 'src/app/providers/job-details.service';
 import { IJobDetails } from 'src/app/models/Job';
 import { AppHelpersService } from 'src/app/core/utils/app-helpers.service';
@@ -26,16 +25,15 @@ export class HomePage implements OnInit {
     public helper: AppHelpersService,
     private _auth: AuthService,
     private _route: Router,
-    private _jobDetailsService: JobDetailsService,
-    private _storage: StorageService) { }
+    private _jobDetailsService: JobDetailsService) { }
 
   ngOnInit() {
     this._loadData();
     this.navigationSubscription = this._route.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
-      if (e instanceof NavigationEnd) {
-        this._loadData();
-      }
+      // if (e instanceof NavigationEnd) {
+      //   this._loadData();
+      // }
 
     });
   }
@@ -45,18 +43,7 @@ export class HomePage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this._storage.getUserData().then((data) => {
-      this.userData = data;
-      this.getJobsByCity(this.userData.city.id)
-        .pipe(take(1))
-        .subscribe((data: any) => {
-          this.jobsCountByCity = data.count;
-          this.jobsListByCity = data.results as IJobDetails[];
-          if (this.jobsListByCity.length > 3) {
-            this.jobsListByCity = this.jobsListByCity.sort((a, b) => a.timestamp > b.timestamp ? 1 : -1).slice(0, 3);
-          }
-        });
-    })
+   this._loadData();
   }
 
   public logout() {
@@ -75,14 +62,18 @@ export class HomePage implements OnInit {
   }
 
   _loadData() {
-    this._storage.getUserData().then((data) => {
-      this.userData = data;
-      this.getJobsByCity(this.userData.city.id)
-        .pipe(take(1))
-        .subscribe((data: any) => {
+    this._auth.getUserProfile().pipe(take(1), switchMap((user) => {
+      this.userData = user;
+      return this.getJobsByCity(user.city.id);
+    }))
+    .subscribe((data: any) => {
+      if (!!this.userData.city.id) {
           this.jobsCountByCity = data.count;
           this.jobsListByCity = data.results as IJobDetails[];
-        });
+          if (this.jobsListByCity.length > 3) {
+            this.jobsListByCity = this.jobsListByCity.sort((a, b) => a.timestamp > b.timestamp ? 1 : -1).slice(0, 3);
+          }
+      }
     })
   }
 }

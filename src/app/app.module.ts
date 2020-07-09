@@ -17,6 +17,7 @@ import { AuthGuardsGuard } from './guards/auth-guards.guard';
 import { MediaCapture } from '@ionic-native/media-capture/ngx';
 import { Media } from '@ionic-native/media/ngx';
 import { File } from '@ionic-native/file/ngx';
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { Camera } from '@ionic-native/Camera/ngx';
 import { IonicSelectableModule } from 'ionic-selectable';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
@@ -45,6 +46,7 @@ import { SearchBoxPipe } from './providers/search-box.pipe';
     Media,
     MediaCapture,
     File,
+    FileTransfer,
     Camera,
     ImagePicker
   ],

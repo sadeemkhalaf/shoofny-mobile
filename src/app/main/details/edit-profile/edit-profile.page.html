@@ -7,7 +7,7 @@
 <div class="margin-32 col">
   <div class="row align-items-center margin-bottom-16">
     <div class="profile-picture-circle margin-right-16"></div>
-    <ion-label class="title-rg">Change Picture</ion-label>
+    <ion-label class="title-rg link" (click)="pickImage()">Change Picture</ion-label>
   </div>
   <ion-label class="title-lg margin-bottom-8">Basic Information</ion-label>
   <ion-list>
@@ -21,7 +21,7 @@
     </ion-item>
     <ion-item class="col">
       <ion-label position="stacked">email</ion-label>
-      <ion-input clearInput placeholder="email"  [(ngModel)]="user.email" type="email"></ion-input>
+      <ion-input clearInput placeholder="email" [(ngModel)]="user.email" type="email"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label class="title-rg" position="floating">Date of Birth</ion-label>
@@ -95,4 +95,16 @@
     </ion-chip>
   </div>
 </div>
+<div>
+  <ion-button (click)="uploadVideo()" >Upload Video</ion-button>
+</div>
 </ion-content>
+<ion-footer>
+  <div class="row align-items-center padding-8">
+    <ion-button routerDirection="forward" (click)="submitData()">
+      <ion-label class="submit-button">
+        <span>Save Changes</span>
+      </ion-label>    
+    </ion-button>
+  </div>
+</ion-footer>

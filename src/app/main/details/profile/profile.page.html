@@ -1,18 +1,18 @@
-<div class="padding-16 top-header" *ngIf="!!profile">
+<div class="padding-16 top-header">
   <div class="row tool-bar space-between">
     <app-back-button></app-back-button>
     <span class="justify-content-center" [routerLink]="['/home/profile/edit-profile']"><span class="title-sm">Edit</span> <ion-icon name="pencil-outline" slot="end"></ion-icon></span>
   </div>
 <div class="col profile-header">
   <div class="profile-picture-circle"></div>
-  <ion-label class="title-lg">{{profile.first_name}}</ion-label>
+  <ion-label class="title-lg" *ngIf="!!profile">{{profile.first_name}} {{profile.last_name}}</ion-label>
   <ion-label class="title-sm">{{profile.city.display_name}}</ion-label>
   <ion-label class="title-sm">{{profile.DOEX.name_EN}}</ion-label>
-  <ion-label class="title-sm">AGE</ion-label>
+  <ion-label class="title-sm">{{!!profile.DOB ? calculatAge() : 'AGE'}} y.o</ion-label>
 </div>
 </div>
 
-<ion-content *ngIf="!!profile">
+<ion-content>
   <div class="row space-between margin-left-32 margin-right-32 margin-top-16 margin-bottom-16">
     <div class="col align-items-center">
       <ion-label class="title-sm">Rating</ion-label>
@@ -39,10 +39,14 @@
     <ion-label class="title-lg margin-bottom-16">Top Skills</ion-label>
     <div class="margin-bottom-16">
       <ion-chip *ngFor="let skill of profile.tags">{{skill}}</ion-chip>
+      <ion-label class="title-sm" *ngIf="1 > profile.tags.length">
+        No skills added</ion-label>
     </div>
     <ion-label class="title-lg margin-bottom-32">Your Video</ion-label>
-    <div class="justify-content-center margin-bottom-16 video-container">
-      <video controls style="width: auto; height: auto;" 
+    <div class="justify-content-center margin-bottom-16 video-container"
+    [ngClass]="{'no-video': !profile.video}">
+      <video *ngIf="!!profile.video"
+      controls style="width: auto; height: auto;" 
       [src]="profile.video"
       #video>
       </video>

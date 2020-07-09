@@ -21,7 +21,7 @@ export class IUser {
     nationality: INationality;
     DOEX: IDomainOfExperience;
     YOEX: IYearsOfExperience;
-    tags: string[];
+    tags: string[] = [];
     token?: Token;
 
     IUser() {

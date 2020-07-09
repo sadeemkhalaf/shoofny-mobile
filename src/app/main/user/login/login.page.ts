@@ -35,7 +35,7 @@ export class LoginPage implements OnInit {
   }
 
  login(email: string, password: string) {
-    this._auth.login(email, password);
+    this._auth.login(email, password, true);
   }
 
   get errorControl() {

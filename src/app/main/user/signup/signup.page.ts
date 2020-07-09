@@ -3,12 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AppHelpersService } from 'src/app/core/utils/app-helpers.service';
 import { AuthService } from 'src/app/providers/auth.service';
 import { DetailsService } from 'src/app/providers/details.service';
+import { take } from 'rxjs/operators';
 
-interface IRegisterUser {
+class RegisterUser {
   first_name: string;
   last_name: string;
-  code: string;
-  mobile: string;
   email: string;
   password: string;
   password_confirm: string;
@@ -30,9 +29,11 @@ interface ICountryCode {
 export class SignupPage implements OnInit {
   public form: FormGroup;
   public isSubmitted = false;
-  public register: IRegisterUser;
+  public register: RegisterUser = new RegisterUser();
   public countryCodes: ICountryCode[] = [];
   public countryCode: ICountryCode;
+  public firstName: string;
+  public lastName: string;
 
   private _countryCodes: ICountryCode[] = [];
 
@@ -40,7 +41,7 @@ export class SignupPage implements OnInit {
     public formBuilder: FormBuilder,
     public helper: AppHelpersService,
     private _auth: AuthService,
-    private _detailsService: DetailsService
+    private _detailsService: DetailsService,
   ) { }
 
   ngOnInit() {
@@ -92,6 +93,12 @@ export class SignupPage implements OnInit {
       this.register.password = this.form.get('password').value;
       this.register.password_confirm = this.form.get('confirmPassword').value;
       this.register.userName = this.form.get('userName').value;
+      this.register.is_seeker = 1;
+      this.register.first_name = this.firstName;
+      this.register.last_name = this.lastName;
+      this._auth.registerUser(this.register).pipe(take(1)).subscribe((res) => {
+        this._auth.login(this.register.email, this.register.password, false);
+      }, error => this.helper.showToast('something went wrong!'))
     }
   }
 

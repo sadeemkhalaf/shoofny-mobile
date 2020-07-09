@@ -4,8 +4,6 @@ import { AuthService } from 'src/app/providers/auth.service';
 import { IUser } from 'src/app/models/user';
 import { AppHelpersService } from 'src/app/core/utils/app-helpers.service';
 import { take } from 'rxjs/operators';
-import { MediaCapture } from '@ionic-native/media-capture/ngx';
-import { StorageService } from 'src/app/core/storage/storage.service';
 
 @Component({
   selector: 'app-profile',
@@ -26,12 +24,25 @@ export class ProfilePage implements OnInit {
     this._authService.getUserProfile()
     .pipe(take(1))
     .subscribe((user) => {
-      this.profile = user;
-    }, error => this.helper.showToast('somthing went wrong!')
+      this.profile = user as IUser;
+    }, error => this.helper.showToast(error)
     )
   }
 
-  ionViewDidLoad() {}
+  ionViewDidEnter() {
+    this._authService.getUserProfile()
+    .pipe(take(1))
+    .subscribe((user) => {
+      this.profile = user as IUser;
+    }, error => this.helper.showToast(error)
+    )
+  }
+
+  calculatAge() {
+    const difference = Date.now() - new Date(this.profile.DOB).getTime();
+    const result = new Date(difference);
+    return Math.abs(result.getUTCFullYear() - 1970);
+  }
 
   playVideo() {
     let options: StreamingVideoOptions = {

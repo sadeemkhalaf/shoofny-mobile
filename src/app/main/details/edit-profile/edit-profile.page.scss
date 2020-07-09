@@ -30,7 +30,11 @@
         @include font-size(8);
     }
 
-    ion-input {
+    .link {
+        color: var(--ion-custom-color-primary);
+    }
+
+    ion-input, ion-datetime, ionic-selectable {
         font-weight: 400;
         @include font-size(8);
     }

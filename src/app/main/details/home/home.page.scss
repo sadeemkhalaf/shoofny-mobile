@@ -68,6 +68,12 @@
         }
     }
 
+    .title-rg {
+        font-weight: 400;
+        @include font-size(8);
+        opacity: 0.7;
+    }
+
     .lift-up {
         @include flex-box(column);
         background-color: white;

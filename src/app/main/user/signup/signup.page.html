@@ -22,10 +22,14 @@
       <ion-label class="title-lg margin-bottom-8">Fill in the fields to create the account</ion-label>
       <ion-list>
         <ion-item class="col">
-          <ion-input clearInput placeholder="First Name" class="title-rg"></ion-input>
+          <ion-input clearInput placeholder="First Name" class="title-rg"
+          [(ngModel)]="firstName"
+          ></ion-input>
         </ion-item>
         <ion-item class="col">
-          <ion-input clearInput placeholder="Last Name" class="title-rg"></ion-input>
+          <ion-input clearInput placeholder="Last Name" class="title-rg"
+          [(ngModel)]="lastName"
+          ></ion-input>
         </ion-item>
         <ion-item class="col">
           <ion-label position="stacked" class="margin-bottom-8">Phone Number</ion-label>
@@ -80,7 +84,7 @@
 </ion-content>
 
 <ion-footer class="padding-8" style="direction: rtl;">
-  <ion-button [routerLink]="['profile']">  <!-- type="submit" -->
+  <ion-button type="submit" (click)="onSubmitForm()"> 
     <ion-label>
       <ion-icon name="arrow-forward-outline"></ion-icon>
       Continue

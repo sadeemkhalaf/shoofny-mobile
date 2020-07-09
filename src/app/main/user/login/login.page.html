@@ -9,7 +9,7 @@
       ></ion-img>
       <ion-item class="col">
         <ion-label position="floating">Email</ion-label>
-        <ion-input type="email" class="no-padding" formControlName="email" required></ion-input>
+        <ion-input type="text" class="no-padding" formControlName="email" required></ion-input>
       </ion-item>
       <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
         Email is required.
