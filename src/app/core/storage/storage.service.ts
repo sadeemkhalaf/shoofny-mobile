@@ -35,7 +35,7 @@ export class StorageService implements IStorage {
   }
 
   public async getUserData() {
-    return this.getLocalData(`${API_STORAGE_KEY}-${USER_DATA_STORAGE_KEY}`);
+    return this.getLocalData(`${USER_DATA_STORAGE_KEY}`);
   }
 
   public async clearUserData() {

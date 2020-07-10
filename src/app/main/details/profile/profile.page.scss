@@ -58,4 +58,17 @@
         background-color: #c4c4c4;
         height: 150px;
     }
+
+    .chips-box {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .ion-chip {
+        color: #ffffff;
+        background-color: var(--ion-custom-color-dark);
+        border-radius: 20px;
+        padding: 8px;
+        @include font-size(8);
+    }
 }

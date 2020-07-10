@@ -7,7 +7,8 @@ import { StorageService } from '../core/storage/storage.service';
 import { Router } from '@angular/router';
 import { AppHelpersService } from '../core/utils/app-helpers.service';
 import { IUserSubmit } from '../main/details/edit-profile/edit-profile.page';
-
+import { switchMap, take } from 'rxjs/operators';
+import { DetailsService } from './details.service';
 export class Token {
   access: string;
   refresh: string;
@@ -26,6 +27,7 @@ export class AuthService {
     private _networkService: NetworkService,
     private _storageService: StorageService,
     private _helper: AppHelpersService,
+    private _details: DetailsService,
     private _route: Router) {
     this.loggedInUser = this._loggedInUser.asObservable();
     this._checkLoggedIn();
@@ -53,29 +55,29 @@ export class AuthService {
   }
 
   public updateUserProfile(user: IUserSubmit) {
-    return this._http.put<IUserSubmit>('/api/auth/profile', user);
+    return this._http.put<IUserSubmit>('/api/auth/profile/', user);
   }
 
   public refreshToken() {
     console.log('refresh token');
     this._storageService.getRefreshAuthToken().then((refreshToken) => {
       return new Promise<Token>(
-      (resolve, reject) =>
-        this._http.post('/api/token/refresh/', { refresh: refreshToken })
-          .subscribe((token: any) => {
-            if (!!token) {
-              this._storageService.updateUserToken(token)
-                .then(() => resolve(token));
-            } else {
-              reject({ message: 'token missing or expired' });
-            }
-          }, error => {
-            reject(error);
-            this.logout().then(() =>
-            this._route.navigate([`/login`], {queryParamsHandling: 'merge', replaceUrl: true})
-            );
+        (resolve, reject) =>
+          this._http.post('/api/token/refresh/', { refresh: refreshToken })
+            .subscribe((token: any) => {
+              if (!!token) {
+                this._storageService.updateUserToken(token)
+                  .then(() => resolve(token));
+              } else {
+                reject({ message: 'token missing or expired' });
+              }
+            }, error => {
+              reject(error);
+              this.logout().then(() =>
+                this._route.navigate([`/login`], { queryParamsHandling: 'merge', replaceUrl: true })
+              );
 
-          }));
+            }));
     }, error => console.error(error));
 
   }
@@ -86,27 +88,29 @@ export class AuthService {
 
   private _getAccessToken(data, isLogin: boolean) {
     this._helper.showLoading();
-    return new Promise<Token>(
+    return new Promise<any>(
       (resolve, reject) =>
         this._http.post('/api/token/', data)
-          .subscribe((token: any) => {
+          .pipe(switchMap((token) => {
             this._helper.hideLoading();
-            if (!!token) {
-              this._checkLoggedIn();
-              this._isLoggedIn.next(true);
-              this._setUserToken(token).then(() => {
-                resolve(token);
-                if (isLogin) {
-                   this._route.navigate(['/home']);
-                } else {
-                  this._route.navigate(['/signup/profile'])
-                }
-              });
-            } else {
-              this._helper.hideLoading();
-              this._helper.showToast('Wrong email/password!', 'danger');
-              reject({ message: 'Wrong username and password' });
-            }
+            this._checkLoggedIn();
+            this._isLoggedIn.next(true);
+            this._setUserToken(token).then(() => {
+              resolve(token);
+              if (isLogin) {
+                this._route.navigate(['/home']);
+              } else {
+                this._route.navigate(['/signup/profile'])
+              }
+            });
+            return this._http.get<IUser>('/api/auth/profile');
+          }, error => {
+            this._helper.hideLoading();
+            this._helper.showToast('Wrong email/password!', 'danger');
+            reject({ message: 'Wrong username and password' });
+          }), take(1))
+          .subscribe((userData: any) => {
+            this._setUserData(userData);
           }, error => {
             this._helper.hideLoading();
             this._helper.showToast('Something went wrong!', 'danger');
@@ -116,10 +120,12 @@ export class AuthService {
 
   private _setUserData(userData: IUser): Promise<any> {
     return this._storageService.updateUserData(userData)
-      .then((response) => this._loggedInUser.next(userData), (reason) => console.warn(reason));
+      .then((response) => {
+        this._loggedInUser.next(userData);
+      }, (reason) => console.warn(reason));
   }
 
-  private async _setUserToken(userData: Token): Promise<any> {
+  private async _setUserToken(userData: any): Promise<any> {
     await this._storageService.updateRefreshToken(userData);
     await this._storageService.updateUserToken(userData);
   }
@@ -161,8 +167,7 @@ export class AuthService {
         if (status === ConnectionStatus.Online) {
           this._storageService.getAuthToken()
             .then((token) => {
-              if (!!token)
-              {
+              if (!!token) {
                 this._fillUserData(resolve, reject);
                 this._isLoggedIn.next(true);
               } else {

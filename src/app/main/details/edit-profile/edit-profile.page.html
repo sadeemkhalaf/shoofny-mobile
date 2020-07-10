@@ -72,12 +72,18 @@
   <ion-label class="title-lg margin-bottom-8">Public Professional Profiles</ion-label>
   <ion-list>
     <ion-item class="col">
-      <ion-input clearInput placeholder="url"></ion-input>
+      <ion-input clearInput placeholder="url" [(ngModel)]="url"></ion-input>
     </ion-item>
-    <div class="row align-items-center margin-top-8">
-      <div class="circle-add-button">+</div>
+    <div class="row align-items-center margin-top-8" (click)="addUrl()">
+      <div class="circle-add-button add">+</div>
       <span class="margin-left-8 title-sm">add more</span>
     </div>
+    <ion-item class="row" *ngFor="let url of urls, let i = index">
+      <ion-input placeholder="url" [(ngModel)]="urls[i]"></ion-input>
+      <div class="row align-items-center margin-top-8" (click)="clearUrl(url)">
+        <div class="circle-add-button warning">x</div>
+      </div>
+    </ion-item>
   </ion-list>
   <ion-label class="floating-label" position="floating">Tags</ion-label>
   <ion-item>

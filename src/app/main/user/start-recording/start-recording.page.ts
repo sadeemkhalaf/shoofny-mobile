@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MediaPickerService } from 'src/app/providers/media-picker.service';
 import { take } from 'rxjs/operators';
 import { WebView } from '@ionic-native/ionic-webview';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-start-recording',
@@ -20,7 +21,8 @@ export class StartRecordingPage implements OnInit {
   public pathTest: string;
 
   constructor(
-    private _mediaService: MediaPickerService
+    private _mediaService: MediaPickerService,
+    private _router: Router
   ) { }
 
   ngOnInit() {
@@ -47,6 +49,10 @@ export class StartRecordingPage implements OnInit {
       video.play();
     });
 
+  }
+
+  goToHomePage() {
+    this._router.navigate([`/home`])
   }
 
 }

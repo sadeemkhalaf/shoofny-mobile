@@ -34,7 +34,7 @@ export class MediaPickerService {
   $selectedVideo: ReplaySubject<any> = new ReplaySubject(1);
 
   // upload variables
-  selectedVideo: string = "https://res.cloudinary.com/demo/video/upload/w_640,h_640,c_pad/dog.mp4";
+  selectedVideo: string = 'https://res.cloudinary.com/demo/video/upload/w_640,h_640,c_pad/dog.mp4';
   uploadedVideo: string;
 
   isUploading: boolean = false;
@@ -117,7 +117,6 @@ export class MediaPickerService {
 
   uploadVideo(filename: string, selectedVideo?) {
     // var filename = this.selectedVideo.substr(this.selectedVideo.lastIndexOf('/') + 1);   
-     
     var options: FileUploadOptions = {
       fileName: filename,
       fileKey: "video",
@@ -140,6 +139,7 @@ export class MediaPickerService {
       .catch((err)=>{
         this.isUploading = false;
         this.uploadPercent = 0;
+        console.log(`error: ${JSON.stringify(err)}`)
         this._helper.showToast('Error uploading video.', 'danger');
       });
 

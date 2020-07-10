@@ -22,6 +22,7 @@ export class IUser {
     DOEX: IDomainOfExperience;
     YOEX: IYearsOfExperience;
     tags: string[] = [];
+    Public_Profile: string[] = [];
     token?: Token;
 
     IUser() {

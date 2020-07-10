@@ -1,17 +1,16 @@
 import { Component } from '@angular/core';
-
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from './providers/auth.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { StorageService } from './core/storage/storage.service';
 import { AppHelpersService } from './core/utils/app-helpers.service';
 import { DetailsService } from './providers/details.service';
 import { INationality, ICity, IDomainOfExperience } from './models/user';
 import { DataService } from './providers/data.service';
-import { Location } from '@angular/common';
 import { take } from 'rxjs/operators';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -34,16 +33,21 @@ export class AppComponent {
   public domain: IDomainOfExperience;
   public tagInput: string;
 
+  private _connectStream = combineLatest(this._detailsService.getCities(), this._detailsService.getCountries, this._detailsService.getDomains,
+    (cities, countries, domains) => {
+      this._storage.setLocalData('cities', cities);
+      this._storage.setLocalData('countries', countries);
+      this._storage.setLocalData('domains', domains);
+    });
+
   constructor(
     public helper: AppHelpersService,
     private _storage: StorageService,
     private _route: Router,
-    private _router: ActivatedRoute,
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private _auth: AuthService,
-    private _location: Location,
     private _detailsService: DetailsService,
     private _dataService: DataService
   ) {
@@ -56,11 +60,10 @@ export class AppComponent {
       this.splashScreen.hide();
       this._storage.getAuthToken().then((loggedIn) => {
         if (!!loggedIn) {
-          console.log('hello home!')
-          this._route.parseUrl('/home');
           this.getCountries();
           this.getCities();
           this.getDomains();
+          this._route.parseUrl('/home');
         } else {
           this._route.parseUrl('/login');
         }
@@ -81,6 +84,7 @@ export class AppComponent {
     .pipe(take(1))
     .subscribe((countries: any) => {
       this.countries = countries.results;
+      this._storage.setLocalData('countries', this.countries);
     });
   }
 
@@ -89,6 +93,7 @@ export class AppComponent {
     .pipe(take(1))
     .subscribe((cities: any) => {
       this.cities = cities.results;
+      this._storage.setLocalData('cities', this.cities);
     });
   }
 
@@ -97,7 +102,8 @@ export class AppComponent {
     .pipe(take(1))
     .subscribe((domains: any) => {
       this.domains = domains.results;
-    });
+      this._storage.setLocalData('domains', this.domains);
+      });
   }
 
   countryChange(event: any) {
@@ -130,7 +136,7 @@ export class AppComponent {
     // route with config data to job list page
     this._dataService.setData(config);
     this._route.navigate(['home/jobs']);
-    this.helper.closeMenu('filter'); 
+    this.helper.closeMenu('filter');
   }
 
   clearAndReset() {
@@ -145,16 +151,16 @@ export class AppComponent {
 
   private _prepareData() {
     let filterConfig: any = {};
-    if(!!this.country) {
+    if (!!this.country) {
       filterConfig.country = this.country.id;
     }
-    if(!!this.city) {
+    if (!!this.city) {
       filterConfig.city = this.city.id;
     }
-    if(!!this.domain) {
+    if (!!this.domain) {
       filterConfig.domain = this.domain.id;
     }
-    if(!!this.city) {
+    if (!!this.city) {
       filterConfig.city = this.city.id;
     }
     filterConfig.job_title = this.jobTitle;

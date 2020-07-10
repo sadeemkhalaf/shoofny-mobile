@@ -56,4 +56,8 @@
         font-weight: 400;
         @include font-size(8);
     }
+
+    .error-label {
+        color: red;
+    }
 }

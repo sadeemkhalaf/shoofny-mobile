@@ -44,10 +44,17 @@
         border-radius: 50%;
         height: 22px;
         width: 22px;
-        background-color: var(--ion-custom-color-dark);
         padding: 4px;
         color: white;
         align-items: center;
         justify-content: center;
-    }
+      }
+
+      .warning {
+        background-color: var(--ion-color-danger);
+      }
+    
+      .add {
+        background-color: var(--ion-custom-color-dark);
+      }
 }

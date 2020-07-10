@@ -7,17 +7,16 @@ import { HttpClient, HttpBackend } from '@angular/common/http';
 })
 export class DetailsService {
 
-  constructor(private _http: AuthHttp,
-              private _client: HttpClient) { }
+  constructor(private _http: AuthHttp) { }
 
     getCountries() {
-      return this._http.get('/cities_light/api/countries');
+      return this._http.get('/cities_light/api/countries/');
     }
     getCities() {
-      return this._http.get('/cities_light/api/cities');
+      return this._http.get('/cities_light/api/cities/');
     }
     getDomains() {
-      return this._http.get('/api/domains');
+      return this._http.get('/api/domains/');
     }
 
     getCountriesDetails() {

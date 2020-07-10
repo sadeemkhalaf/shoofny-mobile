@@ -21,6 +21,7 @@ export class IUserSubmit {
   date_joined: Date;
   is_seeker: boolean;
   is_active: boolean;
+  Public_Profile: string[];
   rating_avaerage: number;
   profile_views: number;
   gender: string;
@@ -56,6 +57,8 @@ export class EditProfilePage implements OnInit {
   public city: ICity;
   public filteredCities: ICity[] = [];
   public domain: IDomainOfExperience;
+  public urls: string[] = [];
+  public url: string;
 
   constructor(
     public helper: AppHelpersService,
@@ -69,6 +72,8 @@ export class EditProfilePage implements OnInit {
   ngOnInit() {
     this._storageService.getUserData().then((data) => {
       this.user = data as IUser;
+      this.tags = !!this.user.tags ? this.user.tags : [];
+      this.urls = !!this.user.Public_Profile ? this.user.Public_Profile  : []; 
       this._prepareData();
       this.getDomains();
       this.getCountries();
@@ -79,25 +84,24 @@ export class EditProfilePage implements OnInit {
   ionViewDidLoad() { }
 
   getCountries() {
-    this._detailsService.getCountries()
-      .subscribe((countries: any) => {
-        this.countries = countries.results;
-      });
+    this._storageService.getLocalData('countries')
+   .then((countries) => {
+      this.countries = countries;
+    });
   }
 
   getCities() {
-    this._detailsService.getCities()
-      .subscribe((cities: any) => {
-        this.cities = cities.results;
-        this.filteredCities = this.cities;
-      });
+    this._storageService.getLocalData('cities')
+    .then((cities: any) => {
+      this.cities = cities;
+    });
   }
 
   getDomains() {
-    this._detailsService.getDomains()
-      .subscribe((domains: any) => {
-        this.domains = domains.results;
-      });
+    this._storageService.getLocalData('domains')
+    .then((domains: any) => {
+      this.domains = domains;
+    });
   }
 
   countryChange(event: any) {
@@ -124,6 +128,17 @@ export class EditProfilePage implements OnInit {
 
   clearTag(value: string) {
     this.tags = this.tags.filter(tag => tag !== value);
+  }
+
+  addUrl() {
+    if (!!this.url && this.url.length > 0) {
+      this.urls.push(this.url);
+      this.url = '';
+    }
+  }
+
+  clearUrl(value: string) {
+    this.urls = this.urls.filter((url) => url !== value);
   }
 
   pickImage() {
@@ -154,10 +169,12 @@ export class EditProfilePage implements OnInit {
   submitData() {
     let userForm: IUserSubmit = new IUserSubmit();
     Object.assign(userForm, this.user);
-    userForm.nationality = this.country.id;
-    userForm.city = this.city.id;
-    userForm.DOEX = this.domain.id;
-    userForm.YOEX = 1; // TODO: replace with actual values
+    userForm.nationality = !!this.country ? this.country.id : null;
+    userForm.city = !!this.city ? this.city.id : null;
+    userForm.DOEX = !!this.domain ? this.domain.id : null;
+    userForm.YOEX = null; // TODO: replace with actual values
+    userForm.tags = this.tags;
+    userForm.Public_Profile = this.urls.length > 0 ? this.urls : null;
     const dob = new Date(this.user.DOB);
     userForm.DOB = `${dob.getUTCFullYear()}-${dob.getMonth()}-${dob.getDate()}`;
     if (this.imageUpdated) {
@@ -167,7 +184,10 @@ export class EditProfilePage implements OnInit {
       this.helper.showToast('Changes Saved');
       this._storageService.updateUserData(result);
     }, 
-    error => this.helper.showToast('Something went wrong!'));
+    error => {
+      this.helper.showToast('Something went wrong!');
+      console.log(`error: ${error}`);
+    });
   }
 
   uploadVideo() {

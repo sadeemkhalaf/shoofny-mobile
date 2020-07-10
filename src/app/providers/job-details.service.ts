@@ -13,7 +13,7 @@ export class JobDetailsService {
 
     // domains of experience
     public getDomainsOfExperience() {
-      return this._http.get<IDomainOfExperience[]>('/api/domains');
+      return this._http.get<IDomainOfExperience[]>('/api/domains/');
     }
 
     // get job details by id

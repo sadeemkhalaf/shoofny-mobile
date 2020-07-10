@@ -85,7 +85,7 @@ export class AuthHttpInterceptor implements HttpInterceptor {
       this._storageService.getAuthToken()
       .then((token) => {
         if(!!token) {
-          this.refreshToken();
+          this._refreshToken();
         } else {
           console.log('err.status: ', err.status);
           this._router.navigate([`/login`], {queryParamsHandling: 'merge', replaceUrl: true});
@@ -97,17 +97,21 @@ export class AuthHttpInterceptor implements HttpInterceptor {
     }
   }
 
-  public refreshToken() {
+  private _refreshToken() {
+    this._helper.showLoading();
     this._storageService.getRefreshAuthToken().then((refreshToken) => {
       console.log(refreshToken);
       return new Promise<Token>(
       (resolve, reject) =>
         this._http.post('/api/token/refresh/', { refresh: refreshToken })
           .subscribe((token: any) => {
+            this._helper.hideLoading();
             if (!!token) {
               this._storageService.updateUserToken(token)
                 .then(() => {
+                  if (this._router.url.includes('login')) {
                     this._router.navigate([`/home`], {replaceUrl: true});
+                  }
                   resolve(token);
                 });
             } else {
@@ -117,6 +121,7 @@ export class AuthHttpInterceptor implements HttpInterceptor {
             }
           }, error => {
             reject(error);
+            this._helper.hideLoading();
             this._storageService.clearUserData();
             this._router.navigate([`/login`], {queryParamsHandling: 'merge', replaceUrl: true});
           }));

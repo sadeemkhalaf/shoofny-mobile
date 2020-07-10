@@ -83,4 +83,8 @@
       @include font-size(30);
       color: var(--ion-custom-color-dark);
     }
+
+    .link {
+      color: var(--ion-custom-color-primary);
+    }
 }

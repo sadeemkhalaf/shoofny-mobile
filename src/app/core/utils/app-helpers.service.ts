@@ -62,7 +62,7 @@ export class AppHelpersService {
 
   public showToast(message: string, color: Color = 'danger', duration: number = TOAST_TIMEOUT, position: 'top' | 'bottom' | 'middle' = 'top') {
     if (this.isRealDevice) {
-      const backgroundColor = color === 'danger' ? '#00ab66' : '#00ab66';//'#F43E00';
+      const backgroundColor = color === 'danger' ? '#F43E00' : '#00ab66';//'#F43E00';
       // const textColor = color === 'danger' ? '#f43e00' : '#FFFFFF';
       this._toastSubject.next({message, position: 'bottom', duration, styling: {backgroundColor}});
     } else {

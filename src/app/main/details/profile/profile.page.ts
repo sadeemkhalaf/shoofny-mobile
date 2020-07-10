@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/providers/auth.service';
 import { IUser } from 'src/app/models/user';
 import { AppHelpersService } from 'src/app/core/utils/app-helpers.service';
 import { take } from 'rxjs/operators';
+import { StorageService } from 'src/app/core/storage/storage.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,16 +17,17 @@ export class ProfilePage implements OnInit {
 
   constructor(
     public helper: AppHelpersService,
-    private _authService: AuthService,
+    private _storageService: StorageService,
     private _streamingMedia: StreamingMedia
     ) { }
 
   ngOnInit() {}
 
   ionViewDidEnter() {
-    this._authService.getUserProfile()
-    .subscribe((user) => {
+    this._storageService.getUserData( )
+    .then((user) => {
       this.profile = user as IUser;
+      console.log('profile: ', this.profile.first_name)
     }, error => this.helper.showToast(error)
     )
   }

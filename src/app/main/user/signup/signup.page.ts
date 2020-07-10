@@ -11,7 +11,7 @@ class RegisterUser {
   email: string;
   password: string;
   password_confirm: string;
-  userName: string;
+  username: string;
   is_seeker: number;
 }
 
@@ -92,13 +92,20 @@ export class SignupPage implements OnInit {
       this.register.email = this.form.get('email').value;
       this.register.password = this.form.get('password').value;
       this.register.password_confirm = this.form.get('confirmPassword').value;
-      this.register.userName = this.form.get('userName').value;
+      this.register.username = this.form.get('userName').value;
       this.register.is_seeker = 1;
       this.register.first_name = this.firstName;
       this.register.last_name = this.lastName;
       this._auth.registerUser(this.register).pipe(take(1)).subscribe((res) => {
         this._auth.login(this.register.email, this.register.password, false);
-      }, error => this.helper.showToast('something went wrong!'))
+      }, error => {
+        if(error.toString().includes('500')) {
+          this.helper.showToast('server error!');
+        } else {
+          this.helper.showToast('something went wrong!');
+        }
+        
+      })
     }
   }
 

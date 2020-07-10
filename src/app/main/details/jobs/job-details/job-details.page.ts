@@ -3,8 +3,9 @@ import { JobDetailsService } from 'src/app/providers/job-details.service';
 import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { IJobDetails } from 'src/app/models/Job';
-import { IUser } from 'src/app/models/user';
 import { AppHelpersService } from 'src/app/core/utils/app-helpers.service';
+import { IUser } from 'src/app/models/user';
+import { StorageService } from 'src/app/core/storage/storage.service';
 
 @Component({
   selector: 'app-job-details',
@@ -16,10 +17,12 @@ export class JobDetailsPage implements OnInit {
   public jobDetails: IJobDetails;
   public applied: boolean = false;
   private _jobId: number;
+  private _user: IUser;
 
   constructor(
     public helper: AppHelpersService,
     private _route: ActivatedRoute,
+    private _storageService: StorageService,
     private _jobDetailsService: JobDetailsService) { }
 
   ngOnInit() {
@@ -28,9 +31,10 @@ export class JobDetailsPage implements OnInit {
     .subscribe((data: any) => {
       this.jobDetails = data.results[0] as IJobDetails;
     })
+    this._getUser();
   }
 
-  caculateDays() {
+  public caculateDays() {
     const now = new Date(Date.now()).getTime();
     const updated = new Date(this.jobDetails.updated).getTime();
     const diffTime = Math.abs(now - updated);
@@ -40,13 +44,19 @@ export class JobDetailsPage implements OnInit {
 
   public applyNow() {
     this.helper.showLoading();
-    this._jobDetailsService.applyNow(this.jobDetails.id, this.jobDetails.user.id).subscribe(() => {
+    this._jobDetailsService.applyNow(this.jobDetails.id, this._user.id).subscribe(() => {
       this.applied = true;
       this.helper.hideLoading();
-      this.helper.showToast('You applied successfully!');
+      this.helper.showToast('You applied successfully!', 'success');
     }, error => {
       console.warn(error);
+      this.helper.showToast('You\'ve already applied', 'danger');
+      this.applied = true;
       this.helper.hideLoading();
     })
+  }
+
+  private _getUser() {
+    this._storageService.getUserData().then((user) => this._user = user);
   }
 }
