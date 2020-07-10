@@ -30,7 +30,7 @@ export class LoginPage implements OnInit {
     });
     this.form = this.formBuilder.group({
       password: ['', Validators.required],
-      email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]]
+      email: ['', Validators.required]
     });
   }
 
