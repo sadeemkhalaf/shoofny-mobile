@@ -1,4 +1,4 @@
-<ion-content *ngIf="!!jobsList">
+<div>
   <div class="row space-between margin-16">
     <app-back-button></app-back-button>
     <ion-label>Jobs</ion-label>
@@ -10,7 +10,8 @@
       <ion-icon name="options"></ion-icon>
     </ion-button>
    </div>
-
+</div>
+   <ion-content *ngIf="!!jobsList">
    <div class="col jobs-list" *ngFor="let job of jobsList">
     <app-job-list-item [jobItem]="job" class="margin-bottom-8"></app-job-list-item>
 </div>

@@ -51,6 +51,8 @@ export class JobsPage implements OnInit {
       console.log('config: ', this._config);
       this._jobDetailsService.getJobByParam(this._config).pipe(take(1)).subscribe((jobs: any) => {
         this.jobsList = jobs.results as IJobDetails[];
+        // sort results 
+        this.jobsList = this._sortJobsByDate(this.jobsList);
         this.helper.hideLoading();
       }, error => this.helper.hideLoading());
       this._data.clearData();
@@ -60,6 +62,7 @@ export class JobsPage implements OnInit {
       console.log('config: ', this._config);
       this._jobDetailsService.getJobByParam(this._config).pipe(take(1)).subscribe((jobs: any) => {
         this.jobsList = jobs.results as IJobDetails[];
+        this.jobsList = this._sortJobsByDate(this.jobsList);
         this.helper.hideLoading()
       }, error => this.helper.hideLoading());
       this._data.clearData();
@@ -70,4 +73,11 @@ export class JobsPage implements OnInit {
       }, error => this.helper.hideLoading());
     }
   }
+
+  
+private _sortJobsByDate(jobsList: any[]) {
+  return jobsList.sort((a, b) => a.timestamp < b.timestamp ? 1 : -1)
 }
+}
+
+

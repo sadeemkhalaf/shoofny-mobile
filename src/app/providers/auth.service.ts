@@ -103,14 +103,15 @@ export class AuthService {
                 this._route.navigate(['/signup/profile'])
               }
             });
-            return this._http.get<IUser>('/api/auth/profile');
+            return this.getUserProfile();
           }, error => {
             this._helper.hideLoading();
             this._helper.showToast('Wrong email/password!', 'danger');
             reject({ message: 'Wrong username and password' });
           }), take(1))
-          .subscribe((userData: any) => {
-            this._setUserData(userData);
+          .subscribe(async (userData: any) => {
+            await this._setUserData(userData);
+            this._route.navigate(['/home']);
           }, error => {
             this._helper.hideLoading();
             this._helper.showToast('Something went wrong!', 'danger');

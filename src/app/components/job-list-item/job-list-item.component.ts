@@ -10,9 +10,13 @@ import { Router } from '@angular/router';
 export class JobListItemComponent implements OnInit {
 
   @Input() jobItem: IJobDetails;
+  public jobTitle: string;
+
   constructor(private _route: Router) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.jobTitle = this.jobItem.slug.split('-').join(' ');
+  }
 
   caculateDays() {
     const now = new Date(Date.now()).getTime();

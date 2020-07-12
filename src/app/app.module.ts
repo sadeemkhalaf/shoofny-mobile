@@ -22,8 +22,9 @@ import { Camera } from '@ionic-native/Camera/ngx';
 import { IonicSelectableModule } from 'ionic-selectable';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { SearchBoxPipe } from './providers/search-box.pipe';
+import { SearchJobsPipe } from './search-jobs.pipe';
 @NgModule({
-  declarations: [AppComponent, SearchBoxPipe],
+  declarations: [AppComponent, SearchBoxPipe, SearchJobsPipe],
   entryComponents: [],
   imports: [
     BrowserModule,

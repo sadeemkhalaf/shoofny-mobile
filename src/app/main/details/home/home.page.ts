@@ -70,7 +70,7 @@ export class HomePage implements OnInit {
           this.jobsCountByCity = data.count;
           this.jobsListByCity = data.results as IJobDetails[];
           if (this.jobsListByCity.length > 3) {
-            this.jobsListByCity = this.jobsListByCity.sort((a, b) => a.timestamp > b.timestamp ? 1 : -1).slice(0, 3);
+            this.jobsListByCity = this.jobsListByCity.sort((a, b) => a.timestamp < b.timestamp ? 1 : -1).slice(0, 3);
           }
         });
       }
