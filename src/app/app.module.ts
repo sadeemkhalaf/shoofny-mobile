@@ -7,7 +7,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { Toast } from '@ionic-native/toast/ngx';
 import { CoreModule } from './core/core.module';
@@ -23,12 +23,24 @@ import { IonicSelectableModule } from 'ionic-selectable';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { SearchBoxPipe } from './providers/search-box.pipe';
 import { SearchJobsPipe } from './search-jobs.pipe';
+import { AppRoutingModule } from './app-routing.module';
+import { HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function LanguageLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}
 @NgModule({
   declarations: [AppComponent, SearchBoxPipe, SearchJobsPipe],
   entryComponents: [],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
+    TranslateModule.forRoot({loader: {
+      provide: TranslateLoader,
+      useFactory: (LanguageLoader),
+      deps: [HttpClient]
+    }}),
     AppRoutingModule,
     RouterModule,
     FormsModule,

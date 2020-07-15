@@ -1,0 +1,61 @@
+{
+    "LOGIN": {
+        "title": "تسجيل دخول",
+        "email": "البريد الالكتروني",
+        "password": "كلمة المرور",
+        "signup": "إنشاء حساب",
+        "forgotPassword": "نسيت كلمة المرور"
+
+    }, "SIGNUP": {
+        "title": "إنشاء حساب جديد",
+        "first_name": "الاسم الأول",
+        "last_name": "اسم العائلة",
+        "email": "البريد الالكتروني",
+        "password": "كلمة المرور",
+        "confirmPassword": "تأكيد كلمة المرور",
+        "mobile": "رقم الهاتف المحمول",
+        "code": "الرمز",
+        "username": "اسم المستخدم"
+
+    }, "FILL_NEW_PROFILE": {
+        "title": "تفاصيل الحساب",
+        "dob": "تاريخ الميلاد",
+        "country": "الدولة",
+        "city": "المدينة",
+        "professionalInformation": "تفاصيل احترافية",
+        "basicInformation": "تفاصيل عامة",
+        "domainOfExpertise": "مجال الخبرة",
+        "experience": "الخبرة",
+        "publicProfessionalProfiles": "الحسابات الاحترافية العامة",
+        "url": "رابط",
+        "addMore": "أضف المزيد",
+        "skills": "المهارات",
+        "addSkills": "أضف مهارة",
+        "confirm": "تأكيد واستمرار"
+
+    }, "START_RECORDING": {
+        "title": "بدء تسجيل الفيديو"
+
+    },
+     "RESET_PASSWORD": {
+        "title": "تعيين كلمة مرور جديدة"
+
+    }, "HOME": {
+        "title": "الرذيسية"
+
+    }, "PROFILE": {
+        "title": ""
+
+    }, "EDIT_PROFILE": {
+        "title": ""
+
+    }, "JOBS": {
+        "title": ""
+
+    }, "JOB_DETAILS": {
+        "title": ""
+
+    }, "SETTINGS": {
+        "title": ""
+    }
+}
