@@ -17,6 +17,11 @@ export interface IHttp {
    */
   put<T>(url: string, data: any): Observable<T>;
 
+    /**
+   * Performs a request with `path` http method.
+   */
+  patch<T>(url: string, data: any): Observable<T>;
+
   /**
    * Performs a request with `delete` http method.
    */

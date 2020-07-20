@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AppHelpersService } from 'src/app/core/utils/app-helpers.service';
 import { AuthService } from 'src/app/providers/auth.service';
 import { DetailsService } from 'src/app/providers/details.service';
-import { take } from 'rxjs/operators';
+import { take, first } from 'rxjs/operators';
 
 class RegisterUser {
   first_name: string;
@@ -96,7 +96,7 @@ export class SignupPage implements OnInit {
       this.register.is_seeker = 1;
       this.register.first_name = this.firstName;
       this.register.last_name = this.lastName;
-      this._auth.registerUser(this.register).pipe(take(1)).subscribe((res) => {
+      this._auth.registerUser(this.register).pipe(first()).subscribe((res) => {
         this._auth.login(this.register.email, this.register.password, false);
       }, error => {
         if(error.toString().includes('500')) {

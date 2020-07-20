@@ -1,9 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {StreamingMedia, StreamingVideoOptions} from '@ionic-native/streaming-media/ngx';
-import { AuthService } from 'src/app/providers/auth.service';
 import { IUser } from 'src/app/models/user';
 import { AppHelpersService } from 'src/app/core/utils/app-helpers.service';
-import { take } from 'rxjs/operators';
 import { StorageService } from 'src/app/core/storage/storage.service';
 
 @Component({
@@ -27,7 +25,6 @@ export class ProfilePage implements OnInit {
     this._storageService.getUserData( )
     .then((user) => {
       this.profile = user as IUser;
-      console.log('profile: ', this.profile.first_name)
     }, error => this.helper.showToast(error)
     )
   }

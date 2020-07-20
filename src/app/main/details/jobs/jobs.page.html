@@ -5,14 +5,14 @@
       <app-profile-picture-circle [routerLink]="['/home/profile']"></app-profile-picture-circle>
     </div>
   <div class="search-box-row">
-    <ion-searchbar type="ios" placeholder="search" showCancelButton="focus"></ion-searchbar>
+    <ion-searchbar type="ios" placeholder="search" showCancelButton="focus" [(ngModel)]="search"></ion-searchbar>
     <ion-button (click)="helper.openMenu('filter')">
       <ion-icon name="options"></ion-icon>
     </ion-button>
    </div>
 </div>
    <ion-content *ngIf="!!jobsList">
-   <div class="col jobs-list" *ngFor="let job of jobsList">
+   <div class="col jobs-list" *ngFor="let job of jobsList | filter: search">
     <app-job-list-item [jobItem]="job" class="margin-bottom-8"></app-job-list-item>
 </div>
 <div class="no-results-label">

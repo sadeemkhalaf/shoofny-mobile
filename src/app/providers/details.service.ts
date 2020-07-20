@@ -19,6 +19,10 @@ export class DetailsService {
       return this._http.get('/api/domains/');
     }
 
+    getLevels() {
+      return this._http.get('/api/level/');
+    }
+
     getCountriesDetails() {
       return fetch('../../../../assets/data/CountryCodes.json');
     }

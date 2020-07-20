@@ -6,7 +6,7 @@
 <ion-content *ngIf="!!user">
 <div class="margin-32 col">
   <div class="row align-items-center margin-bottom-16">
-    <div class="profile-picture-circle margin-right-16"></div>
+    <div class="profile-picture-circle margin-right-16"> <img [src]="image"/></div>
     <ion-label class="title-rg link" (click)="pickImage()">Change Picture</ion-label>
   </div>
   <ion-label class="title-lg margin-bottom-8">Basic Information</ion-label>
@@ -49,6 +49,10 @@
         (onChange)="cityChange($event)">
       </ionic-selectable>
     </ion-item>
+    <ion-item>
+      <ion-label class="title-rg margin-top-16 margin-bottom-8">Private Profile</ion-label>
+      <ion-toggle [(ngModel)]="user.Private"></ion-toggle>
+    </ion-item>
   </ion-list>
   <ion-label class="title-lg margin-bottom-8">Professional Information</ion-label>
   <ion-list>
@@ -65,7 +69,14 @@
     </ion-item>
     <ion-item class="col">
       <ion-label position="stacked">Experience Level</ion-label>
-      <ion-input clearInput placeholder="experience level" [(ngModel)]="user.YOEX.year"></ion-input>
+      <ionic-selectable
+      [(ngModel)]="level"
+      [items]="levels"
+      itemValueField="id"
+      itemTextField="title"
+      [canSearch]="true"
+      (onChange)="levelChange($event)">
+    </ionic-selectable>
     </ion-item>
   </ion-list>
   
@@ -93,7 +104,7 @@
       <ion-icon name="add-outline"></ion-icon>
     </ion-button>
   </ion-item>
-  <div *ngIf="tags.length > 0">
+   <div *ngIf="tags.length > 0" class="chips-box">
     <ion-chip *ngFor="let tag of tags" color="secondary">
       <ion-icon name="tag" color="primary"></ion-icon>
       <ion-label>{{tag}}</ion-label>

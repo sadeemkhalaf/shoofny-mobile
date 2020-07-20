@@ -10,7 +10,6 @@ export class DataResolverService implements Resolve<any>{
   constructor(private _dataService: DataService) { }
 
   resolve(route: import("@angular/router").ActivatedRouteSnapshot, state: import("@angular/router").RouterStateSnapshot) {
-    // const id = route.paramMap.get('id');
     return this._dataService.getData();
   }
 }

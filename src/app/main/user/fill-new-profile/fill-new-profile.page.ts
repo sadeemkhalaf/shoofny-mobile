@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   IUser,
   INationality,
@@ -11,13 +11,14 @@ import { StorageService } from 'src/app/core/storage/storage.service';
 import { DetailsService } from 'src/app/providers/details.service';
 import { MediaPickerService } from 'src/app/providers/media-picker.service';
 import { take } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-fill-new-profile',
   templateUrl: './fill-new-profile.page.html',
   styleUrls: ['./fill-new-profile.page.scss'],
 })
-export class FillNewProfilePage implements OnInit {
+export class FillNewProfilePage implements OnInit, OnDestroy {
   public user: IUser = new IUser();
 
   // inputs values
@@ -37,6 +38,8 @@ export class FillNewProfilePage implements OnInit {
   public filteredCities: ICity[] = [];
   public domain: IDomainOfExperience;
 
+  private _subscriptions: Subscription[] = [];
+
   constructor(
     private _authService: AuthService,
     private _storageService: StorageService,
@@ -44,25 +47,29 @@ export class FillNewProfilePage implements OnInit {
     private _detailsService: DetailsService
   ) { }
 
+  ngOnDestroy(): void {
+    this._subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
+
   ngOnInit() {
     this._initializeUser();
   }
 
   //
   getCountries() {
-    this._detailsService.getCountries().subscribe((countries: any) => {
+    return this._detailsService.getCountries().subscribe((countries: any) => {
       this.countries = countries.results;
     });
   }
 
   getCities() {
-    this._detailsService.getCities().subscribe((cities: any) => {
+    return this._detailsService.getCities().subscribe((cities: any) => {
       this.cities = cities.results;
     });
   }
 
   getDomains() {
-    this._detailsService.getDomains().subscribe((domains: any) => {
+    return this._detailsService.getDomains().subscribe((domains: any) => {
       this.domains = domains.results;
     });
   }
@@ -105,7 +112,7 @@ export class FillNewProfilePage implements OnInit {
 
   pickImage() {
     this._imagePickerService.selectImage().then(() =>
-      this._imagePickerService.$selectedImage.pipe(take(1)).subscribe((img) => {
+      this._imagePickerService.$selectedImage.pipe().subscribe((img) => {
         this.image = img;
         document
           .getElementsByClassName('profile-picture-circle')
@@ -130,8 +137,8 @@ export class FillNewProfilePage implements OnInit {
 
   private _initializeUser() {
     this.user.YOEX = new IYearsOfExperience();
-    this.getCities();
-    this.getCountries();
-    this.getDomains();
+    this._subscriptions.push(this.getCities());
+    this._subscriptions.push(this.getCities());
+    this._subscriptions.push(this.getDomains());
   }
 }

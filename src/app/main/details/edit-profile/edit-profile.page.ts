@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/providers/auth.service';
-import { IUser, INationality, ICity, IDomainOfExperience } from 'src/app/models/user';
+import { IUser, INationality, ICity, IDomainOfExperience, IYearsOfExperience } from 'src/app/models/user';
 import { StorageService } from 'src/app/core/storage/storage.service';
-import { DetailsService } from 'src/app/providers/details.service';
 import { MediaPickerService } from 'src/app/providers/media-picker.service';
-import { take } from 'rxjs/operators';
 import { AppHelpersService } from 'src/app/core/utils/app-helpers.service';
 import { WebView } from '@ionic-native/ionic-webview';
+import { DomController } from '@ionic/angular';
+import { first } from 'rxjs/operators';
 
 export class IUserSubmit {
   id: number;
@@ -15,7 +15,7 @@ export class IUserSubmit {
   email: string;
   username: string;
   DOB: string;
-  picture: string;
+  picture: any;
   video: string;
   Private: boolean;
   date_joined: Date;
@@ -49,6 +49,7 @@ export class EditProfilePage implements OnInit {
   public cities: ICity[] = [];
   public domains: IDomainOfExperience[] = [];
   public image: any;
+  public levels: IYearsOfExperience[] = [];
   public imageUpdated: boolean = false;
 
   // selected and filtered
@@ -57,14 +58,15 @@ export class EditProfilePage implements OnInit {
   public city: ICity;
   public filteredCities: ICity[] = [];
   public domain: IDomainOfExperience;
+  public level: IYearsOfExperience ;
   public urls: string[] = [];
   public url: string;
 
   constructor(
     public helper: AppHelpersService,
     private _authService: AuthService,
+    private domCtrl: DomController,
     private _storageService: StorageService,
-    private _detailsService: DetailsService,
     private _imagePickerService: MediaPickerService,
     private _mediaService: MediaPickerService
   ) { }
@@ -78,6 +80,7 @@ export class EditProfilePage implements OnInit {
       this.getDomains();
       this.getCountries();
       this.getCities();
+      this.getLevels();
     });
   }
 
@@ -104,6 +107,13 @@ export class EditProfilePage implements OnInit {
     });
   }
 
+  getLevels() {
+    this._storageService.getLocalData('levels')
+    .then((levels: any) => {
+      this.levels = levels;
+    });
+  }
+
   countryChange(event: any) {
     this.country = event.value;
     console.log(this.country);
@@ -113,6 +123,10 @@ export class EditProfilePage implements OnInit {
 
   cityChange(event: any) {
     this.city = event.value;
+  }
+
+  levelChange(event: any) {
+    this.level = event.value;
   }
 
   domainChange(event: any) {
@@ -143,7 +157,7 @@ export class EditProfilePage implements OnInit {
 
   pickImage() {
     this._imagePickerService.selectImage().then(() =>
-      this._imagePickerService.$selectedImage.pipe(take(1)).subscribe((img) => {
+      this._imagePickerService.$selectedImage.pipe(first()).subscribe((img) => {
         this.imageUpdated = true;
         this.image = img;
         document
@@ -156,7 +170,7 @@ export class EditProfilePage implements OnInit {
 
   public startRecording() {
     this._mediaService.selectVideo().then(() => {
-      this._mediaService.$selectedVideo.pipe(take(1)).subscribe((vid) => {
+      this._mediaService.$selectedVideo.pipe(first()).subscribe((vid) => {
         if (!!vid) {
           this.enablePlay = true;
         } else {
@@ -172,7 +186,7 @@ export class EditProfilePage implements OnInit {
     userForm.nationality = !!this.country ? this.country.id : null;
     userForm.city = !!this.city ? this.city.id : null;
     userForm.DOEX = !!this.domain ? this.domain.id : null;
-    userForm.YOEX = null; // TODO: replace with actual values
+    userForm.YOEX = !!this.level ? this.level.id : null;
     userForm.tags = this.tags;
     userForm.Public_Profile = this.urls.length > 0 ? this.urls : null;
     const dob = new Date(this.user.DOB);
@@ -180,13 +194,15 @@ export class EditProfilePage implements OnInit {
     if (this.imageUpdated) {
       userForm.picture = this.image; 
     }
-    this._authService.updateUserProfile(userForm).subscribe((result) => {
+    this.helper.showLoading();
+    this._authService.updateUserProfile(userForm).pipe(first()).subscribe((result) => {
       this.helper.showToast('Changes Saved');
       this._storageService.updateUserData(result);
+      this.helper.hideLoading();
     }, 
     error => {
-      this.helper.showToast('Something went wrong!');
-      console.log(`error: ${error}`);
+      this.helper.showHttpErrorMessage(error);
+      this.helper.hideLoading();
     });
   }
 
@@ -203,5 +219,6 @@ export class EditProfilePage implements OnInit {
     this.country = !!this.user.nationality.id ? this.user.nationality as INationality : null;
     this.city = !!this.user.city ? this.user.city as ICity : null;
     this.domain = this.user.DOEX as IDomainOfExperience;
+    this.level = !!this.user.YOEX ? this.user.YOEX as IYearsOfExperience : null;
   }
 }

@@ -57,4 +57,9 @@
       .add {
         background-color: var(--ion-custom-color-dark);
       }
+
+      .chips-box {
+          @include flex-box(row);
+          flex-wrap: wrap;
+      }
 }

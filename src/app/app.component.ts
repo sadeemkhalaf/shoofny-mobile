@@ -7,38 +7,31 @@ import { Router } from '@angular/router';
 import { StorageService } from './core/storage/storage.service';
 import { AppHelpersService } from './core/utils/app-helpers.service';
 import { DetailsService } from './providers/details.service';
-import { INationality, ICity, IDomainOfExperience } from './models/user';
+import { INationality, ICity, IDomainOfExperience, IYearsOfExperience } from './models/user';
 import { DataService } from './providers/data.service';
-import { take } from 'rxjs/operators';
-import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-export class AppComponent {
+export class AppComponent{
 
   //TODO: move flter items to another component later
   public countries: INationality[] = [];
   public cities: ICity[] = [];
   public domains: IDomainOfExperience[] = [];
+  public levels: IYearsOfExperience[] = [];
   public tags: string[] = [];
 
   // selected and filtered
   public jobTitle: string = "";
-  public country: INationality;
-  public city: ICity;
+  public country: INationality = null;
+  public city: ICity = null;
   public filteredCities: ICity[] = [];
-  public domain: IDomainOfExperience;
+  public domain: IDomainOfExperience = null;
+  public level: IYearsOfExperience = null;
   public tagInput: string;
-
-  private _connectStream = combineLatest(this._detailsService.getCities(), this._detailsService.getCountries, this._detailsService.getDomains,
-    (cities, countries, domains) => {
-      this._storage.setLocalData('cities', cities);
-      this._storage.setLocalData('countries', countries);
-      this._storage.setLocalData('domains', domains);
-    });
 
   constructor(
     public helper: AppHelpersService,
@@ -63,6 +56,7 @@ export class AppComponent {
           this.getCountries();
           this.getCities();
           this.getDomains();
+          this.getLevels();
           this._route.parseUrl('/home');
         } else {
           this._route.parseUrl('/login');
@@ -70,7 +64,6 @@ export class AppComponent {
       });
     });
   }
-
 
   public logout() {
     this._auth.logout().then(() => {
@@ -81,7 +74,7 @@ export class AppComponent {
 
   getCountries() {
     this._detailsService.getCountries()
-    .pipe(take(1))
+    .pipe()
     .subscribe((countries: any) => {
       this.countries = countries.results;
       this._storage.setLocalData('countries', this.countries);
@@ -90,7 +83,7 @@ export class AppComponent {
 
   getCities() {
     this._detailsService.getCities()
-    .pipe(take(1))
+    .pipe()
     .subscribe((cities: any) => {
       this.cities = cities.results;
       this._storage.setLocalData('cities', this.cities);
@@ -99,10 +92,19 @@ export class AppComponent {
 
   getDomains() {
     this._detailsService.getDomains()
-    .pipe(take(1))
+    .pipe()
     .subscribe((domains: any) => {
       this.domains = domains.results;
       this._storage.setLocalData('domains', this.domains);
+      });
+  }
+
+  getLevels() {
+    this._detailsService.getLevels()
+    .pipe()
+    .subscribe((levels: any) => {
+      this.levels = levels.results;
+      this._storage.setLocalData('levels', this.levels);
       });
   }
 
@@ -118,6 +120,10 @@ export class AppComponent {
 
   domainChange(event: any) {
     this.domain = event.value;
+  }
+
+  levelChange(event: any) {
+    this.level = event.value;
   }
 
   addTag(value: string) {
@@ -140,7 +146,6 @@ export class AppComponent {
   }
 
   clearAndReset() {
-    // this.helper.closeMenu('filter'); 
     this._resetfilter();
   }
 
@@ -160,9 +165,10 @@ export class AppComponent {
     if (!!this.domain) {
       filterConfig.domain = this.domain.id;
     }
-    if (!!this.city) {
-      filterConfig.city = this.city.id;
+    if (!!this.level) {
+      filterConfig.level = this.level.id;
     }
+    
     filterConfig.job_title = this.jobTitle;
     filterConfig.tags = this.tags;
 
@@ -175,6 +181,7 @@ export class AppComponent {
     this.tags = [];
     this.jobTitle = '';
     this.domain = null;
+    this.level = null;
     this._dataService.clearData();
   }
 

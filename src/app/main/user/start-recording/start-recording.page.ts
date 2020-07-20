@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MediaPickerService } from 'src/app/providers/media-picker.service';
-import { take } from 'rxjs/operators';
+import { take, first } from 'rxjs/operators';
 import { WebView } from '@ionic-native/ionic-webview';
 import { Router } from '@angular/router';
 
@@ -31,7 +31,7 @@ export class StartRecordingPage implements OnInit {
   public startRecording() {
     this._mediaService.uploadVideo('testVideo');
     // this._mediaService.selectVideo().then((results) => {
-    //   this._mediaService.$selectedVideo.pipe(take(1)).subscribe((vid) => {
+    //   this._mediaService.$selectedVideo.pipe().subscribe((vid) => {
     //     if (!!vid) {
     //       this.enablePlay = true;
     //     } else {
@@ -42,7 +42,7 @@ export class StartRecordingPage implements OnInit {
   }
 
   public playVideo() {
-    this._mediaService.$selectedVideo.pipe(take(1)).subscribe((vid) => {
+    this._mediaService.$selectedVideo.pipe(first()).subscribe((vid) => {
       const video = this.myVideo.nativeElement;
       video.src = WebView.convertFileSrc(vid);
       this.pathTest = WebView.convertFileSrc(vid);

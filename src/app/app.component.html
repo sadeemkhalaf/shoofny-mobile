@@ -64,12 +64,19 @@
             itemValueField="id"
             itemTextField="name_EN"
             [canSearch]="true"
-            (onChange)="cityChange($event)">
+            (onChange)="domainChange($event)">
           </ionic-selectable>
         </ion-item>
         <ion-item class="col">
           <ion-label position="stacked">Experience Level</ion-label>
-          <ion-input clearInput placeholder="level"></ion-input>
+          <ionic-selectable
+          [(ngModel)]="level"
+          [items]="levels"
+          itemValueField="id"
+          itemTextField="title"
+          [canSearch]="true"
+          (onChange)="levelChange($event)">
+        </ionic-selectable>
         </ion-item>
         <ion-label class="floating-label" position="floating">Tags</ion-label>
         <ion-item>

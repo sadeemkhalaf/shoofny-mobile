@@ -7,8 +7,7 @@ import { StorageService } from '../core/storage/storage.service';
 import { Router } from '@angular/router';
 import { AppHelpersService } from '../core/utils/app-helpers.service';
 import { IUserSubmit } from '../main/details/edit-profile/edit-profile.page';
-import { switchMap, take } from 'rxjs/operators';
-import { DetailsService } from './details.service';
+import { switchMap, take, first } from 'rxjs/operators';
 export class Token {
   access: string;
   refresh: string;
@@ -27,7 +26,6 @@ export class AuthService {
     private _networkService: NetworkService,
     private _storageService: StorageService,
     private _helper: AppHelpersService,
-    private _details: DetailsService,
     private _route: Router) {
     this.loggedInUser = this._loggedInUser.asObservable();
     this._checkLoggedIn();
@@ -55,7 +53,7 @@ export class AuthService {
   }
 
   public updateUserProfile(user: IUserSubmit) {
-    return this._http.put<IUserSubmit>('/api/auth/profile/', user);
+    return this._http.patch<IUserSubmit>('/api/auth/profile/', user);
   }
 
   public refreshToken() {
@@ -91,7 +89,7 @@ export class AuthService {
     return new Promise<any>(
       (resolve, reject) =>
         this._http.post('/api/token/', data)
-          .pipe(switchMap((token) => {
+          .pipe(first(), switchMap((token) => {
             this._helper.hideLoading();
             this._checkLoggedIn();
             this._isLoggedIn.next(true);
@@ -104,17 +102,19 @@ export class AuthService {
               }
             });
             return this.getUserProfile();
-          }, error => {
+          }, (error: any) => {
             this._helper.hideLoading();
-            this._helper.showToast('Wrong email/password!', 'danger');
+            // this._helper.showToast('Wrong email/password!', 'danger');
+            this._helper.showHttpErrorMessage(error);
             reject({ message: 'Wrong username and password' });
-          }), take(1))
+          }))
           .subscribe(async (userData: any) => {
-            await this._setUserData(userData);
-            this._route.navigate(['/home']);
+            console.log(`user data: ${userData}`);
+            await this._setUserData(userData)
+            .then(() => this._route.navigate(['/home']));
           }, error => {
             this._helper.hideLoading();
-            this._helper.showToast('Something went wrong!', 'danger');
+            console.log(error);
             reject(error);
           }));
   }
@@ -137,7 +137,7 @@ export class AuthService {
   }
 
   private _fillUserData(resolve, reject) {
-    this._http.get<IUser>('/api/auth/profile/')
+    this._http.get<IUser>('/api/auth/profile/').pipe(first())
       .subscribe((userData: IUser) => this._setUserData(userData)
         .then(() => {
           resolve(userData);

@@ -9,7 +9,7 @@
 <ion-content *ngIf="!!jobDetails">
   <div class="header">
     <div class="col">
-      <ion-label class="title-lg">{{jobDetails.job_title}}</ion-label>
+      <ion-label class="title-lg">{{jobTitle}}</ion-label>
       <ion-label class="title-sm margin-top-4">At {{jobDetails.user.Company_Name}}</ion-label>
       <ion-label class="title-sm margin-top-4">{{jobDetails.country.name}}, {{jobDetails.city.name}}</ion-label>
       <ion-label class="title-sm margin-top-4">{{caculateDays()}}</ion-label>
@@ -26,10 +26,14 @@
       <span class="title-rg"> {{jobDetails.domains.name_EN}}</span>
       <div class="margin-8"></div>
       <ion-label class="title-md">Skills Required </ion-label>
-      <div class="margin-top-8" *ngFor="let tag of jobDetails.tags">
-        <ion-chip>
-          <ion-label>{{tag}}</ion-label>
-        </ion-chip>
+      <div class="margin-bottom-8 margin-top-8">
+        <div class="chips-box">
+          <div *ngFor="let tag of jobDetails.tags" class="ion-chip margin-right-4">
+            <ion-label>{{tag}}</ion-label>
+          </div>
+        </div>
+        <ion-label class="title-sm" *ngIf="1 > jobDetails.tags.length">
+          No skills added</ion-label>
       </div>
     </div>
   </div>

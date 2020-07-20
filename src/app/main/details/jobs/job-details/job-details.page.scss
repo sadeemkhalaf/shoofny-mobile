@@ -64,4 +64,19 @@
         }
     }
 
+    .chips-box {
+        @include flex-box(row);
+        flex-wrap: wrap;
+
+        .ion-chip {
+            color: #ffffff;
+            background-color: var(--ion-custom-color-primary);
+            border-radius: 20px;
+            padding: 4px 8px;
+            @include font-size(8);
+        }
+    }
+
+
+
 }

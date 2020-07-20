@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppHelpersService } from 'src/app/core/utils/app-helpers.service';
 import { AuthService } from 'src/app/providers/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -10,7 +10,7 @@ import { StorageService } from 'src/app/core/storage/storage.service';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class LoginPage implements OnInit, OnDestroy {
   public form: FormGroup;
   public isSubmitted = false;
 
@@ -21,6 +21,9 @@ export class LoginPage implements OnInit {
     private _storage: StorageService,
     private _auth: AuthService) {
     }
+  ngOnDestroy(): void {
+    throw new Error("Method not implemented.");
+  }
 
   ngOnInit() {
     this._storage.getUserData().then((data) => {

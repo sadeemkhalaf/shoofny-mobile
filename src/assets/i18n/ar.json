@@ -41,21 +41,23 @@
         "title": "تعيين كلمة مرور جديدة"
 
     }, "HOME": {
-        "title": "الرذيسية"
+        "title": "الرئيسية",
+        "hello": "مرحبا",
+        "": ""
 
     }, "PROFILE": {
-        "title": ""
+        "title": "الحساب الشخصي"
 
     }, "EDIT_PROFILE": {
-        "title": ""
+        "title": "تعديل الحساب الشخصي"
 
     }, "JOBS": {
-        "title": ""
+        "title": "الوظائف"
 
     }, "JOB_DETAILS": {
-        "title": ""
+        "title": "تفاصيل الوظيفة"
 
     }, "SETTINGS": {
-        "title": ""
+        "title": "الإعدادات"
     }
 }

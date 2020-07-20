@@ -21,7 +21,6 @@ import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { Camera } from '@ionic-native/Camera/ngx';
 import { IonicSelectableModule } from 'ionic-selectable';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
-import { SearchBoxPipe } from './providers/search-box.pipe';
 import { SearchJobsPipe } from './search-jobs.pipe';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClient } from '@angular/common/http';
@@ -31,7 +30,7 @@ export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
 @NgModule({
-  declarations: [AppComponent, SearchBoxPipe, SearchJobsPipe],
+  declarations: [AppComponent, SearchJobsPipe],
   entryComponents: [],
   imports: [
     BrowserModule,

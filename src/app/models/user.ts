@@ -76,7 +76,4 @@ export class IYearsOfExperience {
     id: number;
     title: string;
     // year: string;
-    IYearsOfExperience() {
-        this.title = '0';
-    }
 }

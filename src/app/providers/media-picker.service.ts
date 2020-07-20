@@ -126,7 +126,7 @@ export class MediaPickerService {
     this._videoFileUpload = this._fileTransfer.create();
     this.isUploading = true;
 
-    this._videoFileUpload.upload(this.selectedVideo, `${environment.APIEndpoint}/api/auth/profile`, options)
+    this._videoFileUpload.upload(this.selectedVideo, `${environment.APIEndpoint}/api/videos/`, options)
       .then((data)=>{
         this.isUploading = false;
         this.uploadPercent = 0;
@@ -170,6 +170,9 @@ export class MediaPickerService {
   }
 
   private _copyVideoToLocalDirectory(capturedFile) {
+    /* var filename = videoUrl.substr(videoUrl.lastIndexOf('/') + 1);
+       var dirpath = videoUrl.substr(0, videoUrl.lastIndexOf('/') + 1); 
+       dirpath = dirpath.includes("file://") ? dirpath : "file://" + dirpath;*/
     let fileName = capturedFile.name;
     let dir = capturedFile['localURL'].split('/');
     dir.pop();

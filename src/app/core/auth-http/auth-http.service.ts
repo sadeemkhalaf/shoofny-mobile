@@ -43,6 +43,17 @@ export class AuthHttp implements IHttp {
     return subject.asObservable();
   }
 
+  public patch<T>(url: string, data: object): Observable<T> {
+    const subject: ReplaySubject<T> = new ReplaySubject<T>(1);
+
+    this._http.patch<T>(url, data || {})
+      .pipe(timeout(this.TIMEOUT))
+      .subscribe((response) => subject.next(response), (error) => subject.error(error));
+
+
+    return subject.asObservable();
+  }
+
   public delete<T>(url: string, options?: Object): Observable<T> {
     const subject: ReplaySubject<T> = new ReplaySubject<T>(1);
 

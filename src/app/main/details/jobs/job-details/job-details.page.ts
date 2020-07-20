@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { JobDetailsService } from 'src/app/providers/job-details.service';
 import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
@@ -6,18 +6,22 @@ import { IJobDetails } from 'src/app/models/Job';
 import { AppHelpersService } from 'src/app/core/utils/app-helpers.service';
 import { IUser } from 'src/app/models/user';
 import { StorageService } from 'src/app/core/storage/storage.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-job-details',
   templateUrl: './job-details.page.html',
   styleUrls: ['./job-details.page.scss'],
 })
-export class JobDetailsPage implements OnInit {
+export class JobDetailsPage implements OnInit, OnDestroy {
 
   public jobDetails: IJobDetails;
+  public jobTitle: string;
+
   public applied: boolean = false;
   private _jobId: number;
   private _user: IUser;
+  private _subscriptions: Subscription[] = [];
 
   constructor(
     public helper: AppHelpersService,
@@ -25,12 +29,17 @@ export class JobDetailsPage implements OnInit {
     private _storageService: StorageService,
     private _jobDetailsService: JobDetailsService) { }
 
+  ngOnDestroy(): void {
+    this._subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
+
   ngOnInit() {
     this._jobId = Number(this._route.snapshot.paramMap.get('id'));
-    this._jobDetailsService.getJobByParam({id: this._jobId}).pipe(take(1))
+    this._subscriptions.push(this._jobDetailsService.getJobByParam({id: this._jobId})
     .subscribe((data: any) => {
       this.jobDetails = data.results[0] as IJobDetails;
-    })
+      this.jobTitle = this.jobDetails.slug.split('-').join(' ');
+    }));
     this._getUser();
   }
 

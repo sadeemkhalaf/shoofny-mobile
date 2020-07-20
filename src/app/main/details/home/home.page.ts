@@ -7,6 +7,7 @@ import { IJobDetails } from 'src/app/models/Job';
 import { AppHelpersService } from 'src/app/core/utils/app-helpers.service';
 import { Subscription } from 'rxjs';
 import { StorageService } from 'src/app/core/storage/storage.service';
+import { take } from 'rxjs/operators';
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -20,6 +21,7 @@ export class HomePage implements OnInit {
   public jobsListByCity: IJobDetails[] = [];
 
   navigationSubscription: Subscription = new Subscription();
+  private _subscriptions: Subscription[] = [];
 
   constructor(
     public helper: AppHelpersService,
@@ -41,6 +43,7 @@ export class HomePage implements OnInit {
 
   ngOnDestroy() {
     this.navigationSubscription.unsubscribe();
+    this._subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
   ionViewWillEnter() {
@@ -66,13 +69,13 @@ export class HomePage implements OnInit {
     this._StorageService.getUserData().then((user) => {
       this.userData = user;
       if (!!this.userData.city.id) {
-        this.getJobsByCity(user.city.id).subscribe((data: any) => {
+        this._subscriptions.push(this.getJobsByCity(user.city.id).subscribe((data: any) => {
           this.jobsCountByCity = data.count;
           this.jobsListByCity = data.results as IJobDetails[];
           if (this.jobsListByCity.length > 3) {
             this.jobsListByCity = this.jobsListByCity.sort((a, b) => a.timestamp < b.timestamp ? 1 : -1).slice(0, 3);
           }
-        });
+        }));
       }
     });
   }
