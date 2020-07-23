@@ -35,9 +35,8 @@ export class HomePage implements OnInit {
     this.navigationSubscription = this._route.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
       // if (e instanceof NavigationEnd) {
-      //   this._loadData();
+        this._loadData();
       // }
-
     });
   }
 

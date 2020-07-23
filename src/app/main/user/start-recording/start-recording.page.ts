@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MediaPickerService } from 'src/app/providers/media-picker.service';
-import { take, first } from 'rxjs/operators';
-import { WebView } from '@ionic-native/ionic-webview';
+import { first } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { from } from 'rxjs';
+import { VideoCaptureService } from 'src/app/providers/video-capture.service';
 
 @Component({
   selector: 'app-start-recording',
@@ -21,7 +21,7 @@ export class StartRecordingPage implements OnInit {
   public pathTest: string;
 
   constructor(
-    private _mediaService: MediaPickerService,
+    private _mediaService: VideoCaptureService,
     private _router: Router
   ) { }
 
@@ -29,23 +29,14 @@ export class StartRecordingPage implements OnInit {
   }
 
   public startRecording() {
-    this._mediaService.uploadVideo('testVideo');
-    // this._mediaService.selectVideo().then((results) => {
-    //   this._mediaService.$selectedVideo.pipe().subscribe((vid) => {
-    //     if (!!vid) {
-    //       this.enablePlay = true;
-    //     } else {
-    //       this.enablePlay = false;
-    //     }
-    //   });
-    // });
+    from(this._mediaService.selectVideo()).pipe(first()).subscribe((video) => {
+      console.log(video);
+    });
   }
 
   public playVideo() {
     this._mediaService.$selectedVideo.pipe(first()).subscribe((vid) => {
       const video = this.myVideo.nativeElement;
-      video.src = WebView.convertFileSrc(vid);
-      this.pathTest = WebView.convertFileSrc(vid);
       video.play();
     });
 

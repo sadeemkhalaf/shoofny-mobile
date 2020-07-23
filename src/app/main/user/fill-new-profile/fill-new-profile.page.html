@@ -75,7 +75,14 @@
       </ion-item>
       <ion-item class="col">
         <ion-label position="stacked">Experience Level</ion-label>
-        <ion-input clearInput placeholder="experience level" [(ngModel)]="user.YOEX.title"></ion-input>
+        <ionic-selectable
+        [(ngModel)]="level"
+        [items]="levels"
+        itemValueField="id"
+        itemTextField="title"
+        [canSearch]="true"
+        (onChange)="levelChange($event)">
+      </ionic-selectable>
       </ion-item>
     </ion-list>
     
@@ -114,7 +121,7 @@
 </ion-content>
 
 <ion-footer class="padding-8" style="direction: rtl;">
-  <ion-button [routerLink]="['start-recording']">
+  <ion-button (click)="submitData()">
     <ion-label>
       <ion-icon name="arrow-forward-outline"></ion-icon>
       Confirm & Continue

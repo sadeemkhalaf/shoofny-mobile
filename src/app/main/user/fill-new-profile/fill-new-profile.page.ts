@@ -10,8 +10,11 @@ import { AuthService } from 'src/app/providers/auth.service';
 import { StorageService } from 'src/app/core/storage/storage.service';
 import { DetailsService } from 'src/app/providers/details.service';
 import { MediaPickerService } from 'src/app/providers/media-picker.service';
-import { take } from 'rxjs/operators';
+import { first } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { AppHelpersService } from 'src/app/core/utils/app-helpers.service';
+import { IUserSubmit } from '../../details/edit-profile/edit-profile.page';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-fill-new-profile',
@@ -27,6 +30,7 @@ export class FillNewProfilePage implements OnInit, OnDestroy {
   public urls: string[] = [];
   public countries: INationality[] = [];
   public cities: ICity[] = [];
+  public levels: IYearsOfExperience[] = [];
   public domains: IDomainOfExperience[] = [];
   public image: any;
 
@@ -34,6 +38,7 @@ export class FillNewProfilePage implements OnInit, OnDestroy {
   public jobTitle: string;
   public country: INationality;
   public city: ICity;
+  public level: IYearsOfExperience;
   public url: string;
   public filteredCities: ICity[] = [];
   public domain: IDomainOfExperience;
@@ -44,7 +49,9 @@ export class FillNewProfilePage implements OnInit, OnDestroy {
     private _authService: AuthService,
     private _storageService: StorageService,
     private _imagePickerService: MediaPickerService,
-    private _detailsService: DetailsService
+    private _detailsService: DetailsService,
+    private _helper: AppHelpersService,
+    private _router: Router
   ) { }
 
   ngOnDestroy(): void {
@@ -52,6 +59,7 @@ export class FillNewProfilePage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this._authService.getUserProfile().pipe(first()).subscribe((user) => this.user = user );
     this._initializeUser();
   }
 
@@ -74,6 +82,12 @@ export class FillNewProfilePage implements OnInit, OnDestroy {
     });
   }
 
+  getLevels() {
+    return this._detailsService.getLevels().subscribe((levels: any) => {
+      this.levels = levels.results;
+    });
+  }
+
   countryChange(event: any) {
     this.country = event.value;
     this.country.id = Number(this.country.url.split('/')[7]);
@@ -82,6 +96,10 @@ export class FillNewProfilePage implements OnInit, OnDestroy {
 
   cityChange(event: any) {
     this.city = event.value;
+  }
+
+  levelChange(event: any) {
+    this.level = event.value;
   }
 
   domainChange(event: any) {
@@ -122,6 +140,33 @@ export class FillNewProfilePage implements OnInit, OnDestroy {
     );
   }
 
+  submitData() {
+    let userForm: IUserSubmit = new IUserSubmit();
+    Object.assign(userForm, this.user);
+    userForm.nationality = !!this.country ? this.country.id : null;
+    userForm.city = !!this.city ? this.city.id : null;
+    userForm.DOEX = !!this.domain ? this.domain.id : null;
+    userForm.YOEX = !!this.level ? this.level.id : null;
+    userForm.tags = this.tags;
+    userForm.Public_Profile = this.urls.length > 0 ? this.urls : null;
+    const dob = new Date(this.user.DOB);
+    userForm.DOB = `${dob.getUTCFullYear()}-${dob.getMonth()}-${dob.getDate()}`;
+    // if (this.imageUpdated) {
+    //   userForm.picture = this.image; 
+    // }
+    this._helper.showLoading();
+    this._authService.updateUserProfile(userForm).pipe(first()).subscribe((result) => {
+      this._helper.showToast('Information Saved', 'success');
+      this._storageService.updateUserData(result);
+      this._helper.hideLoading();
+      this._router.navigate(['signup/profile/start-recording']);
+    }, 
+    error => {
+      this._helper.showHttpErrorMessage(error);
+      this._helper.hideLoading();
+    });
+  }
+
   private _getFilteredCities() {
     // By Country Selected (country id)
     this.filteredCities = this.cities.filter(
@@ -129,16 +174,11 @@ export class FillNewProfilePage implements OnInit, OnDestroy {
     );
   }
 
-  private _prepareData() {
-    this.country = this.user.nationality;
-    this.city = this.user.city;
-    this.domain = this.user.DOEX;
-  }
-
   private _initializeUser() {
     this.user.YOEX = new IYearsOfExperience();
     this._subscriptions.push(this.getCities());
     this._subscriptions.push(this.getCities());
     this._subscriptions.push(this.getDomains());
+    this._subscriptions.push(this.getLevels());
   }
 }

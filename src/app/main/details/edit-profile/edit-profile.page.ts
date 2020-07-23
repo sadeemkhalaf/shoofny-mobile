@@ -4,8 +4,6 @@ import { IUser, INationality, ICity, IDomainOfExperience, IYearsOfExperience } f
 import { StorageService } from 'src/app/core/storage/storage.service';
 import { MediaPickerService } from 'src/app/providers/media-picker.service';
 import { AppHelpersService } from 'src/app/core/utils/app-helpers.service';
-import { WebView } from '@ionic-native/ionic-webview';
-import { DomController } from '@ionic/angular';
 import { first } from 'rxjs/operators';
 
 export class IUserSubmit {
@@ -65,10 +63,8 @@ export class EditProfilePage implements OnInit {
   constructor(
     public helper: AppHelpersService,
     private _authService: AuthService,
-    private domCtrl: DomController,
     private _storageService: StorageService,
-    private _imagePickerService: MediaPickerService,
-    private _mediaService: MediaPickerService
+    private _imagePickerService: MediaPickerService
   ) { }
 
   ngOnInit() {
@@ -116,7 +112,6 @@ export class EditProfilePage implements OnInit {
 
   countryChange(event: any) {
     this.country = event.value;
-    console.log(this.country);
     this.country.id = Number(this.country.url.split('/')[7]);
     this._getFilteredCities();
   }
@@ -167,18 +162,6 @@ export class EditProfilePage implements OnInit {
       })
     );
   }
-
-  public startRecording() {
-    this._mediaService.selectVideo().then(() => {
-      this._mediaService.$selectedVideo.pipe(first()).subscribe((vid) => {
-        if (!!vid) {
-          this.enablePlay = true;
-        } else {
-          this.enablePlay = false;
-        }
-      });
-    });
-  }
   
   submitData() {
     let userForm: IUserSubmit = new IUserSubmit();
@@ -196,7 +179,7 @@ export class EditProfilePage implements OnInit {
     }
     this.helper.showLoading();
     this._authService.updateUserProfile(userForm).pipe(first()).subscribe((result) => {
-      this.helper.showToast('Changes Saved');
+      this.helper.showToast('Changes Saved', 'success');
       this._storageService.updateUserData(result);
       this.helper.hideLoading();
     }, 
@@ -207,7 +190,7 @@ export class EditProfilePage implements OnInit {
   }
 
   uploadVideo() {
-    this._mediaService.uploadVideo('aboutme');
+    // this._mediaService._uploadVideo('aboutme');
   }
 
   private _getFilteredCities() {
@@ -216,7 +199,7 @@ export class EditProfilePage implements OnInit {
   }
 
   private _prepareData() {
-    this.country = !!this.user.nationality.id ? this.user.nationality as INationality : null;
+    this.country = !!this.user.nationality ? this.user.nationality as INationality : null;
     this.city = !!this.user.city ? this.user.city as ICity : null;
     this.domain = this.user.DOEX as IDomainOfExperience;
     this.level = !!this.user.YOEX ? this.user.YOEX as IYearsOfExperience : null;

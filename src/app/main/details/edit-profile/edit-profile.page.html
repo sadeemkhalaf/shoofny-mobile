@@ -6,7 +6,7 @@
 <ion-content *ngIf="!!user">
 <div class="margin-32 col">
   <div class="row align-items-center margin-bottom-16">
-    <div class="profile-picture-circle margin-right-16"> <img [src]="image"/></div>
+    <div class="profile-picture-circle margin-right-16"> <img src="image"/></div>
     <ion-label class="title-rg link" (click)="pickImage()">Change Picture</ion-label>
   </div>
   <ion-label class="title-lg margin-bottom-8">Basic Information</ion-label>
@@ -112,9 +112,7 @@
     </ion-chip>
   </div>
 </div>
-<div>
-  <ion-button (click)="uploadVideo()" >Upload Video</ion-button>
-</div>
+
 </ion-content>
 <ion-footer>
   <div class="row align-items-center padding-8">

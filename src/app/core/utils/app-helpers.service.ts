@@ -102,7 +102,7 @@ export class AppHelpersService {
     this._loadingSubject.next(false);
   }
 
-  public showHttpErrorMessage(reason: { status: number; error: any; message: string }) {
+  public showHttpErrorMessage(reason: { status: number; error: any; message: string; detail?: string }) {
     switch (reason.status) {
       case 503:
       case 504:
@@ -116,7 +116,9 @@ export class AppHelpersService {
         this.showToast('Internal server error, please let us know about it', 'danger');
         break;
       default:
-        this.showToast(reason.message || 'Something went wrong! please contact our support.', 'danger');
+        {
+          this.showToast(reason.message || 'Something went wrong! please contact our support.', 'danger');
+        }
     }
   }
 

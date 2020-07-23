@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { AppHelpersService } from '../core/utils/app-helpers.service';
 import { IUserSubmit } from '../main/details/edit-profile/edit-profile.page';
 import { switchMap, take, first } from 'rxjs/operators';
+import { error } from 'protractor';
 export class Token {
   access: string;
   refresh: string;
@@ -95,26 +96,23 @@ export class AuthService {
             this._isLoggedIn.next(true);
             this._setUserToken(token).then(() => {
               resolve(token);
-              if (isLogin) {
-                this._route.navigate(['/home']);
-              } else {
+              if (!!!isLogin) {
                 this._route.navigate(['/signup/profile'])
               }
             });
             return this.getUserProfile();
           }, (error: any) => {
             this._helper.hideLoading();
-            // this._helper.showToast('Wrong email/password!', 'danger');
-            this._helper.showHttpErrorMessage(error);
+            this._helper.showToast(`Wrong username and password`, 'danger');
             reject({ message: 'Wrong username and password' });
           }))
           .subscribe(async (userData: any) => {
-            console.log(`user data: ${userData}`);
             await this._setUserData(userData)
             .then(() => this._route.navigate(['/home']));
           }, error => {
             this._helper.hideLoading();
-            console.log(error);
+            this._helper.showHttpErrorMessage(error);
+            console.log('error: ', error);
             reject(error);
           }));
   }
@@ -141,6 +139,7 @@ export class AuthService {
       .subscribe((userData: IUser) => this._setUserData(userData)
         .then(() => {
           resolve(userData);
+          this._storageService.updateUserData(userData);
         }), (reason) => {
           if (reason.status >= 400 && reason.status < 500) {
             if (reason.status == 401) {
