@@ -71,7 +71,7 @@ export class MediaPickerService implements OnInit {
 
   private _pickImage(source: any) {
     const options: CameraOptions = {
-      quality: 100,
+      quality: 40,
       sourceType: source,
       destinationType: this._camera.DestinationType.DATA_URL,
       encodingType: this._camera.EncodingType.JPEG,

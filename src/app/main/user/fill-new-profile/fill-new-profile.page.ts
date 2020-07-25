@@ -27,12 +27,12 @@ export class FillNewProfilePage implements OnInit, OnDestroy {
   // inputs values
   public tagInput: string;
   public tags: string[] = [];
-  public urls: string[] = [];
   public countries: INationality[] = [];
   public cities: ICity[] = [];
   public levels: IYearsOfExperience[] = [];
   public domains: IDomainOfExperience[] = [];
   public image: any;
+  public imageUpdated: boolean = false;
 
   // selected and filtered
   public jobTitle: string;
@@ -117,20 +117,10 @@ export class FillNewProfilePage implements OnInit, OnDestroy {
     this.tags = this.tags.filter((tag) => tag !== value);
   }
 
-  addUrl() {
-    if (!!this.url && this.url.length > 0) {
-      this.urls.push(this.url);
-      this.url = '';
-    }
-  }
-
-  clearUrl(value: string) {
-    this.urls = this.urls.filter((url) => url !== value);
-  }
-
   pickImage() {
     this._imagePickerService.selectImage().then(() =>
       this._imagePickerService.$selectedImage.pipe().subscribe((img) => {
+        this.imageUpdated = true;
         this.image = img;
         document
           .getElementsByClassName('profile-picture-circle')
@@ -148,12 +138,12 @@ export class FillNewProfilePage implements OnInit, OnDestroy {
     userForm.DOEX = !!this.domain ? this.domain.id : null;
     userForm.YOEX = !!this.level ? this.level.id : null;
     userForm.tags = this.tags;
-    userForm.Public_Profile = this.urls.length > 0 ? this.urls : null;
+    userForm.Public_Profile = this.url;
     const dob = new Date(this.user.DOB);
     userForm.DOB = `${dob.getUTCFullYear()}-${dob.getMonth()}-${dob.getDate()}`;
-    // if (this.imageUpdated) {
-    //   userForm.picture = this.image; 
-    // }
+    if (this.imageUpdated) {
+      userForm.picture = this.image; 
+    }
     this._helper.showLoading();
     this._authService.updateUserProfile(userForm).pipe(first()).subscribe((result) => {
       this._helper.showToast('Information Saved', 'success');

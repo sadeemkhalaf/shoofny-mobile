@@ -49,12 +49,20 @@ export class AuthService {
     return this._http.get<IUser>('/api/auth/profile');
   }
 
+  public uploadVideo(videoBlob: Blob) {
+    return this._http.post(`/api/videos/`, videoBlob);
+  }
+
   public registerUser(user: any) {
     return this._http.post<any>('/api/auth/register/', user);
   }
 
-  public updateUserProfile(user: IUserSubmit) {
-    return this._http.patch<IUserSubmit>('/api/auth/profile/', user);
+  public resetPassword(email: string) {
+    return this._http.post(`/api/auth/reset-password/`, {login: email});
+  }
+
+  public updateUserProfile(user: any) {
+    return this._http.patch<any>('/api/auth/profile/', user);
   }
 
   public refreshToken() {

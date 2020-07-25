@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IUser } from 'src/app/models/user';
 import { StorageService } from 'src/app/core/storage/storage.service';
 import { Router, NavigationEnd } from '@angular/router';
@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './profile-picture-circle.component.html',
   styleUrls: ['./profile-picture-circle.component.scss'],
 })
-export class ProfilePictureCircleComponent implements OnInit {
+export class ProfilePictureCircleComponent implements OnInit, OnDestroy {
   public userData: IUser;
   navigationSubscription: Subscription;
 
@@ -38,7 +38,7 @@ export class ProfilePictureCircleComponent implements OnInit {
       document
         .getElementsByClassName('image-circle')
         .item(0)
-        .setAttribute('style', `background-image: url('${pictureUrl}')`);
+        .setAttribute('style', `background-image: url("${pictureUrl}")`);
     });
   }
 }

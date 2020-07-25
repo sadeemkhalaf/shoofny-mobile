@@ -8,22 +8,22 @@
         src="./assets/logo.png"
       ></ion-img>
       <ion-item class="col">
-        <ion-label position="floating">Email</ion-label>
+        <ion-label position="floating">{{ 'LOGIN.email' | translate }}</ion-label>
         <ion-input type="text" class="no-padding" formControlName="email" required></ion-input>
       </ion-item>
       <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
         Email is required.
       </span>
       <ion-item class="col">
-        <ion-label position="floating">Password</ion-label>
+        <ion-label position="floating">{{ 'LOGIN.password' | translate }}</ion-label>
         <ion-input type="password" formControlName="password" required></ion-input>
       </ion-item>
       <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
         Password is required.
       </span>
-      <ion-button type="submit">Login</ion-button>
-      <ion-label class="links margin-top-10">You don't have an account?<span [routerLink]="['/signup']"> Signup</span></ion-label>
-      <ion-label class="links margin-top-32"><span>Forgot your passsword?</span></ion-label>
+      <ion-button type="submit">{{ 'LOGIN.title' | translate }}</ion-button>
+      <ion-label class="links margin-top-10">{{ 'LOGIN.noAccount' | translate }}?<span [routerLink]="['/signup']"> {{ 'LOGIN.signup' | translate }}</span></ion-label>
+      <ion-label class="links margin-top-32" [routerLink]="['/reset-password']"><span>{{ 'LOGIN.forgotPassword' | translate }}?</span></ion-label>
     </div>
   </form>
 </ion-content>

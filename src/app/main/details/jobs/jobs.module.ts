@@ -9,6 +9,7 @@ import { JobsPageRoutingModule } from './jobs-routing.module';
 import { JobsPage } from './jobs.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { SearchBoxPipe } from 'src/app/providers/search-box.pipe';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { SearchBoxPipe } from 'src/app/providers/search-box.pipe';
     FormsModule,
     IonicModule,
     ComponentsModule,
-    JobsPageRoutingModule
+    JobsPageRoutingModule,
+    TranslateModule
   ],
   declarations: [JobsPage, SearchBoxPipe]
 })

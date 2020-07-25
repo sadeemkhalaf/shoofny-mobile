@@ -4,7 +4,8 @@
         "email": "البريد الالكتروني",
         "password": "كلمة المرور",
         "signup": "إنشاء حساب",
-        "forgotPassword": "نسيت كلمة المرور"
+        "forgotPassword": "نسيت كلمة المرور",
+        "noAccount": "ليس لديك حساب"
 
     }, "SIGNUP": {
         "title": "إنشاء حساب جديد",
@@ -15,10 +16,15 @@
         "confirmPassword": "تأكيد كلمة المرور",
         "mobile": "رقم الهاتف المحمول",
         "code": "الرمز",
-        "username": "اسم المستخدم"
+        "username": "اسم المستخدم",
+        "fillFields": "املئ بياناتك لتسجيل حساب جديد"
 
     }, "FILL_NEW_PROFILE": {
         "title": "تفاصيل الحساب",
+        "register": "تسجيل الحساب",
+        "profile": "ملئ البيانات",
+        "video": "تسجيل الفيديو",
+        "changePicture": "تغيير الصورة",
         "dob": "تاريخ الميلاد",
         "country": "الدولة",
         "city": "المدينة",
@@ -38,26 +44,88 @@
 
     },
      "RESET_PASSWORD": {
-        "title": "تعيين كلمة مرور جديدة"
+        "title": "تعيين كلمة مرور جديدة",
+        "email": "البريد الالكتروني",
+        "password": "كلمة المرور",
+        "resetPassword": "تعيين كلمة مرور جديدة",
+        "signup": "إنشاء حساب",
+        "goBack": "عودة لصفحة تسجيل الدخول"
 
     }, "HOME": {
         "title": "الرئيسية",
         "hello": "مرحبا",
-        "": ""
+        "jobsInCity": "وظائف في مدينتك",
+        "profileViews": "المشاهدات",
+        "profileRating": "التقييم",
+        "latestJobPosts": "آخر الوظائف",
+        "showAll": "المزيد",
+        "noResultsFound": "لا يوجد نتائج"
+
 
     }, "PROFILE": {
-        "title": "الحساب الشخصي"
+        "title": "الحساب الشخصي",
+        "edit": "تعديل",
+        "yearsOld": "عام",
+        "rating": "التقييم",
+        "experience": "الخبرة",
+        "views": "المشاهدات",
+        "contact": "معلومات الاتصال",
+        "topSkills": "المهارات",
+        "yourVideo": "الفيديو",
+        "updateVideo": "تحديث الفيديو"
 
     }, "EDIT_PROFILE": {
-        "title": "تعديل الحساب الشخصي"
+        "title": "تعديل الحساب الشخصي",
+        "basicInformation": "معلومات عامة",
+        "firstName": "الاسم الأول",
+        "lastName": "اسم العائلة",
+        "email": "البريد الالكتروني",
+        "dob": "تاريخ الميلاد",
+        "country": "الدولة",
+        "city": "المدينة",
+        "private": "الخصوصية",
+        "domainOfExpertise": "مجال الخبرة",
+        "experienceLevel": "مستوى الخبرة",
+        "publicProfessionlProfiles": "حسابات عامة",
+        "url": "رابط",
+        "addSkills": "أضف المزيد من المهارات",
+        "changePicture": "تغيير الصورة",
+        "remove": "حذف الصورة",
+        "professionalInformation": "معلومات تفصيلية",
+        "saveChanges": "حفظ التغييرات"
 
     }, "JOBS": {
-        "title": "الوظائف"
+        "title": "الوظائف",
+        "search": "بحث"
 
     }, "JOB_DETAILS": {
-        "title": "تفاصيل الوظيفة"
+        "title": "تفاصيل الوظيفة",
+        "jobDescription": "وصف الوظيفة",
+        "experience": "الخبرة المطلوبة",
+        "domains": "المجال",
+        "skillsRequired": "المهارات المطلوبة",
+        "applyNow": "قدم الآن",
+        "noSkillsAdded": "لا يوجد تفاصيل"
 
     }, "SETTINGS": {
         "title": "الإعدادات"
+
+    }, "MENU": {
+        "title": "الإعدادات",
+        "profile": "الحساب الشخصي",
+        "settings": "الإعدادات",
+        "logout": "تسجيل خروج"
+        
+    }, "FILTER": {
+        "title": "فلترة الوظائف",
+        "jobTitle": "الحساب الشخصي",
+        "country": "الدولة",
+        "city": "المدينة",
+        "domains": "المجال",
+        "experienceLevel": "المجال",
+        "tags": "المهارات",
+        "clear": "مسح الخانات",
+        "cancel": "إلغاء",
+        "showFiltered": "أظهر النتائج"
     }
 }

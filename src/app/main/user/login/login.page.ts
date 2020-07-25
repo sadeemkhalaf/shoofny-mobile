@@ -22,7 +22,7 @@ export class LoginPage implements OnInit, OnDestroy {
     private _auth: AuthService) {
     }
   ngOnDestroy(): void {
-    throw new Error("Method not implemented.");
+    // throw new Error("Method not implemented.");
   }
 
   ngOnInit() {

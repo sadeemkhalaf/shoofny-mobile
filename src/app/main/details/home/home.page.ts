@@ -7,7 +7,7 @@ import { IJobDetails } from 'src/app/models/Job';
 import { AppHelpersService } from 'src/app/core/utils/app-helpers.service';
 import { Subscription } from 'rxjs';
 import { StorageService } from 'src/app/core/storage/storage.service';
-import { take } from 'rxjs/operators';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',

@@ -13,52 +13,89 @@ import { AuthHttp } from './auth-http.service';
 export class AuthHttpInterceptor implements HttpInterceptor {
 
   constructor(private _router: Router,
-              private _storageService: StorageService,
-              private _http: AuthHttp,
-              private _helper: AppHelpersService) {
+    private _storageService: StorageService,
+    private _http: AuthHttp,
+    private _helper: AppHelpersService) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const APIEndpoint = environment.APIEndpoint;
-    const tokenPromise = this._addToken();
-    return from(tokenPromise)
-      .pipe(
-        switchMap(token => {
-          let headers = request.headers;
-          if (!!token && token !== '') {
-            headers = headers.set('Authorization', 'Bearer ' + (token || ''));
-          }
-          headers = headers.append('Content-Type', 'application/json');
-          const requestClone = request.clone({headers, withCredentials: true, url: `${APIEndpoint}${request.url}`});
-          return next.handle(requestClone)
-            .pipe(tap((ev: HttpEvent<any>) => {
-              if (ev instanceof HttpResponse) {
-              }
-            }), catchError((error) => {
-              let errorData = {
-                message: '',
-                status: 500
-              };
-              this._helper.hideLoading();
-              if (error.error instanceof ErrorEvent) {
-                // client-side error
-                console.warn('>>> Client Side Error: ', error);
-                errorData = {message: `Error: ${error.error.message}`, status: -1};
-              } else {
-                console.warn('>>> Server Side Error: ', error);
-                // server-side error
-                errorData = {message: this._getMessageFromError(error), status: error.status};
-                // TODO maybe handle more cases? like server under maintenance, or other 5xx errors
-                if (errorData.status === 500) {
-                  const newError = Object.assign({}, error, {message: 'Internal Server Error, failed to perform action'});
-                  return throwError(newError);
+    if (!request.url.includes('assets/i18n')) {
+      const APIEndpoint = environment.APIEndpoint;
+      const tokenPromise = this._addToken();
+      return from(tokenPromise)
+        .pipe(
+          switchMap(token => {
+            let headers = request.headers;
+            if (!!token && token !== '') {
+              headers = headers.set('Authorization', 'Bearer ' + (token || ''));
+            }
+            headers = headers.append('Content-Type', 'application/json');
+            const requestClone = request.clone({ headers, withCredentials: true, url: `${APIEndpoint}${request.url}` });
+            
+            return next.handle(requestClone)
+              .pipe(tap((ev: HttpEvent<any>) => {
+                if (ev instanceof HttpResponse) {
                 }
-                this._handleAuthError(error);
-              }
-              return throwError(errorData);
-            }));
-        })
-      );
+              }), catchError((error) => {
+                let errorData = {
+                  message: '',
+                  status: 500
+                };
+                this._helper.hideLoading();
+                if (error.error instanceof ErrorEvent) {
+                  // client-side error
+                  console.warn('>>> Client Side Error: ', error);
+                  errorData = { message: `Error: ${error.error.message}`, status: -1 };
+                } else {
+                  console.warn('>>> Server Side Error: ', error);
+                  // server-side error
+                  errorData = { message: this._getMessageFromError(error), status: error.status };
+                  // TODO maybe handle more cases? like server under maintenance, or other 5xx errors
+                  if (errorData.status === 500) {
+                    const newError = Object.assign({}, error, { message: 'Internal Server Error, failed to perform action' });
+                    return throwError(newError);
+                  }
+                  this._handleAuthError(error);
+                }
+                return throwError(errorData);
+              }));
+          })
+        );
+    } else {
+      
+      let headers = request.headers;
+      headers = headers.append('Content-Type', 'application/json');
+      const requestClone = request.clone({ headers, withCredentials: true, url: `${request.url}` });
+      
+      return next.handle(requestClone)
+        .pipe(tap((ev: HttpEvent<any>) => {
+          if (ev instanceof HttpResponse) {
+          }
+        }), catchError((error) => {
+          let errorData = {
+            message: '',
+            status: 500
+          };
+          this._helper.hideLoading();
+          if (error.error instanceof ErrorEvent) {
+            // client-side error
+            console.warn('>>> Client Side Error: ', error);
+            errorData = { message: `Error: ${error.error.message}`, status: -1 };
+          } else {
+            console.warn('>>> Server Side Error: ', error);
+            // server-side error
+            errorData = { message: this._getMessageFromError(error), status: error.status };
+            // TODO maybe handle more cases? like server under maintenance, or other 5xx errors
+            if (errorData.status === 500) {
+              const newError = Object.assign({}, error, { message: 'Internal Server Error, failed to perform action' });
+              return throwError(newError);
+            }
+            this._handleAuthError(error);
+          }
+          return throwError(errorData);
+        }));
+    }
+
   }
 
   private _getMessageFromError(error) {
@@ -83,14 +120,14 @@ export class AuthHttpInterceptor implements HttpInterceptor {
     console.log('Handled error ' + err.status + ' - ' + err.message);
     if (err.status === 401) {
       this._storageService.getAuthToken()
-      .then((token) => {
-        if(!!token) {
-          this._refreshToken();
-        } else {
-          console.log('err.status: ', err.status);
-          this._router.navigate([`/login`], {queryParamsHandling: 'merge', replaceUrl: true});
-        }
-      });
+        .then((token) => {
+          if (!!token) {
+            this._refreshToken();
+          } else {
+            console.log('err.status: ', err.status);
+            this._router.navigate([`/login`], { queryParamsHandling: 'merge', replaceUrl: true });
+          }
+        });
       // if you've caught / handled the error, you don't want to rethrow it
       // unless you also want downstream consumers to have to handle it as well.
       return of(err.message);
@@ -102,29 +139,29 @@ export class AuthHttpInterceptor implements HttpInterceptor {
     this._storageService.getRefreshAuthToken().then((refreshToken) => {
       console.log(refreshToken);
       return new Promise<Token>(
-      (resolve, reject) =>
-        this._http.post('/api/token/refresh/', { refresh: refreshToken })
-          .subscribe((token: any) => {
-            this._helper.hideLoading();
-            if (!!token) {
-              this._storageService.updateUserToken(token)
-                .then(() => {
-                  if (this._router.url.includes('login')) {
-                    this._router.navigate([`/home`], {replaceUrl: true});
-                  }
-                  resolve(token);
-                });
-            } else {
+        (resolve, reject) =>
+          this._http.post('/api/token/refresh/', { refresh: refreshToken })
+            .subscribe((token: any) => {
+              this._helper.hideLoading();
+              if (!!token) {
+                this._storageService.updateUserToken(token)
+                  .then(() => {
+                    if (this._router.url.includes('login')) {
+                      this._router.navigate([`/home`], { replaceUrl: true });
+                    }
+                    resolve(token);
+                  });
+              } else {
+                this._storageService.clearUserData();
+                reject({ message: 'token missing or expired' });
+                this._router.navigate([`/login`], { queryParamsHandling: 'merge', replaceUrl: true });
+              }
+            }, error => {
+              reject(error);
+              this._helper.hideLoading();
               this._storageService.clearUserData();
-              reject({ message: 'token missing or expired' });
-              this._router.navigate([`/login`], {queryParamsHandling: 'merge', replaceUrl: true});
-            }
-          }, error => {
-            reject(error);
-            this._helper.hideLoading();
-            this._storageService.clearUserData();
-            this._router.navigate([`/login`], {queryParamsHandling: 'merge', replaceUrl: true});
-          }));
+              this._router.navigate([`/login`], { queryParamsHandling: 'merge', replaceUrl: true });
+            }));
     }, error => console.error(error))
 
   }

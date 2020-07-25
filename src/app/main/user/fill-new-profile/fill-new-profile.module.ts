@@ -9,6 +9,7 @@ import { FillNewProfilePageRoutingModule } from './fill-new-profile-routing.modu
 import { FillNewProfilePage } from './fill-new-profile.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { IonicSelectableComponent, IonicSelectableModule } from 'ionic-selectable';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { IonicSelectableComponent, IonicSelectableModule } from 'ionic-selectabl
     IonicModule,
     ComponentsModule,
     IonicSelectableModule,
+    TranslateModule,
     FillNewProfilePageRoutingModule
   ],
   declarations: [FillNewProfilePage]

@@ -9,6 +9,7 @@ import { AppHelpersService } from './core/utils/app-helpers.service';
 import { DetailsService } from './providers/details.service';
 import { INationality, ICity, IDomainOfExperience, IYearsOfExperience } from './models/user';
 import { DataService } from './providers/data.service';
+import { TranslateConfigService } from './providers/translate-config.service';
 
 @Component({
   selector: 'app-root',
@@ -42,14 +43,17 @@ export class AppComponent{
     private statusBar: StatusBar,
     private _auth: AuthService,
     private _detailsService: DetailsService,
-    private _dataService: DataService
+    private _dataService: DataService,
+    private _translate: TranslateConfigService
   ) {
     this.initializeApp();
+    // translate.setDefaultLang('en');
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
+      this._translate.setLanguage('ar');
       this.splashScreen.hide();
       this._storage.getAuthToken().then((loggedIn) => {
         if (!!loggedIn) {

@@ -5,6 +5,7 @@ import { ProfileSummaryComponent } from './profile-summary/profile-summary.compo
 import { SearchBoxComponent } from './search-box/search-box.component';
 import { ProfilePictureCircleComponent } from './profile-picture-circle/profile-picture-circle.component';
 import { BackButtonComponent } from './back-button/back-button.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 export const components = [
   JobListItemComponent,
@@ -19,6 +20,7 @@ export const components = [
     components
   ],
   imports: [
+    TranslateModule,
     CommonModule
   ],   exports: [
     components

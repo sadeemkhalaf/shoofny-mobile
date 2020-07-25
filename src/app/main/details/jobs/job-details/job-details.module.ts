@@ -8,6 +8,7 @@ import { JobDetailsPageRoutingModule } from './job-details-routing.module';
 
 import { JobDetailsPage } from './job-details.page';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { ComponentsModule } from 'src/app/components/components.module';
     FormsModule,
     IonicModule,
     ComponentsModule,
-    JobDetailsPageRoutingModule
+    JobDetailsPageRoutingModule,
+    TranslateModule
   ],
   declarations: [JobDetailsPage]
 })

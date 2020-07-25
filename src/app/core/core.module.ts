@@ -7,10 +7,11 @@ import { AppHelpersService } from './utils/app-helpers.service';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { Network } from '@ionic-native/network/ngx';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [],
-  imports: [HttpClientModule, CommonModule, IonicStorageModule.forRoot()],
+  imports: [TranslateModule, HttpClientModule, CommonModule, IonicStorageModule.forRoot()],
   providers: [
     Network,
     StorageService,

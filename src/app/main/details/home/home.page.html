@@ -6,13 +6,13 @@
         <app-profile-picture-circle [routerLink]="['/home/profile']" ></app-profile-picture-circle>
       </div>
       <div class="row margin-left-16 margin-bottom-16" *ngIf="!!userData">
-        <ion-label class="greeting-label">Hello, {{!!userData.first_name ? userData.first_name : ''}}</ion-label>
+        <ion-label class="greeting-label">{{ 'HOME.hello' | translate }}, {{!!userData.first_name ? userData.first_name : ''}}</ion-label>
       </div>
       <div class="insights row space-between margin-16">
         <div class="col center">
           <div class="row">
             <ion-icon name="location"></ion-icon>
-            <ion-label class="small-label">Jobs in your city</ion-label>
+            <ion-label class="small-label">{{ 'HOME.jobsInCity' | translate }}</ion-label>
           </div>
           <ion-label class="med-label">{{jobsCountByCity}}</ion-label>
 
@@ -20,35 +20,38 @@
         <div class="col center">
           <div class="row">
             <ion-icon name="eye"></ion-icon>
-            <ion-label class="small-label">Profile Views</ion-label>
+            <ion-label class="small-label">{{ 'HOME.profileViews' | translate }}</ion-label>
           </div>
           <ion-label class="med-label">{{!!profile_views? profile_views : 0}}</ion-label>
         </div>
         <div class="col center">
           <div class="row">
             <ion-icon name="star"></ion-icon>
-            <ion-label class="small-label">Profile Rating</ion-label>
+            <ion-label class="small-label">{{ 'HOME.profileRating' | translate }}</ion-label>
           </div>
           <ion-label class="med-label">{{!!rating_avaerage ? rating_avaerage : 0}}</ion-label>
         </div>
       </div>
     </div>
     <div class="lift-up body col">
-      <ion-label class="margin-left-16 margin-top-32 lite-text">find your dream job here</ion-label>
-      <div class="search-box-row">
+
+      <!-- <div class="search-box-row">
         <ion-searchbar type="ios" placeholder="search" showCancelButton="focus"></ion-searchbar>
         <ion-button (click)="helper.openMenu('filter')">
           <ion-icon name="options"></ion-icon>
         </ion-button>
-      </div>
+      </div> -->
       <div class="row margin-right-16 margin-left-16 margin-top-16 space-between">
-        <ion-label class="lite-text">Latest Job Posts</ion-label>
+        <ion-label class="lite-text">{{ 'HOME.latestJobPosts' | translate }}</ion-label>
+        <ion-button (click)="helper.openMenu('filter')">
+          <ion-icon name="options"></ion-icon>
+        </ion-button>
       </div>
       <div class="col jobs-list" *ngFor="let job of jobsListByCity">
         <app-job-list-item [jobItem]="job"></app-job-list-item>
       </div>
       <div class="no-results-label margin-8" *ngIf="jobsListByCity.length === 0">
-        <ion-label class="title-rg">No Results Found</ion-label>
+        <ion-label class="title-rg">{{ 'HOME.noResultsFound' | translate }}</ion-label>
       </div>
     </div>
   </div>
@@ -58,7 +61,7 @@
   <div class="align-center padding-8">
     <ion-button [routerLink]="['/home/jobs']" routerDirection="forward">
       <ion-label class="show-all-link">
-        <span >Show All</span>
+        <span >{{ 'HOME.showAll' | translate }}</span>
       </ion-label>    
     </ion-button>
   </div>

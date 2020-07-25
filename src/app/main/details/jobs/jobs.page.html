@@ -1,7 +1,7 @@
 <div>
   <div class="row space-between margin-16">
     <app-back-button></app-back-button>
-    <ion-label>Jobs</ion-label>
+    <ion-label>{{ 'JOBS.title' | translate }}</ion-label>
       <app-profile-picture-circle [routerLink]="['/home/profile']"></app-profile-picture-circle>
     </div>
   <div class="search-box-row">
@@ -16,6 +16,6 @@
     <app-job-list-item [jobItem]="job" class="margin-bottom-8"></app-job-list-item>
 </div>
 <div class="no-results-label">
-  <ion-label *ngIf="jobsList.length === 0">No Results Found</ion-label>
+  <ion-label *ngIf="jobsList.length === 0">{{ 'HOME.noResultsFound' | translate }}</ion-label>
 </div>
 </ion-content>

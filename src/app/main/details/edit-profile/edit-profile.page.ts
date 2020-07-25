@@ -5,6 +5,8 @@ import { StorageService } from 'src/app/core/storage/storage.service';
 import { MediaPickerService } from 'src/app/providers/media-picker.service';
 import { AppHelpersService } from 'src/app/core/utils/app-helpers.service';
 import { first } from 'rxjs/operators';
+import { Base64 } from '@ionic-native/base64/ngx';
+import { VideoCaptureService } from 'src/app/providers/video-capture.service';
 
 export class IUserSubmit {
   id: number;
@@ -19,7 +21,7 @@ export class IUserSubmit {
   date_joined: Date;
   is_seeker: boolean;
   is_active: boolean;
-  Public_Profile: string[];
+  Public_Profile: string;
   rating_avaerage: number;
   profile_views: number;
   gender: string;
@@ -49,6 +51,7 @@ export class EditProfilePage implements OnInit {
   public image: any;
   public levels: IYearsOfExperience[] = [];
   public imageUpdated: boolean = false;
+  public dobChanged: boolean;
 
   // selected and filtered
   public jobTitle: string = "";
@@ -64,23 +67,31 @@ export class EditProfilePage implements OnInit {
     public helper: AppHelpersService,
     private _authService: AuthService,
     private _storageService: StorageService,
-    private _imagePickerService: MediaPickerService
+    private _imagePickerService: MediaPickerService,
+    private _mediaService: VideoCaptureService,
+    private _base64: Base64
   ) { }
 
   ngOnInit() {
     this._storageService.getUserData().then((data) => {
       this.user = data as IUser;
       this.tags = !!this.user.tags ? this.user.tags : [];
-      this.urls = !!this.user.Public_Profile ? this.user.Public_Profile  : []; 
+      // this.urls = !!this.user.Public_Profile ? this.user.Public_Profile  : []; 
       this._prepareData();
       this.getDomains();
       this.getCountries();
       this.getCities();
       this.getLevels();
+      if (this.user.picture.length > 0) {
+        window.onload = () => {                  
+        document
+        .getElementById('profileCircle')
+        .setAttribute('style', `background-image: url("${this.user.picture}")`);
+        };
+      }
     });
-  }
 
-  ionViewDidLoad() { }
+  }
 
   getCountries() {
     this._storageService.getLocalData('countries')
@@ -128,6 +139,10 @@ export class EditProfilePage implements OnInit {
     this.domain = event.value;
   }
 
+  dateChanged(event: any) {
+    this.dobChanged = true;
+  }
+
   addTag() {
     if (!!this.tagInput && this.tagInput.length > 0) {
       this.tags.push(this.tagInput);
@@ -137,17 +152,6 @@ export class EditProfilePage implements OnInit {
 
   clearTag(value: string) {
     this.tags = this.tags.filter(tag => tag !== value);
-  }
-
-  addUrl() {
-    if (!!this.url && this.url.length > 0) {
-      this.urls.push(this.url);
-      this.url = '';
-    }
-  }
-
-  clearUrl(value: string) {
-    this.urls = this.urls.filter((url) => url !== value);
   }
 
   pickImage() {
@@ -162,7 +166,7 @@ export class EditProfilePage implements OnInit {
       })
     );
   }
-  
+
   submitData() {
     let userForm: IUserSubmit = new IUserSubmit();
     Object.assign(userForm, this.user);
@@ -171,13 +175,16 @@ export class EditProfilePage implements OnInit {
     userForm.DOEX = !!this.domain ? this.domain.id : null;
     userForm.YOEX = !!this.level ? this.level.id : null;
     userForm.tags = this.tags;
-    userForm.Public_Profile = this.urls.length > 0 ? this.urls : null;
-    const dob = new Date(this.user.DOB);
-    userForm.DOB = `${dob.getUTCFullYear()}-${dob.getMonth()}-${dob.getDate()}`;
+    userForm.Public_Profile = this.url;
+    if (this.dobChanged) {
+        const dob = new Date(this.user.DOB);
+        userForm.DOB = `${dob.getUTCFullYear()}-${dob.getMonth()}-${dob.getDate()}`;
+    }
     if (this.imageUpdated) {
       userForm.picture = this.image; 
     }
     this.helper.showLoading();
+
     this._authService.updateUserProfile(userForm).pipe(first()).subscribe((result) => {
       this.helper.showToast('Changes Saved', 'success');
       this._storageService.updateUserData(result);
@@ -189,8 +196,9 @@ export class EditProfilePage implements OnInit {
     });
   }
 
-  uploadVideo() {
-    // this._mediaService._uploadVideo('aboutme');
+  clearImage() {
+    this.imageUpdated = true;
+    this.image = null;
   }
 
   private _getFilteredCities() {
@@ -203,5 +211,6 @@ export class EditProfilePage implements OnInit {
     this.city = !!this.user.city ? this.user.city as ICity : null;
     this.domain = this.user.DOEX as IDomainOfExperience;
     this.level = !!this.user.YOEX ? this.user.YOEX as IYearsOfExperience : null;
+    this.url = this.user.Public_Profile;
   }
 }

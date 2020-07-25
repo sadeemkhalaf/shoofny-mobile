@@ -9,6 +9,7 @@ import { ProfilePageRoutingModule } from './profile-routing.module';
 import { ProfilePage } from './profile.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { StreamingMedia } from '@ionic-native/streaming-media/ngx';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { StreamingMedia } from '@ionic-native/streaming-media/ngx';
     FormsModule,
     IonicModule,
     ComponentsModule,
-    ProfilePageRoutingModule
+    ProfilePageRoutingModule,
+    TranslateModule
   ], providers: [
     StreamingMedia
   ],

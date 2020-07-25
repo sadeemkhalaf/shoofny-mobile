@@ -1,8 +1,129 @@
 {
     "LOGIN": {
-        "email": "",
-        "password": "",
-        "signup": "",
-        "forgotPassword": ""
+        "title": "Login",
+        "email": "email",
+        "password": "password",
+        "signup": "signup",
+        "forgotPassword": "forgot password",
+        "noAccount": "You don't have an account"
+
+    }, "SIGNUP": {
+        "title": "Sign Up",
+        "first_name": "first name",
+        "last_name": "last name",
+        "email": "email",
+        "password": "password",
+        "confirmPassword": "confirmPassword",
+        "mobile": "mobile",
+        "code": "code",
+        "username": "username",
+        "fillFields": "Fill in the fields to create the account"
+
+    }, "FILL_NEW_PROFILE": {
+        "title": "Build your Profile",
+        "dob": "Date of Birth",
+        "register": "Register",
+        "profile": "Fill Profile",
+        "video": "Record Your Video",
+        "changePicture": "Change Picture",
+        "country": "country",
+        "city": "city",
+        "professionalInformation": "Professional Information",
+        "basicInformation": "Basic Information",
+        "domainOfExpertise": "Domain Of Expertise",
+        "experience": "Experience",
+        "publicProfessionalProfiles": "Public Professional Profiles",
+        "url": "url",
+        "addMore": "add More",
+        "skills": "skills",
+        "addSkills": "add Skills",
+        "confirm": "confirm and Continue"
+
+    }, "START_RECORDING": {
+        "title": "Start Recording"
+
+    },
+     "RESET_PASSWORD": {
+        "title": "Reset Password",
+        "email": "email",
+        "password": "password",
+        "resetPassword": "resetPassword",
+        "signup": "signup",
+        "goBack": "Go back to login"
+
+    }, "HOME": {
+        "hello": "Hello",
+        "jobsInCity": "Jobs in your city ",
+        "profileViews": "Profile Views",
+        "profileRating": "Profile Rating",
+        "latestJobPosts": "Latest Job Posts",
+        "showAll": "Show All",
+        "noResultsFound": "No Results Found"
+
+    }, "PROFILE": {
+        "title": "Profile",
+        "edit": "Edit",
+        "yearsOld": "years old",
+        "rating": "Rating",
+        "experience": "Experience",
+        "views": "Views",
+        "contact": "Contact",
+        "topSkills": "Top Skills",
+        "yourVideo": "Your Video",
+        "updateVideo": "Update Video",
+        "domainOfExpertise": "Domain Of Expertise"
+
+    }, "EDIT_PROFILE": {
+        "title": "Edit Profile",
+        "firstName": "Frist Name",
+        "lastName": "Last Name",
+        "email": "Email",
+        "dob": "Date of Birth",
+        "country": "Country",
+        "city": "City",
+        "private": "Private Account",
+        "publicProfessionlProfiles": "Public Professionl Profiles",
+        "url": "url",
+        "addSkills": "Add Skills",
+        "experienceLevel": "Experience Level",
+        "changePicture": "Change Picture",
+        "remove": "Remove",
+        "basicInformation": "Basic Information",
+        "professionalInformation": "professional Information",
+        "saveChanges": "Save Changes"
+
+    }, "JOBS": {
+        "title": "Title",
+        "search": "Search"
+
+    }, "JOB_DETAILS": {
+        "title": "Job Details",
+        "jobDescription": "Job Description",
+        "experience": "Experience",
+        "domains": "Domains",
+        "skillsRequired": "Skills Required",
+        "applyNow": "Apply Now",
+        "noSkillsAdded": "No Skills Added"
+
+    }, "SETTINGS": {
+        "title": "Settings"
+
+    }, "MENU": {
+        "title": "Settings",
+        "profile": "Profile",
+        "settings": "Settings",
+        "logout": "Logout"
+        
+    }, "FILTER": {
+        "title": "Filter Jobs",
+        "jobTitle": "Job Title",
+        "country": "Country",
+        "city": "City",
+        "domains": "Domains",
+        "experienceLevel": "Experience Level",
+        "tags": "Tags",
+        "clear": "Clear",
+        "cancel": "Cancel",
+        "showFiltered": "Show Filtered"
     }
 }

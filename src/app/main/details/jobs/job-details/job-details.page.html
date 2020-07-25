@@ -1,7 +1,7 @@
 <div class="padding-16 top-header"  *ngIf="!!jobDetails">
   <div class="row tool-bar space-between">
     <app-back-button></app-back-button>
-    <ion-label>Job Details</ion-label>
+    <ion-label>{{ 'JOB_DETAILS.title' | translate }}</ion-label>
     <div></div>
   </div>
 </div>
@@ -17,15 +17,15 @@
   </div>
   <div class="content-body padding-16">
     <div class="description-box">
-      <ion-label class="title-md">Job Description</ion-label>
+      <ion-label class="title-md">{{ 'JOB_DETAILS.jobDescription' | translate }}</ion-label>
       <p>{{jobDetails.job_des}}</p>
-      <ion-label class="title-md">Experience </ion-label>
+      <ion-label class="title-md">{{ 'JOB_DETAILS.experience' | translate }} </ion-label>
       <span class="title-rg"> {{jobDetails.level.title}}</span>
       <div class="margin-8"></div>
-      <ion-label class="title-md">Domains </ion-label>
+      <ion-label class="title-md">{{ 'JOB_DETAILS.domains' | translate }} </ion-label>
       <span class="title-rg"> {{jobDetails.domains.name_EN}}</span>
       <div class="margin-8"></div>
-      <ion-label class="title-md">Skills Required </ion-label>
+      <ion-label class="title-md">{{ 'JOB_DETAILS.skillsRequired' | translate }} </ion-label>
       <div class="margin-bottom-8 margin-top-8">
         <div class="chips-box">
           <div *ngFor="let tag of jobDetails.tags" class="ion-chip margin-right-4">
@@ -33,7 +33,7 @@
           </div>
         </div>
         <ion-label class="title-sm" *ngIf="1 > jobDetails.tags.length">
-          No skills added</ion-label>
+          {{ 'JOB_DETAILS.noSkillsAdded' | translate }}</ion-label>
       </div>
     </div>
   </div>

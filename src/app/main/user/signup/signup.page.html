@@ -5,37 +5,37 @@
 <div class="steps-header row padding-16 space-between">
   <div class="row align-items-center">
     <div class="circle activated"><span class="title-rg">1</span></div>
-    <span class="margin-left-4 margin-right-4 title-sm">Register</span>
+    <span class="margin-left-4 margin-right-4 title-sm">{{ 'FILL_NEW_PROFILE.register' | translate }}</span>
   </div>
   <div class="row align-items-center">
     <div class="circle off"><span class="title-rg">2</span></div>
-    <span class="margin-left-4 margin-right-4 title-sm">Fill Profile</span>
+    <span class="margin-left-4 margin-right-4 title-sm">{{ 'FILL_NEW_PROFILE.profile' | translate }}</span>
   </div>
   <div class="row align-items-center">
     <div class="circle off"><span class="title-rg">3</span></div>
-    <span class="margin-left-4 margin-right-4 title-sm">Take The Video</span>
+    <span class="margin-left-4 margin-right-4 title-sm">{{ 'FILL_NEW_PROFILE.video' | translate }}</span>
   </div>
 </div>
 
 <ion-content>
   <div class="margin-left-32 margin-right-32 margin-top-16 margin-bottom-32">
-      <ion-label class="title-lg margin-bottom-8">Fill in the fields to create the account</ion-label>
+      <ion-label class="title-lg margin-bottom-8">{{ 'SIGNUP.fillFields' | translate }}</ion-label>
       <ion-list>
         <ion-item class="col">
-          <ion-input clearInput placeholder="First Name" class="title-rg"
+          <ion-input clearInput placeholder="{{ 'SIGNUP.first_name' | translate }}" class="title-rg"
           [(ngModel)]="firstName"
           ></ion-input>
         </ion-item>
         <ion-item class="col">
-          <ion-input clearInput placeholder="Last Name" class="title-rg"
+          <ion-input clearInput placeholder="{{ 'SIGNUP.last_name' | translate }}" class="title-rg"
           [(ngModel)]="lastName"
           ></ion-input>
         </ion-item>
         <ion-item class="col">
-          <ion-label position="stacked" class="margin-bottom-8">Phone Number</ion-label>
+          <ion-label position="stacked" class="margin-bottom-8">{{ 'SIGNUP.mobile' | translate }}</ion-label>
           <div class="row mobile-input">
             <div>
-              <ion-label position="stacked" class="margin-bottom-8 title-rg">Dial Code</ion-label>
+              <ion-label position="stacked" class="margin-bottom-8 title-rg">{{ 'SIGNUP.code' | translate }}</ion-label>
               <ionic-selectable
               class="title-rg"
                 item-content
@@ -48,27 +48,27 @@
                 (onSearch)="countryCodeSearch($event)">
               </ionic-selectable>
             </div>
-            <ion-input clearInput maxlength="9" placeholder="Phone Number" class="number title-rg" type="number"></ion-input>
+            <ion-input clearInput maxlength="9" placeholder="{{ 'SIGNUP.mobile' | translate }}" class="number title-rg" type="number"></ion-input>
           </div>
         </ion-item>
       </ion-list>
       <form [formGroup]="form" (ngSubmit)="onSubmitForm()">
         <ion-item class="col">
-          <ion-input clearInput placeholder="Email" class="title-rg" formControlName="email" type="email"></ion-input>
+          <ion-input clearInput placeholder="{{ 'SIGNUP.email' | translate }}" class="title-rg" formControlName="email" type="email"></ion-input>
           <div *ngIf="isSubmitted && f.email.errors" class="invalid-feedback">
             <div *ngIf="f.email.errors.required" class="title-sm error-label">Email is required</div>
             <div *ngIf="f.email.errors.email" class="title-sm error-label">Email must be a valid email address</div>
           </div>
         </ion-item>
         <ion-item class="col">
-          <ion-input clearInput placeholder="Password" type="password" formControlName="password" class="title-rg"></ion-input>
+          <ion-input clearInput placeholder="{{ 'SIGNUP.password' | translate }}" type="password" formControlName="password" class="title-rg"></ion-input>
           <div *ngIf="isSubmitted && f.password.errors" class="invalid-feedback">
             <div *ngIf="f.password.errors.required" class="title-sm error-label">Password is required</div>
             <div *ngIf="f.password.errors.minlength" class="title-sm error-label">Password must be at least 6 characters</div>
           </div>
         </ion-item>
         <ion-item class="col">
-          <ion-input clearInput placeholder="Re-type Password" type="password" formControlName="confirmPassword" class="title-rg">
+          <ion-input clearInput placeholder="{{ 'SIGNUP.confirmPassword' | translate }}" type="password" formControlName="confirmPassword" class="title-rg">
           </ion-input>
           <div *ngIf="isSubmitted && f.confirmPassword.errors" class="invalid-feedback">
             <div *ngIf="f.confirmPassword.errors.required" class="title-sm error-label">Confirm Password is required</div>

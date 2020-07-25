@@ -8,6 +8,8 @@ import { MediaCapture, CaptureVideoOptions } from '@ionic-native/media-capture/n
 import { StorageService } from '../core/storage/storage.service';
 import { AppHelpersService } from '../core/utils/app-helpers.service';
 import { environment } from 'src/environments/environment';
+import { AuthService } from './auth.service';
+import { first } from 'rxjs/operators';
 
 export const VIDEO_FILE_KEY = 'videoFile';
 export const IMAGE_FILE_KEY = 'imageFile';
@@ -18,26 +20,7 @@ export const MEDIA_FOLDER = 'media_folder';
 })
 export class VideoCaptureService implements OnInit {
 
-  constructor(
-    public actionSheetController: ActionSheetController,
-    private _helper: AppHelpersService,
-    private _storageService: StorageService,
-    private _mediaCapture: MediaCapture,
-    private _fileTransfer: FileTransfer,
-    private _file: File,
-    public navCtrl: NavController,
-    private _platform: Platform) { }
-
-  ngOnInit(): void {
-    const path = this._file.dataDirectory;
-    this._platform.ready().then(() => {
-      this._file.checkDir(path, MEDIA_FOLDER).then(() => {
-
-      }, err => {
-        this._file.createDir(path, MEDIA_FOLDER, false);
-      })
-    }, error => { })
-  }
+  private _videoPath: any;
 
   isLoading = false;
   $selectedVideo: ReplaySubject<any> = new ReplaySubject(1);
@@ -52,7 +35,31 @@ export class VideoCaptureService implements OnInit {
   loader;
 
   private _videoFileUpload: FileTransferObject;
+  
+  constructor(
+    public actionSheetController: ActionSheetController,
+    public navCtrl: NavController,
+    private _helper: AppHelpersService,
+    private _storageService: StorageService,
+    private _mediaCapture: MediaCapture,
+    private _fileTransfer: FileTransfer,
+    private _file: File,
+    private _platform: Platform,
+    private _auth: AuthService
+    ) { }
 
+  ngOnInit(): void {
+    const path = this._file.dataDirectory;
+    this._platform.ready().then(() => {
+      this._file.checkDir(path, MEDIA_FOLDER).then(() => {
+
+      }, err => {
+        this._file.createDir(path, MEDIA_FOLDER, false);
+      })
+    }, error => { })
+  }
+
+  // step 1: call this to select/record the video
   public async selectVideo() {
     const actionSheet = await this.actionSheetController.create({
       header: 'Start recoding your Video',
@@ -76,30 +83,54 @@ export class VideoCaptureService implements OnInit {
     return url;
   }
 
+  // step 2: call this to to upload
+  public async uploadVideo() {
+    this.isUploading = true;
+    const path = this._videoPath.nativeURL.substr(0, this._videoPath.nativeURL.lastIndexOf('/') + 1);
+    const type = this._getMimeType(this._videoPath.name.split('.').pop());
+    const buffer = await this._file.readAsArrayBuffer(path, this._videoPath.name);
+    const videoBlob = new Blob([buffer], type);
+  
+    // TODO: use the video upload API here
+    this._auth.uploadVideo(videoBlob).pipe(first()).subscribe((success) => {
+      this.isUploading = false;
+      this._helper.showToast(`Video uploaded successfully`, `success`);
+    }, error => {
+      this.isUploading = false;
+      this._helper.showHttpErrorMessage(error);
+    });
+
+  }
+
   private _recordVideo() {
     const options: CaptureVideoOptions = {
       duration: 59,
       limit: 1,
-      quality: 80
+      quality: 30
     }
     this._mediaCapture.captureVideo(options)
       .then(
         (res) => {
           if (!!res) {
             const capturedFile = res[0];
+            this._videoPath = capturedFile;
             this.$selectedVideo.next(capturedFile.fullPath);
             this._storageService.setLocalData(VIDEO_FILE_KEY, capturedFile);
             this._copyFileToLocalDir(capturedFile.fullPath);
-            // this._uploadVideo(capturedFile.name, this._pathForFile(capturedFile.fullPath));
           }
         },
         (err) => console.error(err)
       );
   }
 
+  private _getMimeType(fileExt) {
+    if (fileExt == 'wav') return { type: 'audio/wav' };
+    else if (fileExt == 'jpg') return { type: 'image/jpg' };
+    else if (fileExt == 'mp4') return { type: 'video/mp4' };
+    else if (fileExt == 'MOV') return { type: 'video/quicktime' };
+  }
 
-  private _uploadVideo(filename: string, selectedVideo: any) {
-    // var filename = this.selectedVideo.substr(this.selectedVideo.lastIndexOf('/') + 1);   
+  private _uploadVideo(filename: string, selectedVideo: any) { 
     var options: FileUploadOptions = {
       fileName: filename,
       fileKey: "video",
