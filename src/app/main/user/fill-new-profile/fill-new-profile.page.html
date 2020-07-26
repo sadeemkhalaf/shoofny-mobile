@@ -27,11 +27,11 @@
     <ion-list>
       <ion-item class="col">
         <ion-label position="stacked">{{ 'SIGNUP.first_name' | translate }}</ion-label>
-        <ion-input clearInput placeholder="{{ 'SIGNUP.firstName' | translate }}" [(ngModel)]="user.first_name"></ion-input>
+        <ion-input clearInput placeholder="{{ 'SIGNUP.first_name' | translate }}" [(ngModel)]="user.first_name"></ion-input>
       </ion-item>
       <ion-item class="col">
         <ion-label position="stacked">{{ 'SIGNUP.last_name' | translate }}</ion-label>
-        <ion-input clearInput placeholder="{{ 'SIGNUP.lastName' | translate }}" [(ngModel)]="user.last_name"></ion-input>
+        <ion-input clearInput placeholder="{{ 'SIGNUP.last_name' | translate }}" [(ngModel)]="user.last_name"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label class="title-rg" position="floating">{{ 'FILL_NEW_PROFILE.dob' | translate }}</ion-label>
@@ -79,7 +79,7 @@
         [(ngModel)]="level"
         [items]="levels"
         itemValueField="id"
-        itemTextField="title"
+        itemTextField="year"
         [canSearch]="true"
         (onChange)="levelChange($event)">
       </ionic-selectable>

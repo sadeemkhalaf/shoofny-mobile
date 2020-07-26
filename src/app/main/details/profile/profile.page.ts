@@ -32,12 +32,9 @@ export class ProfilePage implements OnInit, OnDestroy {
       // If it is a NavigationEnd event re-initalise the component
       if (e) {
         this._loadData();
+        this._loadPicture();
         window.onload = () => {
-          if (!!this.profile && this.profile.picture.length > 0) {
-            document
-              .getElementById('profileCircle')
-              .setAttribute('style', `background-image: url("${this.profile.picture}")`);
-          };
+          this._loadPicture();
         }
       }
     });
@@ -76,5 +73,18 @@ export class ProfilePage implements OnInit, OnDestroy {
         }
       }, error => this.helper.showToast(error)
       );
-  }
+    }
+
+    private _loadPicture() {
+        this._storageService.getUserData().then((data) => {
+          this.profile = data as IUser;
+          const pictureUrl =
+            !!this.profile.picture && this.profile.picture.length > 0
+              ? this.profile.picture
+              : './../../../assets/placeholder-img.png';
+            document
+            .getElementById('profileCircle')
+            .setAttribute('style', `background-image: url("${pictureUrl}")`);
+        });
+      }
 }

@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/providers/auth.service';
 import { DetailsService } from 'src/app/providers/details.service';
 import { take, first } from 'rxjs/operators';
 
-class RegisterUser {
+export class RegisterUser {
   first_name: string;
   last_name: string;
   email: string;
@@ -15,7 +15,7 @@ class RegisterUser {
   is_seeker: number;
 }
 
-interface ICountryCode {
+export interface ICountryCode {
   code: string;
   dial_code: string;
   name: string;

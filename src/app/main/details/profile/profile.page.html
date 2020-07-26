@@ -32,11 +32,11 @@
   </div>
   <div class="margin-left-32 margin-right-32">
     <div class="col margin-bottom-16">
-      <ion-label class="title-lg"> {{ 'PROFILE.contact' | translate }}</ion-label>
-      <ion-label class="title-sm">{{profile.email}}</ion-label>
-      <ion-label class="title-sm">+962792234543</ion-label>
+      <ion-label class="title-lg margin-bottom-8"> {{ 'PROFILE.contact' | translate }}</ion-label>
+      <ion-label class="title-sm margin-bottom-8">{{profile.email}}</ion-label>
+      <ion-label class="title-sm margin-bottom-8">{{profile.phone}}</ion-label>
     </div>
-    <ion-label class="title-lg margin-bottom-16"> {{ 'PROFILE.yearsOld' | translate }}</ion-label>
+    <ion-label class="title-lg margin-bottom-16"> {{ 'PROFILE.topSkills' | translate }}</ion-label>
     <div class="margin-bottom-16">
       <div class="chips-box">
         <div *ngFor="let skill of profile.tags" class="ion-chip margin-right-4">

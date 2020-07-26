@@ -13,7 +13,7 @@ import { MediaPickerService } from 'src/app/providers/media-picker.service';
 import { first } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { AppHelpersService } from 'src/app/core/utils/app-helpers.service';
-import { IUserSubmit } from '../../details/edit-profile/edit-profile.page';
+import { IUserSubmit, IYOEX } from '../../details/edit-profile/edit-profile.page';
 import { Router } from '@angular/router';
 
 @Component({
@@ -29,7 +29,7 @@ export class FillNewProfilePage implements OnInit, OnDestroy {
   public tags: string[] = [];
   public countries: INationality[] = [];
   public cities: ICity[] = [];
-  public levels: IYearsOfExperience[] = [];
+  public levels: IYOEX[] = [];
   public domains: IDomainOfExperience[] = [];
   public image: any;
   public imageUpdated: boolean = false;
@@ -38,7 +38,7 @@ export class FillNewProfilePage implements OnInit, OnDestroy {
   public jobTitle: string;
   public country: INationality;
   public city: ICity;
-  public level: IYearsOfExperience;
+  public level: IYOEX;
   public url: string;
   public filteredCities: ICity[] = [];
   public domain: IDomainOfExperience;
@@ -83,7 +83,7 @@ export class FillNewProfilePage implements OnInit, OnDestroy {
   }
 
   getLevels() {
-    return this._detailsService.getLevels().subscribe((levels: any) => {
+    return this._detailsService.getYOEX().subscribe((levels: any) => {
       this.levels = levels.results;
     });
   }
@@ -165,7 +165,6 @@ export class FillNewProfilePage implements OnInit, OnDestroy {
   }
 
   private _initializeUser() {
-    this.user.YOEX = new IYearsOfExperience();
     this._subscriptions.push(this.getCities());
     this._subscriptions.push(this.getCities());
     this._subscriptions.push(this.getDomains());

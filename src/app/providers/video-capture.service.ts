@@ -22,17 +22,17 @@ export class VideoCaptureService implements OnInit {
 
   private _videoPath: any;
 
-  isLoading = false;
+  private isLoading = false;
   $selectedVideo: ReplaySubject<any> = new ReplaySubject(1);
 
   // upload variables
   selectedVideo: string = 'https://res.cloudinary.com/demo/video/upload/w_640,h_640,c_pad/dog.mp4';
   uploadedVideo: string;
 
-  isUploading: boolean = false;
-  uploadPercent: number = 0;
-  videoFileUpload: FileTransferObject;
-  loader;
+  private isUploading: boolean = false;
+  private uploadPercent: number = 0;
+  private videoFileUpload: FileTransferObject;
+  private loader;
 
   private _videoFileUpload: FileTransferObject;
   
@@ -92,11 +92,14 @@ export class VideoCaptureService implements OnInit {
     const videoBlob = new Blob([buffer], type);
   
     // TODO: use the video upload API here
+    this._helper.showLoading();
     this._auth.uploadVideo(videoBlob).pipe(first()).subscribe((success) => {
+      this._helper.hideLoading();
       this.isUploading = false;
       this._helper.showToast(`Video uploaded successfully`, `success`);
     }, error => {
       this.isUploading = false;
+      this._helper.hideLoading();
       this._helper.showHttpErrorMessage(error);
     });
 

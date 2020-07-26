@@ -24,6 +24,26 @@
       <ion-label position="stacked">{{ 'EDIT_PROFILE.email' | translate }}</ion-label>
       <ion-input clearInput placeholder="{{ 'EDIT_PROFILE.email' | translate }}" [(ngModel)]="user.email" type="email"></ion-input>
     </ion-item>
+    <ion-item class="col">
+      <ion-label position="stacked" class="margin-bottom-8">{{ 'SIGNUP.mobile' | translate }}</ion-label>
+      <div class="row mobile-input">
+        <div>
+          <ion-label position="stacked" class="margin-bottom-8 title-rg">{{ 'SIGNUP.code' | translate }}</ion-label>
+          <ionic-selectable
+          class="title-rg"
+            item-content
+            [(ngModel)]="countryCode"
+            [items]="countryCodes"
+            itemValueField="code"
+            itemTextField="dial_code"
+            [canSearch]="true"
+            (onChange)="countryCodeChange($event)"
+            (onSearch)="countryCodeSearch($event)">
+          </ionic-selectable>
+        </div>
+        <ion-input clearInput maxlength="9" placeholder="{{ 'SIGNUP.mobile' | translate }}" class="number title-rg" type="number" [(ngModel)]="mobile"></ion-input>
+      </div>
+    </ion-item>
     <ion-item>
       <ion-label class="title-rg" position="floating">{{ 'EDIT_PROFILE.dob' | translate }}</ion-label>
       <ion-datetime displayFormat="MM/DD/YYYY" max="2020-01-01" [(ngModel)]="user.DOB" (onChange)="dateChanged($event)"></ion-datetime>
@@ -58,7 +78,7 @@
   <ion-label class="title-lg margin-bottom-8">{{ 'EDIT_PROFILE.professionalInformation' | translate }}</ion-label>
   <ion-list>
     <ion-item class="col">
-      <ion-label position="stacked" class="title-rg" >{{ 'EDIT_PROFILE.domainOfExpertise' | translate }}</ion-label>
+      <ion-label position="stacked" class="title-rg" >{{ 'FILL_NEW_PROFILE.domainOfExpertise' | translate }}</ion-label>
       <ionic-selectable
         [(ngModel)]="domain"
         [items]="domains"
@@ -71,12 +91,12 @@
     <ion-item class="col">
       <ion-label position="stacked">{{ 'EDIT_PROFILE.experienceLevel' | translate }}</ion-label>
       <ionic-selectable
-      [(ngModel)]="level"
-      [items]="levels"
+      [(ngModel)]="yoex"
+      [items]="years"
       itemValueField="id"
-      itemTextField="title"
+      itemTextField="year"
       [canSearch]="true"
-      (onChange)="levelChange($event)">
+      (onChange)="yearChange($event)">
     </ionic-selectable>
     </ion-item>
   </ion-list>
@@ -84,12 +104,12 @@
   <ion-label class="title-lg margin-bottom-8">{{ 'EDIT_PROFILE.publicProfessionlProfiles' | translate }}</ion-label>
   <ion-list>
     <ion-item class="col">
-      <ion-input clearInput placeholder="{{ 'FILETER.url' | translate }}" [(ngModel)]="url"></ion-input>
+      <ion-input clearInput placeholder="{{ 'EDIT_PROFILE.url' | translate }}" [(ngModel)]="url"></ion-input>
     </ion-item>
   </ion-list>
-  <ion-label class="floating-label" position="floating">{{ 'FILETER.tags' | translate }}</ion-label>
+  <ion-label class="floating-label" position="floating">{{ 'FILTER.tags' | translate }}</ion-label>
   <ion-item>
-    <ion-input clearInput placeholder="{ 'FILETER.addSkills' | translate }}" [(ngModel)]="tagInput">
+    <ion-input clearInput placeholder="{{ 'EDIT_PROFILE.addSkills' | translate }}" [(ngModel)]="tagInput">
     </ion-input>
     <ion-button slot="end" (click)="addTag(tagInput)">
       <ion-icon name="add-outline"></ion-icon>

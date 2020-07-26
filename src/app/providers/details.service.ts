@@ -23,6 +23,10 @@ export class DetailsService {
       return this._http.get('/api/level/');
     }
 
+    getYOEX() {
+      return this._http.get('/api/yoex/');
+    }
+
     getCountriesDetails() {
       return fetch('../../../../assets/data/CountryCodes.json');
     }

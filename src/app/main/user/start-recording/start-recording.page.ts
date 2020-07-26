@@ -3,6 +3,8 @@ import { first } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { from } from 'rxjs';
 import { VideoCaptureService } from 'src/app/providers/video-capture.service';
+import { AppHelpersService } from 'src/app/core/utils/app-helpers.service';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-start-recording',
@@ -17,12 +19,16 @@ export class StartRecordingPage implements OnInit {
   };
   public video: any;
   public enablePlay: boolean;
-
+  public uploaded: boolean;
   public pathTest: string;
 
+  private _loader;
+
   constructor(
+    public loadingController: LoadingController,
     private _mediaService: VideoCaptureService,
-    private _router: Router
+    private _router: Router,
+    private _helper: AppHelpersService
   ) { }
 
   ngOnInit() {
@@ -30,7 +36,20 @@ export class StartRecordingPage implements OnInit {
 
   public startRecording() {
     from(this._mediaService.selectVideo()).pipe(first()).subscribe((video) => {
-      console.log(video);
+      this.enablePlay = true;
+      this.video = video;
+    });
+  }
+
+  public uploadVideo() {
+    this._helper.showLoading();
+    this.presentLoading();
+    this.uploaded = true;
+    this._mediaService.uploadVideo().then(() => {
+      this.stopLoading();
+    }, error => {
+      this.uploaded = false;
+      this.stopLoading();
     });
   }
 
@@ -44,6 +63,21 @@ export class StartRecordingPage implements OnInit {
 
   goToHomePage() {
     this._router.navigate([`/home`])
+  }
+
+  async presentLoading() {
+    this._loader = await this.loadingController.create({
+      spinner: null,
+      message: 'Uploading Video, please wait ...',
+      translucent: true,
+      cssClass: 'loader',
+      backdropDismiss: false
+    });
+    await this._loader.present();
+  }
+
+  async stopLoading() {
+    await this._loader.dismiss();
   }
 
 }

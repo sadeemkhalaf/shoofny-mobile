@@ -1,4 +1,5 @@
 import { Token } from '../providers/auth.service';
+import { IYOEX } from '../main/details/edit-profile/edit-profile.page';
 
 export class IUser {
     id: number;
@@ -20,14 +21,14 @@ export class IUser {
     city: ICity;
     nationality: INationality;
     DOEX: IDomainOfExperience;
-    YOEX: IYearsOfExperience;
+    YOEX: IYOEX;
     tags: string[] = [];
     Public_Profile: string;
     token?: Token;
+    phone: string;
 
     IUser() {
         this.DOB = new Date('1/1/1990');
-        this.YOEX = new IYearsOfExperience();
     }
 }
 

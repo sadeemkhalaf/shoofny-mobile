@@ -47,15 +47,16 @@
           <ion-label class="title-sm">Make Every Second Count</ion-label>
         </div>
         <div class="video-container">
-          <div class="success margin-16" *ngIf="enablePlay">
+          <div class="success margin-16" *ngIf="uploaded">
             <ion-label>
               <ion-icon name="thumbs-up-outline"></ion-icon>
               All set!
             </ion-label>
           </div>
-          <div class="row align-items-center center">
-            <ion-button size="small" class="padding-left-8" (click)="startRecording()">{{ 'START_RECORDING.start' | translate }}</ion-button>
-            <ion-label class="padding-left-8 warning title-rg" *ngIf="enablePlay">Finish and login!</ion-label>
+          <div class="col align-items-center center">
+            <ion-button size="small" class="padding-left-8" (click)="startRecording()"  *ngIf="!uploaded" >{{ 'START_RECORDING.start' | translate }}</ion-button>
+            <ion-button size="small" class="padding-left-8" *ngIf="enablePlay && !!video" (click)="uploadVideo()">Upload</ion-button>
+            <ion-label class="padding-left-8 warning title-rg" *ngIf="uploaded">Finish and login!</ion-label>
           </div>
         </div>
         <ion-label class="title-sm link" (click)="goToHomePage()">{{ 'START_RECORDING.skip' | translate }}</ion-label>

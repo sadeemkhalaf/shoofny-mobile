@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/providers/auth.service';
 import { IUser, INationality, ICity, IDomainOfExperience, IYearsOfExperience } from 'src/app/models/user';
 import { StorageService } from 'src/app/core/storage/storage.service';
 import { MediaPickerService } from 'src/app/providers/media-picker.service';
 import { AppHelpersService } from 'src/app/core/utils/app-helpers.service';
 import { first } from 'rxjs/operators';
-import { Base64 } from '@ionic-native/base64/ngx';
-import { VideoCaptureService } from 'src/app/providers/video-capture.service';
+import { ICountryCode } from 'src/app/models/Job';
+import { DetailsService } from 'src/app/providers/details.service';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 export class IUserSubmit {
   id: number;
@@ -31,14 +33,20 @@ export class IUserSubmit {
   DOEX: number;
   YOEX: number;
   tags: string[];
-
+  phone: string;
 }
+
+export interface IYOEX {
+  id: number;
+  year: string;
+}
+
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.page.html',
   styleUrls: ['./edit-profile.page.scss'],
 })
-export class EditProfilePage implements OnInit {
+export class EditProfilePage implements OnInit, OnDestroy  {
   public user: IUser;
   public enablePlay: boolean;
 
@@ -50,8 +58,14 @@ export class EditProfilePage implements OnInit {
   public domains: IDomainOfExperience[] = [];
   public image: any;
   public levels: IYearsOfExperience[] = [];
+  public years: IYOEX[] = [];
   public imageUpdated: boolean = false;
   public dobChanged: boolean;
+  public countryCodes: ICountryCode[] = [];
+  public countryCode: ICountryCode;
+  public mobile: string;
+  
+  private _countryCodes: ICountryCode[] = [];
 
   // selected and filtered
   public jobTitle: string = "";
@@ -59,38 +73,54 @@ export class EditProfilePage implements OnInit {
   public city: ICity;
   public filteredCities: ICity[] = [];
   public domain: IDomainOfExperience;
-  public level: IYearsOfExperience ;
+  public level: IYearsOfExperience;
+  public yoex: IYOEX;
   public urls: string[] = [];
   public url: string;
+
+  navigationSubscription: Subscription;
 
   constructor(
     public helper: AppHelpersService,
     private _authService: AuthService,
     private _storageService: StorageService,
     private _imagePickerService: MediaPickerService,
-    private _mediaService: VideoCaptureService,
-    private _base64: Base64
+    private _detailsService: DetailsService,
+    private _route: Router
   ) { }
 
   ngOnInit() {
-    this._storageService.getUserData().then((data) => {
-      this.user = data as IUser;
-      this.tags = !!this.user.tags ? this.user.tags : [];
-      // this.urls = !!this.user.Public_Profile ? this.user.Public_Profile  : []; 
-      this._prepareData();
-      this.getDomains();
-      this.getCountries();
-      this.getCities();
-      this.getLevels();
-      if (this.user.picture.length > 0) {
-        window.onload = () => {                  
-        document
-        .getElementById('profileCircle')
-        .setAttribute('style', `background-image: url("${this.user.picture}")`);
-        };
+    this.navigationSubscription = this._route.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e) {
+        this._storageService.getUserData().then((data) => {
+          this.user = data as IUser;
+          this.tags = !!this.user.tags ? this.user.tags : [];
+          this._prepareData();
+          this.getDomains();
+          this.getCountries();
+          this.getCities();
+          this.getLevels();
+          this.getYearsOfExperience();
+    
+          if (this.user.picture.length > 0) {
+            window.onload = () => {                  
+            this._loadPicture();
+            };
+          }
+        });
+          this._loadPicture();
       }
     });
 
+  }
+
+  ngOnDestroy(): void {
+    this.navigationSubscription.unsubscribe();
+  }
+
+  getCode(dialCode: string) {
+    return this.countryCodes.filter((code) => !!code.dial_code && code.dial_code.includes(dialCode.split('-')[0]));
   }
 
   getCountries() {
@@ -121,6 +151,14 @@ export class EditProfilePage implements OnInit {
     });
   }
 
+  getYearsOfExperience() {
+    this._detailsService.getYOEX().pipe(first())
+    .subscribe((levels: any) => {
+      this.years = levels.results as IYOEX[];
+      console.log(levels);
+    });
+  }
+
   countryChange(event: any) {
     this.country = event.value;
     this.country.id = Number(this.country.url.split('/')[7]);
@@ -133,6 +171,10 @@ export class EditProfilePage implements OnInit {
 
   levelChange(event: any) {
     this.level = event.value;
+  }
+
+  yearChange(event: any) {
+    this.yoex = event.value;
   }
 
   domainChange(event: any) {
@@ -156,7 +198,7 @@ export class EditProfilePage implements OnInit {
 
   pickImage() {
     this._imagePickerService.selectImage().then(() =>
-      this._imagePickerService.$selectedImage.pipe(first()).subscribe((img) => {
+      this._imagePickerService.$selectedImage.pipe().subscribe((img) => {
         this.imageUpdated = true;
         this.image = img;
         document
@@ -167,15 +209,37 @@ export class EditProfilePage implements OnInit {
     );
   }
 
+  readCountryCodes() {
+    this._detailsService.getCountriesDetails()
+    .then((results) => results.json())
+    .then((data) => {
+      this._countryCodes = data as ICountryCode[];
+      this.countryCodes = data as ICountryCode[];
+      this.countryCode = this.getCode(this.user.phone)[0];
+    });
+  }
+
+  countryCodeChange(event) {
+    console.log(event.value);
+    this.countryCode = event.value;
+  }
+
+  countryCodeSearch(event) {
+    this.countryCodes = this._countryCodes.filter(data => 
+      !!data.dial_code && data.dial_code.includes(event.text) 
+      || !!data.name && data.name.toLocaleLowerCase().includes(event.text.toLocaleLowerCase()));
+  }
+
   submitData() {
     let userForm: IUserSubmit = new IUserSubmit();
     Object.assign(userForm, this.user);
     userForm.nationality = !!this.country ? this.country.id : null;
     userForm.city = !!this.city ? this.city.id : null;
     userForm.DOEX = !!this.domain ? this.domain.id : null;
-    userForm.YOEX = !!this.level ? this.level.id : null;
+    userForm.YOEX = !!this.yoex ? this.yoex.id : null;
     userForm.tags = this.tags;
     userForm.Public_Profile = this.url;
+    userForm.phone = `${this.countryCode.dial_code}-${this.mobile}`
     if (this.dobChanged) {
         const dob = new Date(this.user.DOB);
         userForm.DOB = `${dob.getUTCFullYear()}-${dob.getMonth()}-${dob.getDate()}`;
@@ -207,10 +271,26 @@ export class EditProfilePage implements OnInit {
   }
 
   private _prepareData() {
+    this.readCountryCodes();
     this.country = !!this.user.nationality ? this.user.nationality as INationality : null;
     this.city = !!this.user.city ? this.user.city as ICity : null;
     this.domain = this.user.DOEX as IDomainOfExperience;
-    this.level = !!this.user.YOEX ? this.user.YOEX as IYearsOfExperience : null;
+    this.yoex = !!this.user.YOEX ? this.user.YOEX as IYOEX : null;
     this.url = this.user.Public_Profile;
+    this.image = this.user.picture;
+    this.mobile = !!this.user.phone.split('-')[1]? this.user.phone.split('-')[1] : this.user.phone;
+  }
+
+  private _loadPicture() {
+    this._storageService.getUserData().then((data) => {
+      this.user = data as IUser;
+      const pictureUrl =
+        !!this.image && this.image.length > 0
+          ? this.user.picture
+          : './../../../assets/placeholder-img.png';
+        document
+        .getElementById('profileCircle')
+        .setAttribute('style', `background-image: url("${pictureUrl}")`);
+    });
   }
 }

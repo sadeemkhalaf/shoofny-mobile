@@ -17,9 +17,10 @@ export interface IJobDetails {
 }
 
 export interface ICountryCode {
+    dial_code: string;
     name: string;
     alpha3Code: string;
     nativeName: string;
-    callingCodes: string[]; // always at index 0
+    callingCodes: string[];
     translations: string[];
 }

@@ -16,6 +16,7 @@ export class JobListItemComponent implements OnInit {
 
   ngOnInit() {
     this.jobTitle = this.jobItem.slug.split('-').join(' ');
+
   }
 
   caculateDays() {
@@ -27,5 +28,15 @@ export class JobListItemComponent implements OnInit {
 
   navigateToJobDetails() {
     this._route.navigate([`/home/jobs/job-details/`, this.jobItem.id]);
+  }
+
+  private _loadPicture() {
+    const pictureUrl =
+    !!this.jobItem.user.picture && this.jobItem.user.picture.length > 0
+      ? this.jobItem.user.picture
+      : './../../../assets/placeholder-img.png';
+    document
+    .getElementById('profileCircle')
+    .setAttribute('style', `background-image: url("${pictureUrl}")`);
   }
 }
