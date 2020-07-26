@@ -6,7 +6,7 @@
 <ion-content *ngIf="!!user">
 <div class="margin-32 col">
   <div class="row align-items-center margin-bottom-16">
-    <div #profileCircle id="profileCircle" class="profile-picture-circle margin-right-16"></div>
+    <div #profileCircle #profileCircle class="profile-picture-circle margin-right-16"></div>
     <ion-label class="title-rg link margin-right-32" (click)="pickImage()">{{ 'EDIT_PROFILE.changePicture' | translate }}</ion-label>
     <ion-label class="title-rg danger" (click)="clearImage()">{{ 'EDIT_PROFILE.remove' | translate }}</ion-label>
   </div>

@@ -59,7 +59,7 @@
             <ion-label class="padding-left-8 warning title-rg" *ngIf="uploaded">Finish and login!</ion-label>
           </div>
         </div>
-        <ion-label class="title-sm link" (click)="goToHomePage()">{{ 'START_RECORDING.skip' | translate }}</ion-label>
+        <ion-label class="title-sm link margin-top-32" (click)="goToHomePage()">{{ 'START_RECORDING.skip' | translate }}</ion-label>
       <!-- TODO: still needs a workaround to view video from local storage 
         <div class="video-container">
           <video #video controls style="width: auto; height: auto;" *ngIf="enablePlay" [src]="pathTest" type='video/mp4'></video>

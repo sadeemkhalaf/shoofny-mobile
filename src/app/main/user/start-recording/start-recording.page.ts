@@ -32,12 +32,16 @@ export class StartRecordingPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this._mediaService.$selectedVideo.subscribe((video) => {
+      if(!!video) {
+        this.video = video;
+      }
+    })
   }
 
   public startRecording() {
     from(this._mediaService.selectVideo()).pipe(first()).subscribe((video) => {
       this.enablePlay = true;
-      this.video = video;
     });
   }
 
