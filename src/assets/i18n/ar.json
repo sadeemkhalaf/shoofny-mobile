@@ -40,7 +40,9 @@
         "confirm": "تأكيد واستمرار"
 
     }, "START_RECORDING": {
-        "title": "بدء تسجيل الفيديو"
+        "title": "بدء تسجيل الفيديو",
+        "start": "بدء التسجيل",
+        "skip": "تأجيل التسجيل"
 
     },
      "RESET_PASSWORD": {
@@ -108,7 +110,11 @@
         "noSkillsAdded": "لا يوجد تفاصيل"
 
     }, "SETTINGS": {
-        "title": "الإعدادات"
+        "title": "الإعدادات",
+        "changeLanguage": "تغيير اللغة",
+        "English": "الانجليزية",
+        "Arabic": "العربية",
+        "language": "اللغة"
 
     }, "MENU": {
         "title": "الإعدادات",

@@ -76,7 +76,7 @@
           </div>
         </ion-item>
         <ion-item class="col">
-          <ion-input clearInput placeholder="User Name" formControlName="userName" class="title-rg"></ion-input>
+          <ion-input clearInput placeholder="{{ 'SIGNUP.username' | translate }}" formControlName="userName" class="title-rg"></ion-input>
         </ion-item>
 
     </form>
@@ -87,7 +87,7 @@
   <ion-button type="submit" (click)="onSubmitForm()"> 
     <ion-label>
       <ion-icon name="arrow-forward-outline"></ion-icon>
-      Continue
+      {{ 'FILL_NEW_PROFILE.confirm' | translate }}
     </ion-label>
   </ion-button>
 </ion-footer>

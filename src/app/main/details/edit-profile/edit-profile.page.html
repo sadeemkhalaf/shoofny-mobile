@@ -14,15 +14,15 @@
   <ion-list>
     <ion-item class="col">
       <ion-label position="stacked">{{ 'EDIT_PROFILE.firstName' | translate }}</ion-label>
-      <ion-input clearInput placeholder="First Name" [(ngModel)]="user.first_name"></ion-input>
+      <ion-input clearInput placeholder="{{ 'EDIT_PROFILE.firstName' | translate }}" [(ngModel)]="user.first_name"></ion-input>
     </ion-item>
     <ion-item class="col">
       <ion-label position="stacked">{{ 'EDIT_PROFILE.lastName' | translate }}</ion-label>
-      <ion-input clearInput placeholder="Last Name" [(ngModel)]="user.last_name"></ion-input>
+      <ion-input clearInput placeholder="{{ 'EDIT_PROFILE.lastName' | translate }}" [(ngModel)]="user.last_name"></ion-input>
     </ion-item>
     <ion-item class="col">
       <ion-label position="stacked">{{ 'EDIT_PROFILE.email' | translate }}</ion-label>
-      <ion-input clearInput placeholder="email" [(ngModel)]="user.email" type="email"></ion-input>
+      <ion-input clearInput placeholder="{{ 'EDIT_PROFILE.email' | translate }}" [(ngModel)]="user.email" type="email"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label class="title-rg" position="floating">{{ 'EDIT_PROFILE.dob' | translate }}</ion-label>
@@ -84,12 +84,12 @@
   <ion-label class="title-lg margin-bottom-8">{{ 'EDIT_PROFILE.publicProfessionlProfiles' | translate }}</ion-label>
   <ion-list>
     <ion-item class="col">
-      <ion-input clearInput placeholder="url" [(ngModel)]="url"></ion-input>
+      <ion-input clearInput placeholder="{{ 'FILETER.url' | translate }}" [(ngModel)]="url"></ion-input>
     </ion-item>
   </ion-list>
   <ion-label class="floating-label" position="floating">{{ 'FILETER.tags' | translate }}</ion-label>
   <ion-item>
-    <ion-input clearInput placeholder="add skills" [(ngModel)]="tagInput">
+    <ion-input clearInput placeholder="{ 'FILETER.addSkills' | translate }}" [(ngModel)]="tagInput">
     </ion-input>
     <ion-button slot="end" (click)="addTag(tagInput)">
       <ion-icon name="add-outline"></ion-icon>

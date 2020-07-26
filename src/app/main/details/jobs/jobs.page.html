@@ -5,7 +5,7 @@
       <app-profile-picture-circle [routerLink]="['/home/profile']"></app-profile-picture-circle>
     </div>
   <div class="search-box-row">
-    <ion-searchbar type="ios" placeholder="search" showCancelButton="focus" [(ngModel)]="search"></ion-searchbar>
+    <ion-searchbar type="ios" placeholder="{{ 'JOBS.search' | translate }}" showCancelButton="focus" [(ngModel)]="search"></ion-searchbar>
     <ion-button (click)="helper.openMenu('filter')">
       <ion-icon name="options"></ion-icon>
     </ion-button>

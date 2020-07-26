@@ -10,6 +10,7 @@ import { DetailsService } from './providers/details.service';
 import { INationality, ICity, IDomainOfExperience, IYearsOfExperience } from './models/user';
 import { DataService } from './providers/data.service';
 import { TranslateConfigService } from './providers/translate-config.service';
+import { error } from 'protractor';
 
 @Component({
   selector: 'app-root',
@@ -52,8 +53,8 @@ export class AppComponent{
 
   initializeApp() {
     this.platform.ready().then(() => {
+      this.getLanguage();
       this.statusBar.styleDefault();
-      this._translate.setLanguage('ar');
       this.splashScreen.hide();
       this._storage.getAuthToken().then((loggedIn) => {
         if (!!loggedIn) {
@@ -151,6 +152,17 @@ export class AppComponent{
 
   clearAndReset() {
     this._resetfilter();
+  }
+
+  getLanguage() {
+    this._storage.getLocalData('language').then((language) => {
+      if (!!language) {
+        this._translate.setLanguage(language);
+      } 
+    }, error => {
+        this._translate.setLanguage('en');
+        this._storage.setLocalData('language', 'en');
+    })
   }
 
   private _getFilteredCities() {

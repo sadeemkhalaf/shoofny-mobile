@@ -26,12 +26,12 @@
     <ion-label class="title-lg margin-bottom-8 margin-top-16">{{ 'FILL_NEW_PROFILE.basicInformation' | translate }}</ion-label>
     <ion-list>
       <ion-item class="col">
-        <ion-label position="stacked">{{ 'SIGNUP.firstName' | translate }}</ion-label>
-        <ion-input clearInput placeholder="First Name" [(ngModel)]="user.first_name"></ion-input>
+        <ion-label position="stacked">{{ 'SIGNUP.first_name' | translate }}</ion-label>
+        <ion-input clearInput placeholder="{{ 'SIGNUP.firstName' | translate }}" [(ngModel)]="user.first_name"></ion-input>
       </ion-item>
       <ion-item class="col">
-        <ion-label position="stacked">{{ 'SIGNUP.lastName' | translate }}</ion-label>
-        <ion-input clearInput placeholder="Last Name" [(ngModel)]="user.last_name"></ion-input>
+        <ion-label position="stacked">{{ 'SIGNUP.last_name' | translate }}</ion-label>
+        <ion-input clearInput placeholder="{{ 'SIGNUP.lastName' | translate }}" [(ngModel)]="user.last_name"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label class="title-rg" position="floating">{{ 'FILL_NEW_PROFILE.dob' | translate }}</ion-label>
@@ -89,12 +89,12 @@
     <ion-label class="title-lg margin-bottom-8 margin-top-16">{{ 'FILL_NEW_PROFILE.publicProfessionalProfiles' | translate }}</ion-label>
     <ion-list>
       <ion-item class="col">
-        <ion-input clearInput placeholder="url" [(ngModel)]="url"></ion-input>
+        <ion-input clearInput placeholder="{{ 'FILL_NEW_PROFILE.url' | translate }}" [(ngModel)]="url"></ion-input>
       </ion-item>
     </ion-list>
     <ion-label class="title-lg margin-bottom-8 margin-top-16">Tags</ion-label>
     <ion-item>
-      <ion-input clearInput placeholder="add skills" [(ngModel)]="tagInput">
+      <ion-input clearInput placeholder="{{ 'FILL_NEW_PROFILE.addSkills' | translate }}" [(ngModel)]="tagInput">
       </ion-input>
       <ion-button slot="end" (click)="addTag(tagInput)">
         <ion-icon name="add-outline"></ion-icon>

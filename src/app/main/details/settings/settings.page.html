@@ -1,9 +1,24 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>{{ 'SETTINGS.title' | translate }}</ion-title>
-  </ion-toolbar>
-</ion-header>
+<div class="padding-16 top-header">
+  <app-back-button></app-back-button>
+  <ion-label class="margin-left-16">{{ 'SETTINGS.title' | translate }}</ion-label>
+</div>
 
 <ion-content>
-
+  <ion-item>
+    <ion-label class="title-rg margin-top-16 margin-bottom-8">{{ 'SETTINGS.changeLanguage' | translate }}</ion-label>
+    <ion-select placeholder="{{ 'SETTINGS.language' | translate }}" [(ngModel)]="languageSelected" [value]="languageSelected">
+      <ion-select-option value="en">{{ 'SETTINGS.English' | translate }}</ion-select-option>
+      <ion-select-option value="ar">{{ 'SETTINGS.Arabic' | translate }}</ion-select-option>
+    </ion-select>
+  </ion-item>
 </ion-content>
+
+<ion-footer>
+  <div class="row align-items-center padding-8">
+    <ion-button routerDirection="forward" (click)="setChanges()">
+      <ion-label class="submit-button">
+        <span>{{ 'EDIT_PROFILE.saveChanges' | translate }}</span>
+      </ion-label>    
+    </ion-button>
+  </div>
+</ion-footer>

@@ -54,4 +54,8 @@ export class LoginPage implements OnInit, OnDestroy {
     }
   }
 
+  goToResetPassword() {
+    this._route.navigate(["/reset-password"], {replaceUrl: true})
+  }
+
 }

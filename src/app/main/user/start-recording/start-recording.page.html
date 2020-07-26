@@ -53,12 +53,12 @@
               All set!
             </ion-label>
           </div>
-          <div class="row align-items-center space-between">
-            <ion-button size="small" class="padding-left-8" (click)="startRecording()">START RECORDING</ion-button>
+          <div class="row align-items-center center">
+            <ion-button size="small" class="padding-left-8" (click)="startRecording()">{{ 'START_RECORDING.start' | translate }}</ion-button>
             <ion-label class="padding-left-8 warning title-rg" *ngIf="enablePlay">Finish and login!</ion-label>
           </div>
         </div>
-        <ion-label class="title-sm link" (click)="goToHomePage()">Skip for now</ion-label>
+        <ion-label class="title-sm link" (click)="goToHomePage()">{{ 'START_RECORDING.skip' | translate }}</ion-label>
       <!-- TODO: still needs a workaround to view video from local storage 
         <div class="video-container">
           <video #video controls style="width: auto; height: auto;" *ngIf="enablePlay" [src]="pathTest" type='video/mp4'></video>

@@ -3,20 +3,20 @@
     <ion-menu side="start" menuId="menu" type="push" content-id="main-content" swipe-gesture="false">
     <ion-content>
       <div class="margin-16" translucent>
-        <ion-label>Menu</ion-label>
+        <ion-label>{{ 'MENU.title' | translate }}</ion-label>
       </div>
       <ion-list>
         <ion-item style="cursor: pointer;" [routerLink]="['/home/profile']" (click)="helper.closeMenu('menu')">
           <ion-icon name="person" slot="start"></ion-icon>
-          <ion-label>Profile</ion-label>
+          <ion-label>{{ 'MENU.profile' | translate }}</ion-label>
         </ion-item>
-        <ion-item style="cursor: pointer;">
+        <ion-item style="cursor: pointer;" [routerLink]="['/home/settings']">
           <ion-icon name="settings" slot="start"></ion-icon>
-          <ion-label>Settings</ion-label>
+          <ion-label>{{ 'MENU.settings' | translate }}</ion-label>
         </ion-item>
         <ion-item (click)="logout()" style="cursor: pointer;">
           <ion-icon name="log-out-outline" slot="start"></ion-icon>
-          <ion-label>Logout</ion-label>
+          <ion-label>{{ 'MENU.logout' | translate }}</ion-label>
         </ion-item>
       </ion-list>
     </ion-content>
@@ -25,17 +25,17 @@
   <ion-menu side="end" content-id="main-content" menuId="filter" swipe-gesture="false">
     <ion-content class="margin-8 padding-16">
       <div class="margin-16 row space-between" translucent>
-        <ion-label>Filter Jobs</ion-label>
+        <ion-label>{{ 'FILTER.title' | translate }}</ion-label>
         <span (click)="clearAndReset()" style="display: flex; align-items: center;">
-          clear<ion-icon name="close-outline"></ion-icon></span>
+          {{ 'FILTER.clear' | translate }}<ion-icon name="close-outline"></ion-icon></span>
       </div>
       <ion-list>
         <ion-item class="col">
-          <ion-label position="stacked">Job Title</ion-label>
-          <ion-input clearInput placeholder="Job Title" [(ngModel)]="jobTitle"></ion-input>
+          <ion-label position="stacked">{{ 'FILTER.jobTitle' | translate }}</ion-label>
+          <ion-input clearInput placeholder="{{ 'FILTER.jobTitle' | translate }}" [(ngModel)]="jobTitle"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label>Country</ion-label>
+          <ion-label>{{ 'FILTER.country' | translate }}</ion-label>
           <ionic-selectable
             [(ngModel)]="country"
             [items]="countries"
@@ -46,7 +46,7 @@
           </ionic-selectable>
         </ion-item>
         <ion-item *ngIf="!!country">
-          <ion-label>City</ion-label>
+          <ion-label>{{ 'FILTER.city' | translate }}</ion-label>
           <ionic-selectable
             [(ngModel)]="city"
             [items]="filteredCities"
@@ -57,7 +57,7 @@
           </ionic-selectable>
         </ion-item>
         <ion-item>
-          <ion-label>Domain of Expertise</ion-label>
+          <ion-label>{{ 'FILTER.domains' | translate }}</ion-label>
           <ionic-selectable
             [(ngModel)]="domain"
             [items]="domains"
@@ -68,7 +68,7 @@
           </ionic-selectable>
         </ion-item>
         <ion-item class="col">
-          <ion-label position="stacked">Experience Level</ion-label>
+          <ion-label position="stacked">{{ 'FILTER.experienceLevel' | translate }}</ion-label>
           <ionic-selectable
           [(ngModel)]="level"
           [items]="levels"
@@ -78,9 +78,9 @@
           (onChange)="levelChange($event)">
         </ionic-selectable>
         </ion-item>
-        <ion-label class="floating-label" position="floating">Tags</ion-label>
+        <ion-label class="floating-label" position="floating">{{ 'FILTER.tags' | translate }}</ion-label>
         <ion-item>
-          <ion-input clearInput placeholder="add skills" [(ngModel)]="tagInput">
+          <ion-input clearInput placeholder="{{ 'FILTER.tags' | translate }}" [(ngModel)]="tagInput">
           </ion-input>
           <ion-button slot="end" (click)="addTag()">
             <ion-icon name="add-outline"></ion-icon>
@@ -97,10 +97,10 @@
     </ion-content>
     <ion-footer class="space-between padding-8">
       <ion-button color="medium" (click)="helper.closeMenu('filter')">
-        <ion-label>Cancel</ion-label>
+        <ion-label>{{ 'FILTER.cancel' | translate }}</ion-label>
       </ion-button>
       <ion-button (click)="filterJobs()">
-        <ion-label>Show Filtered</ion-label>
+        <ion-label>{{ 'FILTER.showFiltered' | translate }}</ion-label>
       </ion-button>
     </ion-footer>
   </ion-menu>

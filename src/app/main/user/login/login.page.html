@@ -23,7 +23,7 @@
       </span>
       <ion-button type="submit">{{ 'LOGIN.title' | translate }}</ion-button>
       <ion-label class="links margin-top-10">{{ 'LOGIN.noAccount' | translate }}?<span [routerLink]="['/signup']"> {{ 'LOGIN.signup' | translate }}</span></ion-label>
-      <ion-label class="links margin-top-32" [routerLink]="['/reset-password']"><span>{{ 'LOGIN.forgotPassword' | translate }}?</span></ion-label>
+      <ion-label class="links margin-top-32" (click)="goToResetPassword()"><span>{{ 'LOGIN.forgotPassword' | translate }}?</span></ion-label>
     </div>
   </form>
 </ion-content>

@@ -43,6 +43,10 @@ export class ProfilePage implements OnInit, OnDestroy {
     });
   }
 
+  goToStartRecording() {
+    this._route.navigate(["signup/profile/start-recording"], {replaceUrl: true});
+  }
+
   calculatAge() {
     const difference = Date.now() - new Date(this.profile.DOB).getTime();
     const result = new Date(difference);

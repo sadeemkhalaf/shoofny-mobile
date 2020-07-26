@@ -18,7 +18,7 @@ import { TranslateModule } from '@ngx-translate/core';
     IonicModule,
     ComponentsModule,
     ProfilePageRoutingModule,
-    TranslateModule
+    TranslateModule.forChild(),
   ], providers: [
     StreamingMedia
   ],

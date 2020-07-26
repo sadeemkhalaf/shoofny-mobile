@@ -40,7 +40,9 @@
         "confirm": "confirm and Continue"
 
     }, "START_RECORDING": {
-        "title": "Start Recording"
+        "title": "Start Recording",
+        "start": "Start Recording",
+        "skip": "Skip for Now"
 
     },
      "RESET_PASSWORD": {
@@ -106,7 +108,11 @@
         "noSkillsAdded": "No Skills Added"
 
     }, "SETTINGS": {
-        "title": "Settings"
+        "title": "Settings",
+        "changeLanguage": "Change Language",
+        "English": "English",
+        "Arabic": "العربية",
+        "language": "Language"
 
     }, "MENU": {
         "title": "Settings",

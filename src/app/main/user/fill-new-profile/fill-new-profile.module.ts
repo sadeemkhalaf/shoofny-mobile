@@ -18,7 +18,7 @@ import { TranslateModule } from '@ngx-translate/core';
     IonicModule,
     ComponentsModule,
     IonicSelectableModule,
-    TranslateModule,
+    TranslateModule.forChild(),
     FillNewProfilePageRoutingModule
   ],
   declarations: [FillNewProfilePage]

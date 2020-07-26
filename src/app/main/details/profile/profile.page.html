@@ -36,7 +36,7 @@
       <ion-label class="title-sm">{{profile.email}}</ion-label>
       <ion-label class="title-sm">+962792234543</ion-label>
     </div>
-    <ion-label class="title-lg margin-bottom-16"> {{ 'PROFILE.yearsOld' | topSkills }}</ion-label>
+    <ion-label class="title-lg margin-bottom-16"> {{ 'PROFILE.yearsOld' | translate }}</ion-label>
     <div class="margin-bottom-16">
       <div class="chips-box">
         <div *ngFor="let skill of profile.tags" class="ion-chip margin-right-4">
@@ -55,7 +55,7 @@
       #video>
       </video>
     </div>
-    <div class="margin-bottom-32">
+    <div class="margin-bottom-32" (click)="goToStartRecording()">
       <ion-label class="title-md">{{ 'PROFILE.updateVideo' | translate }}</ion-label>
     </div>
   </div>

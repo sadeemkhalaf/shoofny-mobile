@@ -1,0 +1,8 @@
+@import '../../../../theme/helper-classes.scss';
+:host {
+    .top-header {
+        background-color: var(--ion-custom-color-dark);
+        color: white;
+        @include flex-box(row);
+    }
+}

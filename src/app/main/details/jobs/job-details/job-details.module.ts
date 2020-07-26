@@ -17,7 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
     IonicModule,
     ComponentsModule,
     JobDetailsPageRoutingModule,
-    TranslateModule
+    TranslateModule.forChild(),
   ],
   declarations: [JobDetailsPage]
 })

@@ -9,6 +9,7 @@ import { SignupPageRoutingModule } from './signup-routing.module';
 import { SignupPage } from './signup.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { IonicSelectableModule } from 'ionic-selectable';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { IonicSelectableModule } from 'ionic-selectable';
     IonicModule,
     IonicSelectableModule,
     ComponentsModule,
+    TranslateModule.forChild(),
     SignupPageRoutingModule
   ],
   declarations: [SignupPage]

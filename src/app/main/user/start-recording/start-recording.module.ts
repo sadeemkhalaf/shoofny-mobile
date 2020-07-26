@@ -8,6 +8,7 @@ import { StartRecordingPageRoutingModule } from './start-recording-routing.modul
 
 import { StartRecordingPage } from './start-recording.page';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
     FormsModule,
     IonicModule,
     ComponentsModule,
+    TranslateModule.forChild(),
     StartRecordingPageRoutingModule
   ],
   declarations: [StartRecordingPage]
