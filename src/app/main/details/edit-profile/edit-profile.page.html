@@ -45,7 +45,7 @@
       </ion-item>
       <ion-item *ngIf="!!country">
         <ion-label class="title-rg" position="stacked">{{ 'EDIT_PROFILE.city' | translate }}</ion-label>
-        <ionic-selectable [(ngModel)]="city" [items]="filteredCities" itemValueField="id" itemTextField="name"
+        <ionic-selectable [(ngModel)]="city" [items]="filteredCities" itemValueField="id" itemTextField="name_std"
           [canSearch]="true" (onChange)="cityChange($event)">
         </ionic-selectable>
       </ion-item>

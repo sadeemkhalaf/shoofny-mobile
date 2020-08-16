@@ -139,7 +139,6 @@ export class EditProfilePage implements OnInit, OnDestroy {
 
   countryChange(event: any) {
     this.country = event.value;
-    this.country.id = Number(this.country.url.split('/')[7]);
     this._getFilteredCities();
   }
 

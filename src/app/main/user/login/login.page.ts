@@ -60,6 +60,8 @@ export class LoginPage implements OnInit, OnDestroy {
       if (!!data) {
         this._route.navigate(['/home']);
       }
+    }, error => {
+      // just do nothing 
     });
 
   }

@@ -7,6 +7,7 @@ import { IJobDetails } from 'src/app/models/Job';
 import { AppHelpersService } from 'src/app/core/utils/app-helpers.service';
 import { Subscription } from 'rxjs';
 import { StorageService } from 'src/app/core/storage/storage.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -34,12 +35,13 @@ export class HomePage implements OnInit {
   ngOnInit() {}
 
   ionViewDidEnter() {
-    this.navigationSubscription = this._route.events.subscribe((e: any) => {
+    this._loadData();
+    // this.navigationSubscription = this._route.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
-      if (e instanceof NavigationEnd) {
-        this._loadData();
-      }
-    });
+      // if (e instanceof NavigationEnd) {
+        // this._loadData();
+    //   }
+    // });
   }
 
   ngOnDestroy() {
@@ -70,14 +72,26 @@ export class HomePage implements OnInit {
     await this._StorageService.getUserData().then((data) => {
       this.userData = data;
       if (!!this.userData.city.id) {
-        this._subscriptions.push(this.getJobsByCity(this.userData.city.id).subscribe((data: any) => {
-          this.jobsCountByCity = data.count;
-          this.jobsListByCity = data.results as IJobDetails[];
-          if (this.jobsListByCity.length > 3) {
-            this.jobsListByCity = this.jobsListByCity.sort((a, b) => a.timestamp < b.timestamp ? 1 : -1).slice(0, 3);
-          }
-        }));
+        this._getUserCity(this.userData.city.id);
       }
+    }, error => {
+      // also do nothing
+      this._auth.getUserProfile().pipe(take(1)).subscribe((data) => {
+        this.userData = data;
+        if (!!this.userData.city.id) {
+          this._getUserCity(this.userData.city.id);
+        }
+      })
     })
+  }
+
+  private _getUserCity(id) {
+    this._subscriptions.push(this.getJobsByCity(id).subscribe((data: any) => {
+      this.jobsCountByCity = data.count;
+      this.jobsListByCity = data.results as IJobDetails[];
+      if (this.jobsListByCity.length > 3) {
+        this.jobsListByCity = this.jobsListByCity.sort((a, b) => a.timestamp < b.timestamp ? 1 : -1).slice(0, 3);
+      }
+    }));
   }
 }

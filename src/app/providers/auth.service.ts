@@ -86,7 +86,6 @@ export class AuthService {
 
             }));
     }, error => console.error(error));
-
   }
 
   isAuthenticated() {
