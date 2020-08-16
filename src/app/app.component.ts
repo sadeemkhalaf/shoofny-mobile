@@ -10,7 +10,6 @@ import { DetailsService } from './providers/details.service';
 import { INationality, ICity, IDomainOfExperience, IYearsOfExperience } from './models/user';
 import { DataService } from './providers/data.service';
 import { TranslateConfigService } from './providers/translate-config.service';
-import { error } from 'protractor';
 import { take } from 'rxjs/operators';
 
 @Component({
@@ -79,7 +78,7 @@ export class AppComponent{
   }
 
   getCountries() {
-    this._detailsService.$contries.pipe(take(1))
+    this._detailsService.$countries.pipe(take(1))
     .subscribe((countries: any) => {
       this.countries = countries.results;
       this._storage.setLocalData('countries', this.countries);

@@ -117,14 +117,13 @@ export class AuthHttpInterceptor implements HttpInterceptor {
    * @returns {any}
    */
   private _handleAuthError(err: HttpErrorResponse): Observable<any> {
-    console.log('Handled error ' + err.status + ' - ' + err.message);
+    // console.log('Handled error ' + err.status + ' - ' + err.message);
     if (err.status === 401) {
       this._storageService.getAuthToken()
         .then((token) => {
           if (!!token) {
             this._refreshToken();
           } else {
-            console.log('err.status: ', err.status);
             this._router.navigate([`/login`], { queryParamsHandling: 'merge', replaceUrl: true });
           }
         });

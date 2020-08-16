@@ -94,12 +94,15 @@ export class EditProfilePage implements OnInit, OnDestroy {
       // If it is a NavigationEnd event re-initalise the component
       if (e) {
         this._loadData();
-        this._loadPicture();
-        window.onload = () => {
-          this._loadPicture();
-        }
       }
     });
+  }
+
+  ionViewDidEnter() {
+    this._loadPicture();
+    window.onload = () => {
+      this._loadPicture();
+    }
   }
 
   ngOnDestroy(): void {
@@ -191,7 +194,9 @@ export class EditProfilePage implements OnInit, OnDestroy {
       .then((data) => {
         this._countryCodes = data as ICountryCode[];
         this.countryCodes = data as ICountryCode[];
-        this.countryCode = this.getCode(this.user.phone)[0];
+        if (this.user.phone) {
+          this.countryCode = this.getCode(this.user.phone)[0];
+        }
       });
   }
 
@@ -216,9 +221,9 @@ export class EditProfilePage implements OnInit, OnDestroy {
     userForm.Public_Profile = this.url;
     userForm.phone = `${this.countryCode.dial_code}-${this.mobile}`
     // if (this.dobChanged) {
-      const dob = new Date(this.user.DOB);
-      userForm.DOB = `${dob.getUTCFullYear()}-${dob.getMonth()}-${dob.getDate()}`;
-      console.log(`userForm.DOB: ${userForm.DOB}`);
+    const dob = new Date(this.user.DOB);
+    userForm.DOB = `${dob.getUTCFullYear()}-${dob.getMonth()}-${dob.getDate()}`;
+    console.log(`userForm.DOB: ${userForm.DOB}`);
     // }
     if (this.imageUpdated) {
       userForm.picture = this.image;
@@ -255,7 +260,7 @@ export class EditProfilePage implements OnInit, OnDestroy {
     this.yoex = !!this.user.YOEX ? this.user.YOEX as IYOEX : null;
     this.url = this.user.Public_Profile;
     this.image = this.user.picture;
-    this.mobile = !!this.user.phone.split('-')[1] ? this.user.phone.split('-')[1] : this.user.phone;
+    this.mobile = !!this.user.phone && !!this.user.phone.split('-')[1] ? this.user.phone.split('-')[1] : this.user.phone;
   }
 
   private _loadPicture() {

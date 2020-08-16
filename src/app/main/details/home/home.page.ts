@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/providers/auth.service';
 import { IUser } from 'src/app/models/user';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { JobDetailsService } from 'src/app/providers/job-details.service';
 import { IJobDetails } from 'src/app/models/Job';
 import { AppHelpersService } from 'src/app/core/utils/app-helpers.service';
@@ -31,12 +31,14 @@ export class HomePage implements OnInit {
     private _jobDetailsService: JobDetailsService) {
     }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ionViewDidEnter() {
     this.navigationSubscription = this._route.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
-      // if (e instanceof NavigationEnd) {
+      if (e instanceof NavigationEnd) {
         this._loadData();
-      // }
+      }
     });
   }
 
@@ -65,7 +67,8 @@ export class HomePage implements OnInit {
   }
 
   async _loadData() {
-    this.userData = await this._StorageService.getUserData();
+    await this._StorageService.getUserData().then((data) => {
+      this.userData = data;
       if (!!this.userData.city.id) {
         this._subscriptions.push(this.getJobsByCity(this.userData.city.id).subscribe((data: any) => {
           this.jobsCountByCity = data.count;
@@ -75,5 +78,6 @@ export class HomePage implements OnInit {
           }
         }));
       }
+    })
   }
 }

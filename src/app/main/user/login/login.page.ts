@@ -20,7 +20,7 @@ export class LoginPage implements OnInit, OnDestroy {
     private _route: Router,
     private _storage: StorageService,
     private _auth: AuthService) {
-    }
+  }
 
   ngOnDestroy(): void {
     // throw new Error("Method not implemented.");
@@ -34,7 +34,7 @@ export class LoginPage implements OnInit, OnDestroy {
     });
   }
 
- login(email: string, password: string) {
+  login(email: string, password: string) {
     this._auth.login(email, password, true);
   }
 
@@ -52,13 +52,15 @@ export class LoginPage implements OnInit, OnDestroy {
   }
 
   goToResetPassword() {
-    this._route.navigate(["/reset-password"], {replaceUrl: true})
+    this._route.navigate(["/reset-password"], { replaceUrl: true })
   }
 
   private async _checkLoggedIn() {
-    const data = await this._storage.getUserData();
-    if(!!data) {
-      this._route.navigate(['/home']);
-    }
+    const data = await this._storage.getUserData().then((data) => {
+      if (!!data) {
+        this._route.navigate(['/home']);
+      }
+    });
+
   }
 }

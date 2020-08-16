@@ -27,18 +27,23 @@ export class ProfilePage implements OnInit, OnDestroy {
     this.navigationSubscription.unsubscribe();
   }
 
+  ionViewDidEnter() {
+    this._loadPicture();
+    window.onload = () => {
+      this._loadPicture();
+    }
+  }
+
   ngOnInit() {
     this.navigationSubscription = this._route.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
       if (e) {
         this._loadData();
-        this._loadPicture();
-        window.onload = () => {
-          this._loadPicture();
-        }
       }
     });
   }
+
+  
 
   goToStartRecording() {
     this._route.navigate(["signup/profile/start-recording"], {replaceUrl: true});
