@@ -3,10 +3,8 @@ import { IYOEX } from '../main/details/edit-profile/edit-profile.page';
 
 export class IUser {
     id: number;
-    first_name: string = '';
-    last_name: string = '';
     email: string = '';
-    username: string = '';
+    name: string = '';
     DOB: Date;
     picture: string = '';
     video: string = '';

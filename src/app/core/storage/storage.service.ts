@@ -62,6 +62,6 @@ export class StorageService implements IStorage {
   public getLocalData<T = any>(key: string): Promise<T> {
     return this._storage.get(`${API_STORAGE_KEY}-${key}`)
       .then(data => !!data ? Promise.resolve(JSON.parse(data))
-        : Promise.reject({ message: 'No Cached data for Offline support found' }));
+        : Promise.reject({ message: `No Cached data for Offline support found ${key}` }));
   }
 }

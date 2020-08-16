@@ -25,14 +25,6 @@
     </div>
     <ion-label class="title-lg margin-bottom-8 margin-top-16">{{ 'FILL_NEW_PROFILE.basicInformation' | translate }}</ion-label>
     <ion-list>
-      <ion-item class="col">
-        <ion-label position="stacked">{{ 'SIGNUP.first_name' | translate }}</ion-label>
-        <ion-input clearInput placeholder="{{ 'SIGNUP.first_name' | translate }}" [(ngModel)]="user.first_name"></ion-input>
-      </ion-item>
-      <ion-item class="col">
-        <ion-label position="stacked">{{ 'SIGNUP.last_name' | translate }}</ion-label>
-        <ion-input clearInput placeholder="{{ 'SIGNUP.last_name' | translate }}" [(ngModel)]="user.last_name"></ion-input>
-      </ion-item>
       <ion-item>
         <ion-label class="title-rg" position="floating">{{ 'FILL_NEW_PROFILE.dob' | translate }}</ion-label>
         <ion-datetime displayFormat="MM/DD/YYYY" max="2020-01-01" [(ngModel)]="user.DOB"></ion-datetime>
@@ -117,4 +109,7 @@
       {{ 'FILL_NEW_PROFILE.confirm' | translate }}
     </ion-label>
   </ion-button>
+</ion-footer>
+<ion-footer>
+  <app-change-language></app-change-language>
 </ion-footer>

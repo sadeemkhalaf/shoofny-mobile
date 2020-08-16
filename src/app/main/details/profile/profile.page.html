@@ -5,7 +5,7 @@
   </div>
 <div class="col profile-header" *ngIf="!!profile">
   <div id="profileCircle" class="profile-picture-circle"></div>
-  <ion-label class="title-lg">{{profile.first_name}} {{profile.last_name}}</ion-label>
+  <ion-label class="title-lg">{{profile.name}}</ion-label>
   <ion-label class="title-sm">{{profile.city.display_name}}</ion-label>
   <ion-label class="title-sm">{{profile.DOEX.name_EN}}</ion-label>
   <ion-label class="title-sm">{{!!profile.DOB ? calculatAge() : 'AGE'}} {{ 'PROFILE.yearsOld' | translate }}</ion-label>

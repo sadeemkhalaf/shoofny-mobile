@@ -6,13 +6,15 @@ import { SearchBoxComponent } from './search-box/search-box.component';
 import { ProfilePictureCircleComponent } from './profile-picture-circle/profile-picture-circle.component';
 import { BackButtonComponent } from './back-button/back-button.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { ChangeLanguageComponent } from './change-language/change-language.component';
 
 export const components = [
   JobListItemComponent,
   ProfileSummaryComponent,
   SearchBoxComponent,
   ProfilePictureCircleComponent,
-  BackButtonComponent
+  BackButtonComponent,
+  ChangeLanguageComponent
 ];
 
 @NgModule({

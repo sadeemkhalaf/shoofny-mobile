@@ -28,10 +28,10 @@ export class HomePage implements OnInit {
     private _auth: AuthService,
     private _route: Router,
     private _StorageService: StorageService,
-    private _jobDetailsService: JobDetailsService) { }
+    private _jobDetailsService: JobDetailsService) {
+    }
 
   ngOnInit() {
-    this._loadData();
     this.navigationSubscription = this._route.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
       // if (e instanceof NavigationEnd) {
@@ -64,11 +64,10 @@ export class HomePage implements OnInit {
     this._route.navigate([path]);
   }
 
-  _loadData() {
-    this._StorageService.getUserData().then((user) => {
-      this.userData = user;
+  async _loadData() {
+    this.userData = await this._StorageService.getUserData();
       if (!!this.userData.city.id) {
-        this._subscriptions.push(this.getJobsByCity(user.city.id).subscribe((data: any) => {
+        this._subscriptions.push(this.getJobsByCity(this.userData.city.id).subscribe((data: any) => {
           this.jobsCountByCity = data.count;
           this.jobsListByCity = data.results as IJobDetails[];
           if (this.jobsListByCity.length > 3) {
@@ -76,6 +75,5 @@ export class HomePage implements OnInit {
           }
         }));
       }
-    });
   }
 }

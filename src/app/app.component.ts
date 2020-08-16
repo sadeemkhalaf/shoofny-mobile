@@ -11,6 +11,7 @@ import { INationality, ICity, IDomainOfExperience, IYearsOfExperience } from './
 import { DataService } from './providers/data.service';
 import { TranslateConfigService } from './providers/translate-config.service';
 import { error } from 'protractor';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -78,8 +79,7 @@ export class AppComponent{
   }
 
   getCountries() {
-    this._detailsService.getCountries()
-    .pipe()
+    this._detailsService.$contries.pipe(take(1))
     .subscribe((countries: any) => {
       this.countries = countries.results;
       this._storage.setLocalData('countries', this.countries);
@@ -87,8 +87,8 @@ export class AppComponent{
   }
 
   getCities() {
-    this._detailsService.getCities()
-    .pipe()
+    this._detailsService.$cities
+    .pipe(take(1))
     .subscribe((cities: any) => {
       this.cities = cities.results;
       this._storage.setLocalData('cities', this.cities);
@@ -96,8 +96,8 @@ export class AppComponent{
   }
 
   getDomains() {
-    this._detailsService.getDomains()
-    .pipe()
+    this._detailsService.$domains
+    .pipe(take(1))
     .subscribe((domains: any) => {
       this.domains = domains.results;
       this._storage.setLocalData('domains', this.domains);
@@ -105,8 +105,8 @@ export class AppComponent{
   }
 
   getLevels() {
-    this._detailsService.getLevels()
-    .pipe()
+    this._detailsService.$levels
+    .pipe(take(1))
     .subscribe((levels: any) => {
       this.levels = levels.results;
       this._storage.setLocalData('levels', this.levels);

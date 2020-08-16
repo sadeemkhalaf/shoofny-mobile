@@ -6,9 +6,7 @@ import { NetworkService, ConnectionStatus } from '../core/utils/network.service'
 import { StorageService } from '../core/storage/storage.service';
 import { Router } from '@angular/router';
 import { AppHelpersService } from '../core/utils/app-helpers.service';
-import { IUserSubmit } from '../main/details/edit-profile/edit-profile.page';
-import { switchMap, take, first } from 'rxjs/operators';
-import { error } from 'protractor';
+import { switchMap, first } from 'rxjs/operators';
 export class Token {
   access: string;
   refresh: string;
@@ -19,6 +17,8 @@ export class Token {
 })
 export class AuthService {
   public loggedInUser: Observable<IUser>;
+  public $user: ReplaySubject<IUser> = new ReplaySubject();
+
   private _isLoggedIn = new BehaviorSubject(null);
   private _loggedInUser: ReplaySubject<IUser> = new ReplaySubject(1);
 
@@ -35,7 +35,7 @@ export class AuthService {
 
   // login
   public login(e_mail: string, pass_word: string, isLogin: boolean) {
-    this._getAccessToken({ username: e_mail, password: pass_word }, isLogin);
+    this._getAccessToken({ email: e_mail, password: pass_word }, isLogin);
   }
 
   // TODO:
@@ -46,7 +46,7 @@ export class AuthService {
   }
 
   public getUserProfile() {
-    return this._http.get<IUser>('/api/auth/profile');
+    return this._http.get<IUser>('/api/v1/accounts/profile/');
   }
 
   public uploadVideo(videoBlob: Blob) {
@@ -54,15 +54,15 @@ export class AuthService {
   }
 
   public registerUser(user: any) {
-    return this._http.post<any>('/api/auth/register/', user);
+    return this._http.post<any>('/api/v1/accounts/register/', user);
   }
 
   public resetPassword(email: string) {
-    return this._http.post(`/api/auth/reset-password/`, {login: email});
+    return this._http.post(`/api/v1/accounts/reset-password/`, {login: email});
   }
 
   public updateUserProfile(user: any) {
-    return this._http.patch<any>('/api/auth/profile/', user);
+    return this._http.patch<any>('/api/v1/accounts/profile/', user);
   }
 
   public refreshToken() {
@@ -70,7 +70,7 @@ export class AuthService {
     this._storageService.getRefreshAuthToken().then((refreshToken) => {
       return new Promise<Token>(
         (resolve, reject) =>
-          this._http.post('/api/token/refresh/', { refresh: refreshToken })
+          this._http.post('/api/v1/token/refresh/', { refresh: refreshToken })
             .subscribe((token: any) => {
               if (!!token) {
                 this._storageService.updateUserToken(token)
@@ -97,14 +97,14 @@ export class AuthService {
     this._helper.showLoading();
     return new Promise<any>(
       (resolve, reject) =>
-        this._http.post('/api/token/', data)
-          .pipe(first(), switchMap((token) => {
+        this._http.post('/api/v1/token/', data)
+          .pipe(switchMap((token) => {
             this._helper.hideLoading();
             this._checkLoggedIn();
             this._isLoggedIn.next(true);
             this._setUserToken(token).then(() => {
               resolve(token);
-              if (!!!isLogin) {
+              if (!isLogin) {
                 this._route.navigate(['/signup/profile'])
               }
             });
@@ -113,15 +113,11 @@ export class AuthService {
             this._helper.hideLoading();
             this._helper.showToast(`Wrong username and password`, 'danger');
             reject({ message: 'Wrong username and password' });
+            console.log(error);
           }))
           .subscribe(async (userData: any) => {
             await this._setUserData(userData)
             .then(() => this._route.navigate(['/home']));
-          }, error => {
-            this._helper.hideLoading();
-            this._helper.showHttpErrorMessage(error);
-            console.log('error: ', error);
-            reject(error);
           }));
   }
 
@@ -129,6 +125,7 @@ export class AuthService {
     return this._storageService.updateUserData(userData)
       .then((response) => {
         this._loggedInUser.next(userData);
+        this.$user.next(userData);
       }, (reason) => console.warn(reason));
   }
 
@@ -143,10 +140,11 @@ export class AuthService {
   }
 
   private _fillUserData(resolve, reject) {
-    this._http.get<IUser>('/api/auth/profile/').pipe(first())
+    this._http.get<IUser>('/api/v1/accounts/profile/').pipe(first())
       .subscribe((userData: IUser) => this._setUserData(userData)
         .then(() => {
           resolve(userData);
+          this.$user.next(userData);
           this._storageService.updateUserData(userData);
         }), (reason) => {
           if (reason.status >= 400 && reason.status < 500) {

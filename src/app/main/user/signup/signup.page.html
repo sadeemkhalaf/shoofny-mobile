@@ -19,75 +19,50 @@
 
 <ion-content>
   <div class="margin-left-32 margin-right-32 margin-top-16 margin-bottom-32">
-      <ion-label class="title-lg margin-bottom-8">{{ 'SIGNUP.fillFields' | translate }}</ion-label>
-      <ion-list>
-        <ion-item class="col">
-          <ion-input clearInput placeholder="{{ 'SIGNUP.first_name' | translate }}" class="title-rg"
-          [(ngModel)]="firstName"
-          ></ion-input>
-        </ion-item>
-        <ion-item class="col">
-          <ion-input clearInput placeholder="{{ 'SIGNUP.last_name' | translate }}" class="title-rg"
-          [(ngModel)]="lastName"
-          ></ion-input>
-        </ion-item>
-        <ion-item class="col">
-          <ion-label position="stacked" class="margin-bottom-8">{{ 'SIGNUP.mobile' | translate }}</ion-label>
-          <div class="row mobile-input">
-            <div>
-              <ion-label position="stacked" class="margin-bottom-8 title-rg">{{ 'SIGNUP.code' | translate }}</ion-label>
-              <ionic-selectable
-              class="title-rg"
-                item-content
-                [(ngModel)]="countryCode"
-                [items]="countryCodes"
-                itemValueField="code"
-                itemTextField="dial_code"
-                [canSearch]="true"
-                (onChange)="countryCodeChange($event)"
-                (onSearch)="countryCodeSearch($event)">
-              </ionic-selectable>
-            </div>
-            <ion-input clearInput maxlength="9" placeholder="{{ 'SIGNUP.mobile' | translate }}" class="number title-rg" type="number"></ion-input>
+    <ion-label class="title-lg margin-bottom-8">{{ 'SIGNUP.fillFields' | translate }}</ion-label>
+    <form [formGroup]="form" (ngSubmit)="onSubmitForm()">
+      <ion-item class="col">
+        <ion-input clearInput placeholder="{{ 'SIGNUP.username' | translate }}" formControlName="name" class="title-rg">
+        </ion-input>
+      </ion-item>
+      <ion-item class="col">
+        <ion-input clearInput placeholder="{{ 'SIGNUP.email' | translate }}" class="title-rg" formControlName="email"
+          type="email"></ion-input>
+        <div *ngIf="isSubmitted && f.email.errors" class="invalid-feedback">
+          <div *ngIf="f.email.errors.required" class="title-sm error-label">Email is required</div>
+          <div *ngIf="f.email.errors.email" class="title-sm error-label">Email must be a valid email address</div>
+        </div>
+      </ion-item>
+      <ion-item class="col">
+        <ion-input clearInput placeholder="{{ 'SIGNUP.password' | translate }}" type="password"
+          formControlName="password" class="title-rg"></ion-input>
+        <div *ngIf="isSubmitted && f.password.errors" class="invalid-feedback">
+          <div *ngIf="f.password.errors.required" class="title-sm error-label">Password is required</div>
+          <div *ngIf="f.password.errors.minlength" class="title-sm error-label">Password must be at least 6 characters
           </div>
-        </ion-item>
-      </ion-list>
-      <form [formGroup]="form" (ngSubmit)="onSubmitForm()">
-        <ion-item class="col">
-          <ion-input clearInput placeholder="{{ 'SIGNUP.email' | translate }}" class="title-rg" formControlName="email" type="email"></ion-input>
-          <div *ngIf="isSubmitted && f.email.errors" class="invalid-feedback">
-            <div *ngIf="f.email.errors.required" class="title-sm error-label">Email is required</div>
-            <div *ngIf="f.email.errors.email" class="title-sm error-label">Email must be a valid email address</div>
-          </div>
-        </ion-item>
-        <ion-item class="col">
-          <ion-input clearInput placeholder="{{ 'SIGNUP.password' | translate }}" type="password" formControlName="password" class="title-rg"></ion-input>
-          <div *ngIf="isSubmitted && f.password.errors" class="invalid-feedback">
-            <div *ngIf="f.password.errors.required" class="title-sm error-label">Password is required</div>
-            <div *ngIf="f.password.errors.minlength" class="title-sm error-label">Password must be at least 6 characters</div>
-          </div>
-        </ion-item>
-        <ion-item class="col">
-          <ion-input clearInput placeholder="{{ 'SIGNUP.confirmPassword' | translate }}" type="password" formControlName="confirmPassword" class="title-rg">
-          </ion-input>
-          <div *ngIf="isSubmitted && f.confirmPassword.errors" class="invalid-feedback">
-            <div *ngIf="f.confirmPassword.errors.required" class="title-sm error-label">Confirm Password is required</div>
-            <div *ngIf="f.confirmPassword.errors.mustMatch" class="title-sm error-label">Passwords must match</div>
-          </div>
-        </ion-item>
-        <ion-item class="col">
-          <ion-input clearInput placeholder="{{ 'SIGNUP.username' | translate }}" formControlName="userName" class="title-rg"></ion-input>
-        </ion-item>
-
+        </div>
+      </ion-item>
+      <ion-item class="col">
+        <ion-input clearInput placeholder="{{ 'SIGNUP.confirmPassword' | translate }}" type="password"
+          formControlName="confirmPassword" class="title-rg">
+        </ion-input>
+        <div *ngIf="isSubmitted && f.confirmPassword.errors" class="invalid-feedback">
+          <div *ngIf="f.confirmPassword.errors.required" class="title-sm error-label">Confirm Password is required</div>
+          <div *ngIf="f.confirmPassword.errors.mustMatch" class="title-sm error-label">Passwords must match</div>
+        </div>
+      </ion-item>
     </form>
   </div>
 </ion-content>
 
 <ion-footer class="padding-8" style="direction: rtl;">
-  <ion-button type="submit" (click)="onSubmitForm()"> 
+  <ion-button type="submit" (click)="onSubmitForm()">
     <ion-label>
       <ion-icon name="arrow-forward-outline"></ion-icon>
       {{ 'FILL_NEW_PROFILE.confirm' | translate }}
     </ion-label>
   </ion-button>
+</ion-footer>
+<ion-footer>
+  <app-change-language></app-change-language>
 </ion-footer>

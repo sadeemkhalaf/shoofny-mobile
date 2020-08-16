@@ -1,0 +1,7 @@
+<ion-item>
+  <ion-label class="title-sm margin-top-16 margin-bottom-8">{{ 'SETTINGS.language' | translate }}</ion-label>
+  <ion-select class="title-sm" placeholder="{{ 'SETTINGS.language' | translate }}" [(ngModel)]="languageSelected" [value]="languageSelected" (ionChange)="onChangeLanguage($event)">
+    <ion-select-option class="title-sm" value="en">{{ 'SETTINGS.English' | translate }}</ion-select-option>
+    <ion-select-option class="title-sm" value="ar">{{ 'SETTINGS.Arabic' | translate }}</ion-select-option>
+  </ion-select>
+</ion-item>

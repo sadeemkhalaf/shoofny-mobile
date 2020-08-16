@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { ActionSheetController, NavController, Platform } from '@ionic/angular';
+import { ActionSheetController, NavController, Platform, LoadingController } from '@ionic/angular';
 import { Camera } from '@ionic-native/Camera/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
@@ -32,7 +32,8 @@ export class VideoCaptureService implements OnInit {
   private isUploading: boolean = false;
   private uploadPercent: number = 0;
   private videoFileUpload: FileTransferObject;
-  private loader;
+
+  private _loader;
 
   private _videoFileUpload: FileTransferObject;
   
@@ -45,7 +46,8 @@ export class VideoCaptureService implements OnInit {
     private _fileTransfer: FileTransfer,
     private _file: File,
     private _platform: Platform,
-    private _auth: AuthService
+    private _auth: AuthService,
+    public loadingController: LoadingController
     ) { }
 
   ngOnInit(): void {
@@ -92,17 +94,34 @@ export class VideoCaptureService implements OnInit {
     const videoBlob = new Blob([buffer], type);
   
     // TODO: use the video upload API here
-    this._helper.showLoading();
+    this.presentLoading();
     this._auth.uploadVideo(videoBlob).pipe(first()).subscribe((success) => {
       this._helper.hideLoading();
       this.isUploading = false;
+      this.stopLoading();
       this._helper.showToast(`Video uploaded successfully`, `success`);
     }, error => {
       this.isUploading = false;
+      this.stopLoading();
       this._helper.hideLoading();
       this._helper.showHttpErrorMessage(error);
     });
 
+  }
+
+  async presentLoading() {
+    this._loader = await this.loadingController.create({
+      spinner: null,
+      message: 'Uploading Video, please wait ...',
+      translucent: true,
+      cssClass: 'loader',
+      backdropDismiss: false
+    });
+    await this._loader.present();
+  }
+
+  async stopLoading() {
+    await this._loader.dismiss();
   }
 
   private _recordVideo() {

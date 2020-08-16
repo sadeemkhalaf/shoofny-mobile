@@ -77,7 +77,7 @@ export class ProfilePage implements OnInit, OnDestroy {
 
     private _loadPicture() {
         this._storageService.getUserData().then((data) => {
-          this.profile = data as IUser;
+          // this.profile = data as IUser;
           const pictureUrl =
             !!this.profile.picture && this.profile.picture.length > 0
               ? this.profile.picture

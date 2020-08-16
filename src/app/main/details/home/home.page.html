@@ -6,7 +6,7 @@
         <app-profile-picture-circle [routerLink]="['/home/profile']" ></app-profile-picture-circle>
       </div>
       <div class="row margin-left-16 margin-bottom-16" *ngIf="!!userData">
-        <ion-label class="greeting-label">{{ 'HOME.hello' | translate }}, {{!!userData.first_name ? userData.first_name : ''}}</ion-label>
+        <ion-label class="greeting-label">{{ 'HOME.hello' | translate }}, {{!!userData.name ? userData.name : ''}}</ion-label>
       </div>
       <div class="insights row space-between margin-16">
         <div class="col center">

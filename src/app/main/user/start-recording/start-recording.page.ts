@@ -47,13 +47,10 @@ export class StartRecordingPage implements OnInit {
 
   public uploadVideo() {
     this._helper.showLoading();
-    this.presentLoading();
     this.uploaded = true;
     this._mediaService.uploadVideo().then(() => {
-      this.stopLoading();
     }, error => {
       this.uploaded = false;
-      this.stopLoading();
     });
   }
 
@@ -67,21 +64,6 @@ export class StartRecordingPage implements OnInit {
 
   goToHomePage() {
     this._router.navigate([`/home`])
-  }
-
-  async presentLoading() {
-    this._loader = await this.loadingController.create({
-      spinner: null,
-      message: 'Uploading Video, please wait ...',
-      translucent: true,
-      cssClass: 'loader',
-      backdropDismiss: false
-    });
-    await this._loader.present();
-  }
-
-  async stopLoading() {
-    await this._loader.dismiss();
   }
 
 }

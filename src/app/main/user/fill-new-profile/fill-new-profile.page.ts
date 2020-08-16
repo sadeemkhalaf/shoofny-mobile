@@ -3,14 +3,13 @@ import {
   IUser,
   INationality,
   ICity,
-  IDomainOfExperience,
-  IYearsOfExperience,
+  IDomainOfExperience
 } from 'src/app/models/user';
 import { AuthService } from 'src/app/providers/auth.service';
 import { StorageService } from 'src/app/core/storage/storage.service';
 import { DetailsService } from 'src/app/providers/details.service';
 import { MediaPickerService } from 'src/app/providers/media-picker.service';
-import { first } from 'rxjs/operators';
+import { first, take } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { AppHelpersService } from 'src/app/core/utils/app-helpers.service';
 import { IUserSubmit, IYOEX } from '../../details/edit-profile/edit-profile.page';
@@ -59,32 +58,32 @@ export class FillNewProfilePage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this._authService.getUserProfile().pipe(first()).subscribe((user) => this.user = user );
+    this._authService.$user.subscribe((user) => this.user = user );
     this._initializeUser();
   }
 
   //
   getCountries() {
-    return this._detailsService.getCountries().subscribe((countries: any) => {
-      this.countries = countries.results;
+    return this._detailsService.$countries.pipe(take(1)).subscribe((countries: any) => {
+      this.countries = countries;
     });
   }
 
   getCities() {
-    return this._detailsService.getCities().subscribe((cities: any) => {
-      this.cities = cities.results;
+    return this._detailsService.$cities.pipe(take(1)).subscribe((cities: any) => {
+      this.cities = cities;
     });
   }
 
   getDomains() {
-    return this._detailsService.getDomains().subscribe((domains: any) => {
-      this.domains = domains.results;
+    return this._detailsService.$domains.pipe(take(1)).subscribe((domains: any) => {
+      this.domains = domains;
     });
   }
 
   getLevels() {
-    return this._detailsService.getYOEX().subscribe((levels: any) => {
-      this.levels = levels.results;
+    return this._detailsService.$YOEX.pipe(take(1)).subscribe((levels: any) => {
+      this.levels = levels;
     });
   }
 

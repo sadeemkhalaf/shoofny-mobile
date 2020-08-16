@@ -4,125 +4,95 @@
 </div>
 
 <ion-content *ngIf="!!user">
-<div class="margin-32 col">
-  <div class="row align-items-center margin-bottom-16">
-    <div #profileCircle #profileCircle class="profile-picture-circle margin-right-16"></div>
-    <ion-label class="title-rg link margin-right-32" (click)="pickImage()">{{ 'EDIT_PROFILE.changePicture' | translate }}</ion-label>
-    <ion-label class="title-rg danger" (click)="clearImage()">{{ 'EDIT_PROFILE.remove' | translate }}</ion-label>
-  </div>
-  <ion-label class="title-lg margin-bottom-8">{{ 'EDIT_PROFILE.basicInformation' | translate }}</ion-label>
-  <ion-list>
-    <ion-item class="col">
-      <ion-label position="stacked">{{ 'EDIT_PROFILE.firstName' | translate }}</ion-label>
-      <ion-input clearInput placeholder="{{ 'EDIT_PROFILE.firstName' | translate }}" [(ngModel)]="user.first_name"></ion-input>
-    </ion-item>
-    <ion-item class="col">
-      <ion-label position="stacked">{{ 'EDIT_PROFILE.lastName' | translate }}</ion-label>
-      <ion-input clearInput placeholder="{{ 'EDIT_PROFILE.lastName' | translate }}" [(ngModel)]="user.last_name"></ion-input>
-    </ion-item>
-    <ion-item class="col">
-      <ion-label position="stacked">{{ 'EDIT_PROFILE.email' | translate }}</ion-label>
-      <ion-input clearInput placeholder="{{ 'EDIT_PROFILE.email' | translate }}" [(ngModel)]="user.email" type="email"></ion-input>
-    </ion-item>
-    <ion-item class="col">
-      <ion-label position="stacked" class="margin-bottom-8">{{ 'SIGNUP.mobile' | translate }}</ion-label>
-      <div class="row mobile-input">
-        <div>
-          <ion-label position="stacked" class="margin-bottom-8 title-rg">{{ 'SIGNUP.code' | translate }}</ion-label>
-          <ionic-selectable
-          class="title-rg"
-            item-content
-            [(ngModel)]="countryCode"
-            [items]="countryCodes"
-            itemValueField="code"
-            itemTextField="dial_code"
-            [canSearch]="true"
-            (onChange)="countryCodeChange($event)"
-            (onSearch)="countryCodeSearch($event)">
-          </ionic-selectable>
+  <div class="margin-32 col">
+    <div class="row align-items-center margin-bottom-16">
+      <div id="profileCircle" class="profile-picture-circle margin-right-16"></div>
+      <ion-label class="title-rg link margin-right-32" (click)="pickImage()">
+        {{ 'EDIT_PROFILE.changePicture' | translate }}</ion-label>
+      <ion-label class="title-rg danger" (click)="clearImage()">{{ 'EDIT_PROFILE.remove' | translate }}</ion-label>
+    </div>
+    <ion-label class="title-lg margin-bottom-8">{{ 'EDIT_PROFILE.basicInformation' | translate }}</ion-label>
+    <ion-list>
+      <ion-item class="col">
+        <ion-label position="stacked">{{ 'EDIT_PROFILE.email' | translate }}</ion-label>
+        <ion-input clearInput placeholder="{{ 'EDIT_PROFILE.email' | translate }}" [(ngModel)]="user.email"
+          type="email"></ion-input>
+      </ion-item>
+      <ion-item class="col">
+        <ion-label position="stacked" class="margin-bottom-8">{{ 'SIGNUP.mobile' | translate }}</ion-label>
+        <div class="row mobile-input">
+          <div>
+            <ion-label position="stacked" class="margin-bottom-8 title-rg">{{ 'SIGNUP.code' | translate }}</ion-label>
+            <ionic-selectable class="title-rg" item-content [(ngModel)]="countryCode" [items]="countryCodes"
+              itemValueField="code" itemTextField="dial_code" [canSearch]="true" (onChange)="countryCodeChange($event)"
+              (onSearch)="countryCodeSearch($event)">
+            </ionic-selectable>
+          </div>
+          <ion-input clearInput maxlength="9" placeholder="{{ 'SIGNUP.mobile' | translate }}" class="number title-rg"
+            type="number" [(ngModel)]="mobile"></ion-input>
         </div>
-        <ion-input clearInput maxlength="9" placeholder="{{ 'SIGNUP.mobile' | translate }}" class="number title-rg" type="number" [(ngModel)]="mobile"></ion-input>
-      </div>
-    </ion-item>
+      </ion-item>
+      <ion-item>
+        <ion-label class="title-rg" position="floating">{{ 'EDIT_PROFILE.dob' | translate }}</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY" max="2020-01-01" [(ngModel)]="user.DOB"
+          (onChange)="dateChanged($event)"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label class="title-rg" position="stacked">{{ 'EDIT_PROFILE.country' | translate }}</ion-label>
+        <ionic-selectable [(ngModel)]="country" [items]="countries" itemValueField="id" itemTextField="name"
+          [canSearch]="true" (onChange)="countryChange($event)">
+        </ionic-selectable>
+      </ion-item>
+      <ion-item *ngIf="!!country">
+        <ion-label class="title-rg" position="stacked">{{ 'EDIT_PROFILE.city' | translate }}</ion-label>
+        <ionic-selectable [(ngModel)]="city" [items]="filteredCities" itemValueField="id" itemTextField="name"
+          [canSearch]="true" (onChange)="cityChange($event)">
+        </ionic-selectable>
+      </ion-item>
+      <ion-item>
+        <ion-label class="title-rg margin-top-16 margin-bottom-8">{{ 'EDIT_PROFILE.private' | translate }}</ion-label>
+        <ion-toggle [(ngModel)]="user.Private"></ion-toggle>
+      </ion-item>
+    </ion-list>
+    <ion-label class="title-lg margin-bottom-8">{{ 'EDIT_PROFILE.professionalInformation' | translate }}</ion-label>
+    <ion-list>
+      <ion-item class="col">
+        <ion-label position="stacked" class="title-rg">{{ 'FILL_NEW_PROFILE.domainOfExpertise' | translate }}
+        </ion-label>
+        <ionic-selectable [(ngModel)]="domain" [items]="domains" itemValueField="id" itemTextField="name_EN"
+          [canSearch]="true" (onChange)="cityChange($event)">
+        </ionic-selectable>
+      </ion-item>
+      <ion-item class="col">
+        <ion-label position="stacked">{{ 'EDIT_PROFILE.experienceLevel' | translate }}</ion-label>
+        <ionic-selectable [(ngModel)]="yoex" [items]="years" itemValueField="id" itemTextField="year" [canSearch]="true"
+          (onChange)="yearChange($event)">
+        </ionic-selectable>
+      </ion-item>
+    </ion-list>
+
+    <ion-label class="title-lg margin-bottom-8">{{ 'EDIT_PROFILE.publicProfessionlProfiles' | translate }}</ion-label>
+    <ion-list>
+      <ion-item class="col">
+        <ion-input clearInput placeholder="{{ 'EDIT_PROFILE.url' | translate }}" [(ngModel)]="url"></ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-label class="floating-label" position="floating">{{ 'FILTER.tags' | translate }}</ion-label>
     <ion-item>
-      <ion-label class="title-rg" position="floating">{{ 'EDIT_PROFILE.dob' | translate }}</ion-label>
-      <ion-datetime displayFormat="MM/DD/YYYY" max="2020-01-01" [(ngModel)]="user.DOB" (onChange)="dateChanged($event)"></ion-datetime>
+      <ion-input clearInput placeholder="{{ 'EDIT_PROFILE.addSkills' | translate }}" [(ngModel)]="tagInput">
+      </ion-input>
+      <ion-button slot="end" (click)="addTag(tagInput)">
+        <ion-icon name="add-outline"></ion-icon>
+      </ion-button>
     </ion-item>
-    <ion-item>
-      <ion-label class="title-rg" position="stacked">{{ 'EDIT_PROFILE.country' | translate }}</ion-label>
-      <ionic-selectable
-        [(ngModel)]="country"
-        [items]="countries"
-        itemValueField="id"
-        itemTextField="name"
-        [canSearch]="true"
-        (onChange)="countryChange($event)">
-      </ionic-selectable>
-    </ion-item>
-    <ion-item *ngIf="!!country">
-      <ion-label class="title-rg" position="stacked">{{ 'EDIT_PROFILE.city' | translate }}</ion-label>
-      <ionic-selectable
-        [(ngModel)]="city"
-        [items]="filteredCities"
-        itemValueField="id"
-        itemTextField="name"
-        [canSearch]="true"
-        (onChange)="cityChange($event)">
-      </ionic-selectable>
-    </ion-item>
-    <ion-item>
-      <ion-label class="title-rg margin-top-16 margin-bottom-8">{{ 'EDIT_PROFILE.private' | translate }}</ion-label>
-      <ion-toggle [(ngModel)]="user.Private"></ion-toggle>
-    </ion-item>
-  </ion-list>
-  <ion-label class="title-lg margin-bottom-8">{{ 'EDIT_PROFILE.professionalInformation' | translate }}</ion-label>
-  <ion-list>
-    <ion-item class="col">
-      <ion-label position="stacked" class="title-rg" >{{ 'FILL_NEW_PROFILE.domainOfExpertise' | translate }}</ion-label>
-      <ionic-selectable
-        [(ngModel)]="domain"
-        [items]="domains"
-        itemValueField="id"
-        itemTextField="name_EN"
-        [canSearch]="true"
-        (onChange)="cityChange($event)">
-      </ionic-selectable>
-    </ion-item>
-    <ion-item class="col">
-      <ion-label position="stacked">{{ 'EDIT_PROFILE.experienceLevel' | translate }}</ion-label>
-      <ionic-selectable
-      [(ngModel)]="yoex"
-      [items]="years"
-      itemValueField="id"
-      itemTextField="year"
-      [canSearch]="true"
-      (onChange)="yearChange($event)">
-    </ionic-selectable>
-    </ion-item>
-  </ion-list>
-  
-  <ion-label class="title-lg margin-bottom-8">{{ 'EDIT_PROFILE.publicProfessionlProfiles' | translate }}</ion-label>
-  <ion-list>
-    <ion-item class="col">
-      <ion-input clearInput placeholder="{{ 'EDIT_PROFILE.url' | translate }}" [(ngModel)]="url"></ion-input>
-    </ion-item>
-  </ion-list>
-  <ion-label class="floating-label" position="floating">{{ 'FILTER.tags' | translate }}</ion-label>
-  <ion-item>
-    <ion-input clearInput placeholder="{{ 'EDIT_PROFILE.addSkills' | translate }}" [(ngModel)]="tagInput">
-    </ion-input>
-    <ion-button slot="end" (click)="addTag(tagInput)">
-      <ion-icon name="add-outline"></ion-icon>
-    </ion-button>
-  </ion-item>
-   <div *ngIf="tags.length > 0" class="chips-box">
-    <ion-chip *ngFor="let tag of tags" color="secondary">
-      <ion-icon name="tag" color="primary"></ion-icon>
-      <ion-label>{{tag}}</ion-label>
-      <ion-icon name="close-circle-outline" (click)="clearTag(tag)"></ion-icon>
-    </ion-chip>
+    <div *ngIf="tags.length > 0" class="chips-box">
+      <ion-chip *ngFor="let tag of tags" color="secondary">
+        <ion-icon name="tag" color="primary"></ion-icon>
+        <ion-label>{{tag}}</ion-label>
+        <ion-icon name="close-circle-outline" (click)="clearTag(tag)"></ion-icon>
+      </ion-chip>
+    </div>
   </div>
-</div>
 
 </ion-content>
 <ion-footer>
@@ -130,7 +100,7 @@
     <ion-button routerDirection="forward" (click)="submitData()">
       <ion-label class="submit-button">
         <span>{{ 'EDIT_PROFILE.saveChanges' | translate }}</span>
-      </ion-label>    
+      </ion-label>
     </ion-button>
   </div>
 </ion-footer>

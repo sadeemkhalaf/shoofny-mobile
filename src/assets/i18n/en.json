@@ -16,7 +16,7 @@
         "confirmPassword": "confirmPassword",
         "mobile": "mobile",
         "code": "code",
-        "username": "username",
+        "username": "Name",
         "fillFields": "Fill in the fields to create the account"
 
     }, "FILL_NEW_PROFILE": {

@@ -21,19 +21,16 @@ export class LoginPage implements OnInit, OnDestroy {
     private _storage: StorageService,
     private _auth: AuthService) {
     }
+
   ngOnDestroy(): void {
     // throw new Error("Method not implemented.");
   }
 
   ngOnInit() {
-    this._storage.getUserData().then((data) => {
-      if (!!data) {
-        this._route.navigate(['/home']);
-      }
-    });
+    this._checkLoggedIn();
     this.form = this.formBuilder.group({
-      password: ['', Validators.required],
-      email: ['', Validators.required]
+      email: ['', Validators.required],
+      password: ['', Validators.required]
     });
   }
 
@@ -58,4 +55,10 @@ export class LoginPage implements OnInit, OnDestroy {
     this._route.navigate(["/reset-password"], {replaceUrl: true})
   }
 
+  private async _checkLoggedIn() {
+    const data = await this._storage.getUserData();
+    if(!!data) {
+      this._route.navigate(['/home']);
+    }
+  }
 }

@@ -27,7 +27,7 @@ export class AuthHttpInterceptor implements HttpInterceptor {
           switchMap(token => {
             let headers = request.headers;
             if (!!token && token !== '') {
-              headers = headers.set('Authorization', 'Bearer ' + (token || ''));
+              headers = headers.set('Authorization', 'Bearer  ' + (token || ''));
             }
             headers = headers.append('Content-Type', 'application/json');
             const requestClone = request.clone({ headers, withCredentials: true, url: `${APIEndpoint}${request.url}` });
@@ -140,7 +140,7 @@ export class AuthHttpInterceptor implements HttpInterceptor {
       console.log(refreshToken);
       return new Promise<Token>(
         (resolve, reject) =>
-          this._http.post('/api/token/refresh/', { refresh: refreshToken })
+          this._http.post('/api/v1/token/refresh/', { refresh: refreshToken })
             .subscribe((token: any) => {
               this._helper.hideLoading();
               if (!!token) {

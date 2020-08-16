@@ -1,0 +1,8 @@
+@import '../../../theme//helper-classes.scss';
+:host {
+    .title-sm {
+        font-weight: 400;
+        @include font-size(7);
+        opacity: 70%;
+    }
+}
