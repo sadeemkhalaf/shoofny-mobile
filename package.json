@@ -56,7 +56,7 @@
     "cordova-plugin-whitelist": "^1.3.4",
     "cordova-plugin-x-toast": "^2.7.2",
     "ionic-selectable": "^4.7.1",
-    "rxjs": "~6.5.1",
+    "rxjs": "~6.6.7",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },
